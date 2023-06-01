@@ -173,7 +173,7 @@ function! module#alternative#switch(mods, args)
 	let hr = module#alternative#get()
 	let name = expand('%')
 	if hr == ''
-		call asclib#core#errmsg('missing alternative for: ' . hr)
+		call asclib#core#errmsg('missing alternative for: ' . name)
 		return -1
 	elseif !filereadable(hr)
 		call asclib#core#errmsg('can not read: ' . hr)
