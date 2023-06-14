@@ -239,9 +239,9 @@ endfunc
 "----------------------------------------------------------------------
 command! -nargs=0 -bang SudoWrite call s:SudoWrite('<bang>')
 function! s:SudoWrite(bang) abort
-	let t = shellescape(expand('%'))
+	let t = expand('%')
 	if !empty(t) 
-		exec printf('w%s !sudo tee %s > /dev/null', a:bang, t)
+		exec printf('w%s !sudo tee %s > /dev/null', a:bang, shellescape(t))
 	else
 		echohl ErrorMsg
 		echo 'E32: No file name'
