@@ -250,6 +250,7 @@ function! s:SudoWrite(bang) abort
 		echohl None
 	else
 		exec printf('w%s !sudo tee %s > /dev/null', a:bang, shellescape(t))
+		checktime
 	endif
 endfunc
 
