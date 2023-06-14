@@ -234,3 +234,13 @@ endfunc
 
 
 
+"----------------------------------------------------------------------
+" sudo write
+"----------------------------------------------------------------------
+command! -nargs=0 -bang SudoWrite call s:SudoWrite('<bang>')
+function! s:SudoWrite(bang) abort
+	let t = shellescape(expand('%'))
+	exec printf('w%s !sudo tee %s > /dev/null', a:bang, t)
+endfunc
+
+
