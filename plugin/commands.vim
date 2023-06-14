@@ -240,12 +240,16 @@ endfunc
 command! -nargs=0 -bang SudoWrite call s:SudoWrite('<bang>')
 function! s:SudoWrite(bang) abort
 	let t = expand('%')
-	if !empty(t) 
-		exec printf('w%s !sudo tee %s > /dev/null', a:bang, shellescape(t))
-	else
+	if !empty(&bt)
+		echohl ErrorMsg
+		echo "E382: Cannot write, 'buftype' option is set"
+		echohl None
+	elseif empty(t)
 		echohl ErrorMsg
 		echo 'E32: No file name'
 		echohl None
+	else
+		exec printf('w%s !sudo tee %s > /dev/null', a:bang, shellescape(t))
 	endif
 endfunc
 
