@@ -240,7 +240,13 @@ endfunc
 command! -nargs=0 -bang SudoWrite call s:SudoWrite('<bang>')
 function! s:SudoWrite(bang) abort
 	let t = shellescape(expand('%'))
-	exec printf('w%s !sudo tee %s > /dev/null', a:bang, t)
+	if !empty(t) 
+		exec printf('w%s !sudo tee %s > /dev/null', a:bang, t)
+	else
+		echohl ErrorMsg
+		echo 'E32: No file name'
+		echohl None
+	endif
 endfunc
 
 
