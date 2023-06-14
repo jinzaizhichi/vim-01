@@ -251,7 +251,7 @@ function! s:SudoWrite(bang) abort
 	else
 		exec printf('w%s !sudo tee %s > /dev/null', a:bang, shellescape(t))
 		if !v:shell_error
-			checktime
+			edit!
 		endif
 	endif
 endfunc
