@@ -248,8 +248,17 @@ function! s:SudoWrite(bang) abort
 		echohl ErrorMsg
 		echo 'E32: No file name'
 		echohl None
+	elseif !executable('sudo')
+		echohl ErrorMsg
+		echo 'Error: not find sudo executable'
+		echohl None
+	elseif executable('tee') == 0 && executable('busybox') == 0
+		echohl ErrorMsg
+		echo 'Error: not find tee/busybox executable'
+		echohl None
 	else
-		exec printf('w%s !sudo tee %s > /dev/null', a:bang, shellescape(t))
+		let e = executable('tee')? 'tee' : 'busybox tee'
+		exec printf('w%s !sudo %s %s > /dev/null', a:bang, e, shellescape(t))
 		if !v:shell_error
 			edit!
 		endif
