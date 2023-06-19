@@ -92,8 +92,8 @@ call quickui#menu#install("&Build", [
 			\ ["Project &Init\tShift+F7", 'AsyncTask project-init'],
 			\ ["Project I&nstall\tShift+F8", 'AsyncTask project-install'],
 			\ ['--', ''],
-			\ ["T&ask List\tCtrl+F10", 'TaskFinder'],
-			\ ['E&dit Task', 'AsyncTask -e'],
+			\ ["T&ask List\tShift+F12", 'TaskFinder'],
+			\ ["E&dit Task\tShift+F11", 'AsyncTask -e'],
 			\ ['Edit &Global Task', 'AsyncTask -E'],
 			\ ['&Stop Building', 'AsyncStop'],
 			\ ])

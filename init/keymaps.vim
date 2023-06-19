@@ -241,10 +241,10 @@ noremap <silent><space>jm :call Tools_SwitchMakeFile()<cr>
 "----------------------------------------------------------------------
 " tasks
 "----------------------------------------------------------------------
-noremap <silent><c-f9> :AsyncTaskEdit<cr>
-inoremap <silent><c-f9> <ESC>:AsyncTaskEdit<cr>
-noremap <silent><c-f10> :AsyncTaskList<cr>
-inoremap <silent><c-f10> <ESC>:AsyncTaskList<cr>
+noremap <silent><s-f11> :AsyncTaskEdit<cr>
+inoremap <silent><s-f11> <ESC>:AsyncTaskEdit<cr>
+noremap <silent><s-f12> :TaskFinder<cr>
+inoremap <silent><s-f12> <ESC>:TaskFinder<cr>
 
 noremap <silent><F5> :AsyncTask file-run<cr>
 noremap <silent><F6> :AsyncTask make<cr>
