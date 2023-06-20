@@ -69,7 +69,7 @@ endfunc
 "----------------------------------------------------------------------
 " start debug
 "----------------------------------------------------------------------
-command! -nargs=? GdbStart call s:GdbStart(<q-args>)
+command! -nargs=? -complete=file GdbStart call s:GdbStart(<q-args>)
 function! s:GdbStart(name) abort
 	if !exists(':Termdebug')
 		packadd termdebug
@@ -107,6 +107,7 @@ function! s:term_start_post()
 	" echom printf('start_post: bt=%s bid=%d', &bt, bufnr('%'))
 	if &bt == 'prompt'
 		setlocal bufhidden=wipe
+		exec 'setlocal listchars=tab:\ \ '
 	endif
 endfunc
 
