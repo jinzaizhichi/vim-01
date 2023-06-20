@@ -71,7 +71,9 @@ endfunc
 "----------------------------------------------------------------------
 command! -nargs=? GdbStart call s:GdbStart(<q-args>)
 function! s:GdbStart(name) abort
-	packadd termdebug
+	if !exists(':Termdebug')
+		packadd termdebug
+	endif
 	exec 'Termdebug ' . ((a:name == '')? '' : fnameescape(a:name))
 	GdbKeymap
 endfunc

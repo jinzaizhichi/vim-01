@@ -44,6 +44,15 @@ if get(g:, 'quickui_color_pmenu', 0) == 0
 	endif
 endif
 
+" debug
+if &t_Co < 256 || 1
+	hi! debugPC term=reverse ctermbg=4 guibg=darkblue
+	hi! debugBreakpoint term=reverse ctermbg=9 guibg=red
+else
+	hi! debugPC term=reverse ctermbg=45 guibg=darkblue
+	hi! debugBreakpoint term=reverse ctermbg=196 guibg=red
+endif
+
 
 "----------------------------------------------------------------------
 " lightline theme

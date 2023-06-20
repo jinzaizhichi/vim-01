@@ -288,7 +288,6 @@ endif
 
 " gdb
 if has_key(s:enabled, 'gdb')
-	packadd termdebug
 	IncScript site/bundle/gdb.vim
 endif
 
