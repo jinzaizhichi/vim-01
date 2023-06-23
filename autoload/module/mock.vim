@@ -73,4 +73,23 @@ function! module#mock#init_optname(cmdname, complete, optname) abort
 endfunc
 
 
+"----------------------------------------------------------------------
+" init packad
+"----------------------------------------------------------------------
+function! module#mock#init_packadd(cmdname, complete, packname) abort
+	let load = []
+	let init = []
+	if type(a:packname) == type('')
+		let load = [a:packname]
+	elseif type(a:packname) == type([])
+		let load = a:packname
+	endif
+	for name in load
+		let t = 'packadd ' . fnameescape(name)
+		let init += [t]
+	endfor
+	return module#mock#command(a:cmdname, a:complete, init)
+endfunc
+
+
 
