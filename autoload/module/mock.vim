@@ -35,7 +35,7 @@ function! s:make(cmdname, complete, init) abort
 	endif
 	let n = len(s:init)
 	let s:init += [deepcopy(a:init)]
-	let t = 'command -nargs=* -range -bang '
+	let t = 'command! -nargs=* -range -bang '
 	let t .= (a:complete == '')? '-complete=file' : '-complete='. a:complete
 	let t .= ' ' . a:cmdname . ' call s:mockcmd('
 	let t .= printf('"%s", "<bang>", <line1>, <line2>, <q-args>, ', a:cmdname)
@@ -56,6 +56,21 @@ endfunc
 " init command by opt
 "----------------------------------------------------------------------
 function! module#mock#init_optname(cmdname, complete, optname) abort
+	let load = []
+	let init = []
+	if type(a:optname) == type('')
+		let load = [a:optname]
+	elseif type(a:optname) == type([])
+		let load = a:optname
+	endif
+	let b = asclib#path#runtime('site/opt')
+	for name in load
+		let t = asclib#path#join(b, name)
+		let cmd = 'source ' . fnameescape(t)
+		let init += [cmd]
+	endfor
+	return module#mock#command(a:cmdname, a:complete, init)
 endfunc
+
 
 
