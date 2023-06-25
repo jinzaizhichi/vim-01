@@ -29,8 +29,7 @@ function! s:GdbKeymap()
 	noremap <c-f7> :Finish<cr>
 	" Over is next
 	noremap <c-f8> :Over<cr>
-	noremap <c-f9> :Break<cr>
-	noremap <c-s-f9> :Clear<cr>
+	noremap <c-f9> :GdbToggleBreakpoint<cr>
 	noremap <c-f10> :Step<cr>
 	noremap <c-f11> :Until<cr>
 	noremap <c-f12> :call TermDebugSendCommand('info locals')<cr>
@@ -38,7 +37,7 @@ function! s:GdbKeymap()
 	noremap <c-f2> :Evaluate<cr>
 	noremap <c-f3> :call TermDebugSendCommand('bt')<cr>
 	noremap <c-f4> :Step<cr>
-	noremap <s-space> :Break<cr>
+	noremap <s-space> :GdbToggleBreakpoint<cr>
 endfunc
 
 
@@ -53,7 +52,7 @@ function! s:GdbHelp() abort
 				\ ["&Finish\tCtrl+F7", 'Finish'],
 				\ ["&Next\tCtrl+F8", 'Over'],
 				\ ["--"],
-				\ ["&Break\tCtrl+F9", 'Break'],
+				\ ["&Breakpoint\tCtrl+F9", 'Break'],
 				\ ["&Step\tCtrl+F10", 'Step'],
 				\ ["&Until\tCtrl+F11", 'Until'],
 				\ ["&Display\tCtrl+F12", 'D info locals'],
@@ -76,6 +75,69 @@ function! s:GdbStart(name) abort
 	endif
 	exec 'Termdebug ' . ((a:name == '')? '' : fnameescape(a:name))
 	GdbKeymap
+endfunc
+
+
+"----------------------------------------------------------------------
+" query signs in certain line number
+"----------------------------------------------------------------------
+function! GdbSignQuery(bid, lnum, group)
+	let info = sign_getplaced(a:bid, {'group': a:group, 'lnum': a:lnum})
+	let query = []
+	if type(info) != v:t_list
+		return []
+	endif
+	for items in info
+		if type(items) != v:t_dict
+			continue
+		elseif !has_key(items, 'signs')
+			continue
+		endif
+		let signs = items['signs']
+		if type(signs) != v:t_list
+			continue
+		endif
+		for item in signs
+			if type(item) != v:t_dict
+				continue
+			endif
+			if item.lnum != a:lnum || item.group != a:group
+				continue
+			endif
+			let query += [item.name]
+		endfor
+	endfor
+	return query
+endfunc
+
+
+"----------------------------------------------------------------------
+" toggle break point
+"----------------------------------------------------------------------
+command! -nargs=* GdbToggleBreakpoint call s:GdbToggleBreakpoint()
+function! s:GdbToggleBreakpoint() abort
+	if !exists(':Break')
+		call asclib#core#errmsg('Termdebug is not loaded')
+		return 0
+	endif
+	if &bt != ''
+		call asclib#core#errmsg('Termdebug can not place break point here')
+		return 0
+	endif
+	let bid = bufnr('%')
+	let query = GdbSignQuery(bid, line('.'), 'TermDebug')
+	let check = 0
+	for q in query
+		if q =~ '^debugBreakpoint'
+			let check = 1
+			break
+		endif
+	endfor
+	if check
+		Clear
+	else
+		Break
+	endif
 endfunc
 
 
