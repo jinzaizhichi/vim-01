@@ -1401,8 +1401,8 @@ func s:CreateBreakpoint(id, subid, enabled)
     else
       let hiName = "debugBreakpoint"
     endif
-	let t = substitute(nr, '\..*', '', '')
-	let t = (strlen(t) > 2)? 'BR' : t
+    let t = substitute(nr, '\..*', '', '')
+    let t = (strlen(t) > 2)? 'BR' : t
     call sign_define('debugBreakpoint' .. nr,
 			    \ #{text: t, 
 			    \ texthl: hiName})
