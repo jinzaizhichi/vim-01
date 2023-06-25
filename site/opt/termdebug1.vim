@@ -1401,11 +1401,21 @@ func s:CreateBreakpoint(id, subid, enabled)
     else
       let hiName = "debugBreakpoint"
     endif
-    let t = substitute(nr, '\..*', '', '')
-    let t = (strlen(t) > 2)? 'BR' : t
+    let label = ''
+    if exists('g:termdebug_config')
+        let label = get(g:termdebug_config, 'label', '')
+    elseif exists('g:termdebug_label')
+        let label = g:termdebug_label
+    endif
+    if label == ''
+        let label = substitute(nr, '\..*', '', '')
+        if strlen(label) > 2
+            let label = strpart(label, strlen(label) - 2)
+        endif
+    endif
     call sign_define('debugBreakpoint' .. nr,
-			    \ #{text: t, 
-			    \ texthl: hiName})
+				\ #{text: strpart(label, 0, 2), 
+				\ texthl: hiName})
   endif
 endfunc
 
