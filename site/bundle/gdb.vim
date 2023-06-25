@@ -17,7 +17,7 @@ let g:termdebug_config.use_prompt = 1
 let g:termdebug_config.map_K = 0
 let g:termdebug_config.winbar = 0
 let g:termdebug_config.command = 'gdb'
-let g:termdebug_config.label = 'BP'
+let g:termdebug_config.sign = '>>'
 
 
 "----------------------------------------------------------------------
