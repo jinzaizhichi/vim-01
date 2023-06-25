@@ -130,6 +130,7 @@ call quickui#menu#install("&C/C++", [
 			\ ["&List Function\tAlt+i", 'call quickui#tools#list_function()', ],
 			\ ["&Code Snippet\t<spc>fp", "Leaderf snippet"],
 			\ ["&Edit Snippet\t", "CodeSnipEdit"],
+			\ ["&Debug Menu\tCtrl+F1", "GdbHelp"],
 			\ ["Cpp&man Help\t", 'call MenuHelp_Cppman()'],
 			\ ['--'],
 			\ ["&Switch Header/Source\t<spc>fw", "SwitchHeader edit"],
