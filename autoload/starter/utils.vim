@@ -101,7 +101,6 @@ function! starter#utils#window_resize(wid, width, height) abort
 		exec printf('%dresize %d', wid, a:height)
 	endif
 	call starter#utils#restore_view()
-endif
 endfunc
 
 
