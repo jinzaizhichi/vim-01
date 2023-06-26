@@ -208,3 +208,10 @@ function! starter#test#test4() abort
 	return ctx.pg_count
 endfunc
 
+function! starter#test#test5() abort
+	let keymap = deepcopy(s:starter_keymap)
+	let opts = {}
+	call starter#state#init(keymap, opts)
+endfunc
+
+

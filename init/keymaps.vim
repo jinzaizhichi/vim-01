@@ -465,6 +465,9 @@ noremap <silent><space>lc :call asclib#lint_cppcheck('')<cr>
 noremap <silent><space>lg :call asclib#open_gprof('', '')<cr>
 noremap <silent><space>lt :call asclib#html_prettify()<cr>
 
+" last command
+noremap <space>ll :<c-p><cr>
+
 
 "----------------------------------------------------------------------
 " quickmenu

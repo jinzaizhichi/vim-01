@@ -247,7 +247,7 @@ endfunc
 "----------------------------------------------------------------------
 " fill page
 "----------------------------------------------------------------------
-function! starter#layout#file_pages(ctx, opts) abort
+function! starter#layout#fill_pages(ctx, opts) abort
 	let ctx = a:ctx
 	let opts = a:opts
 	let nitems = len(ctx.items)

@@ -12,12 +12,15 @@
 " 
 "----------------------------------------------------------------------
 let s:config_popup = 0
+let s:config_opts = {}
 
 
 "----------------------------------------------------------------------
-" 
+" initialize
 "----------------------------------------------------------------------
 function! starter#display#init(ctx, opts)
+	let s:config_popup = get(g:, 'quickui_starter_popup', 0)
+	let s:config_opts = a:opts
 endfunc
 
 

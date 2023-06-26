@@ -88,6 +88,18 @@ function! starter#config#rjust(str, size) abort
 	return repeat(' ', a:size - strwidth(a:str)) . a:str
 endfunc
 
+" translate position
+function! starter#config#position(what) abort
+	let pos = get(s:position_dict, a:what, 3)
+	let position = 'botright'
+	if pos <= 1
+		let position = (pos == 0)? 'leftabove' : 'rightbelow'
+	else
+		let position = (pos == 2)? 'topleft' : 'botright'
+	endif
+	return position
+endfunc
+
 
 "----------------------------------------------------------------------
 " visit tree node
@@ -205,12 +217,7 @@ function! starter#config#compile(keymap, opts) abort
 	endfor
 	let ctx.vertical = starter#config#get(a:opts, 'vertical')
 	let ctx.position = starter#config#get(a:opts, 'position')
-	let pos = get(s:position_dict, ctx.position, 3)
-	if pos <= 1
-		let ctx.position = (pos == 0)? 'leftabove' : 'rightbelow'
-	else
-		let ctx.position = (pos == 2)? 'topleft' : 'botright'
-	endif
+	let ctx.position = starter#config#position(ctx.position)
 	return ctx
 endfunc
 
