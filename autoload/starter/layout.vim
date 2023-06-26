@@ -10,7 +10,7 @@
 
 
 "----------------------------------------------------------------------
-" horizon
+" horizon: multiple columns per page
 "----------------------------------------------------------------------
 function! s:layout_horizon(ctx, opts) abort
 	let ctx = a:ctx
@@ -52,10 +52,30 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" vertical
+" vertical: one column per page
 "----------------------------------------------------------------------
 function! s:layout_vertical(ctx, opts) abort
-	let a:ctx.wincy = winheight(0)
+	let ctx = a:ctx
+	let padding = starter#config#get(a:opts, 'padding')
+	let spacing = starter#config#get(a:opts, 'spacing')
+	let ctx.ncols = 1
+	let ctx.nrows = len(ctx.items)
+	let min_height = starter#config#get(a:opts, 'min_height')
+	let max_height = starter#config#get(a:opts, 'max_height')
+	let ypad = padding[1] + padding[3]
+	let min_height -= ypad
+	let max_height -= ypad
+	let min_height = (min_height < 1)? 1 : min_height
+	let max_height = (max_height < 1)? 1 : max_height
+	let ctx.pg_count = (ctx.nrows + max_height - 1) / max_height
+	if type(ctx.pg_count) == 5
+		let ctx.pg_count = float2nr(ctx.pg_count)
+	endif
+	let ctx.pg_height = ctx.nrows
+	let ctx.pg_height = (max_height < ctx.pg_height)? max_height : ctx.pg_height
+	let ctx.pg_height = (min_height > ctx.pg_height)? min_height : ctx.pg_height
+	let ctx.pg_size = ctx.pg_height * ctx.ncols
+	let ctx.pages = []
 endfunc
 
 
@@ -127,7 +147,7 @@ endfunc
 "----------------------------------------------------------------------
 " fill a page
 "----------------------------------------------------------------------
-function! starter#layout#fill_page(ctx, opts, start, size, winheight) abort
+function! s:fill_horizon(ctx, opts, start, size, winheight) abort
 	let ctx = a:ctx
 	let winheight = a:winheight
 	let page = {}
@@ -177,5 +197,25 @@ function! starter#layout#fill_page(ctx, opts, start, size, winheight) abort
 	return page
 endfunc
 
+
+"----------------------------------------------------------------------
+" 
+"----------------------------------------------------------------------
+function! s:fill_vertical(ctx, opts, start, size, winheight) abort
+endfunc
+
+
+
+"----------------------------------------------------------------------
+" fill page
+"----------------------------------------------------------------------
+function! starter#layout#fill_page(ctx, opts, start, size, winheight) abort
+	let ctx = a:ctx
+	if ctx.vertical == 0
+		return s:fill_horizon(ctx, a:opts, a:start, a:size, a:winheight)
+	else
+		return s:fill_vertical(ctx, a:opts, a:start, a:size, a:winheight)
+	endif
+endfunc
 
 
