@@ -53,7 +53,7 @@ function! s:GdbHelp() abort
 				\ ["&Finish\tCtrl+F7", 'Finish'],
 				\ ["&Next\tCtrl+F8", 'Over'],
 				\ ["--"],
-				\ ["&Breakpoint\tCtrl+F9", 'Break'],
+				\ ["&Breakpoint\tCtrl+F9", 'GdbToggleBreakpoint'],
 				\ ["&Step\tCtrl+F10", 'Step'],
 				\ ["&Until\tCtrl+F11", 'Until'],
 				\ ["&Display\tCtrl+F12", 'D info locals'],
