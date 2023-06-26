@@ -60,3 +60,17 @@ function! starter#state#init(keymap, opts) abort
 endfunc
 
 
+"----------------------------------------------------------------------
+" select: return selected key, '' for no select, "\<esc>" for quit
+"----------------------------------------------------------------------
+function! starter#state#select(path) abort
+	let keymap = starter#config#visit(s:keymap, a:path)
+	let ctx = starter#config#compile(keymap, a:opts)
+	if len(ctx.items) == 0
+		return ''
+	endif
+	call starter#layout#init(ctx, s:opts, s:wincx, s:wincy)
+	call starter#layout#fill_pages(ctx, s:opts)
+endfunc
+
+

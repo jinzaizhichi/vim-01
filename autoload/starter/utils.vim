@@ -12,9 +12,6 @@
 "----------------------------------------------------------------------
 " internal
 "----------------------------------------------------------------------
-let s:bid = -1
-let s:previous_wid = -1
-let s:working_wid = -1
 
 
 "----------------------------------------------------------------------
@@ -92,68 +89,10 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" open window
-"----------------------------------------------------------------------
-function! starter#utils#window_open(opts) abort
-	let opts = a:opts
-	let vertical = starter#config#get(opts, 'vertical')
-	let position = starter#config#get(opts, 'position')
-	let min_height = starter#config#get(opts, 'min_height')
-	let min_width = starter#config#get(opts, 'min_width')
-	let s:previous_wid = winnr()
-	call starter#utils#save_view()
-	if vertical == 0
-		exec printf('%s %dsplit', position, min_height)
-	else
-		exec printf('%s %dvsplit', position, min_width)
-	endif
-	call starter#utils#restore_view()
-	let s:working_wid = winnr()
-	if s:bid < 0
-		let s:bid = starter#utils#create_buffer()
-	endif
-	let bid = s:bid
-	exec 'b ' . bid
-	setlocal bt=nofile nobuflisted nomodifiable
-	setlocal nowrap nonumber nolist nocursorline nocursorcolumn noswapfile
-	if exists('+cursorlineopt')
-		setlocal cursorlineopt=both
-	endif
-	if has('signs') && has('patch-7.4.2210')
-		setlocal signcolumn=no 
-	endif
-	if has('spell')
-		setlocal nospell
-	endif
-	if has('folding')
-		setlocal fdc=0
-	endif
-	call starter#utils#update_buffer(bid, [])
-endfunc
-
-
-"----------------------------------------------------------------------
-" window close
-"----------------------------------------------------------------------
-function! starter#utils#window_close() abort
-	if s:working_wid > 0
-		call starter#utils#save_view()
-		exec printf('%dclose', s:working_wid)
-		call starter#utils#restore_view()
-		let s:working_wid = -1
-		if s:previous_wid > 0
-			exec printf('%dwincmd w', s:previous_wid)
-			let s:previous_wid = -1
-		endif
-	endif
-endfunc
-
-
-"----------------------------------------------------------------------
 " resize window
 "----------------------------------------------------------------------
 function! starter#utils#window_resize(wid, width, height) abort
-	let wid = (a:wid == 0)? winnr() : a:wid
+	let wid = (a:wid <= 0)? winnr() : a:wid
 	call starter#utils#save_view()
 	if a:width >= 0
 		exec printf('vert %dresize %d', wid, a:width)
@@ -162,36 +101,7 @@ function! starter#utils#window_resize(wid, width, height) abort
 		exec printf('%dresize %d', wid, a:height)
 	endif
 	call starter#utils#restore_view()
-endfunc
-
-
-"----------------------------------------------------------------------
-" update window content
-"----------------------------------------------------------------------
-function! starter#utils#window_update(textline) abort
-	if s:bid > 0
-		call starter#utils#update_buffer(s:bid, a:textline)
-	endif
-endfunc
-
-
-"----------------------------------------------------------------------
-" execute in window
-"----------------------------------------------------------------------
-function! starter#utils#window_execute(command) abort
-	if type(a:command) == type([])
-		let command = join(a:command, "\n")
-	elseif type(a:command) == type('')
-		let command = a:command
-	else
-		let command = a:command
-	endif
-	if s:working_wid > 0
-		let wid = winnr()
-		noautocmd exec printf('%dwincmd w', s:working_wid)
-		exec command
-		noautocmd exec printf('%dwincmd w', wid)
-	endif
+endif
 endfunc
 
 
