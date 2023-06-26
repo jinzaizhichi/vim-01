@@ -158,7 +158,7 @@ function! starter#config#compile(keymap, opts) abort
 			endif
 		endif
 		if type(value) == v:t_string
-			let item.cmd = value
+			let item.cmd = ''
 			let item.text = value
 		elseif type(value) == v:t_list
 			let item.cmd = (len(value) > 0)? value[0] : ''
@@ -172,10 +172,10 @@ function! starter#config#compile(keymap, opts) abort
 				let item.text = icon_group . item.text
 			endif
 		endif
-		if len(item.label) > ctx.strwidth_key
+		if strwidth(item.label) > ctx.strwidth_key
 			let ctx.strwidth_key = strwidth(item.label)
 		endif
-		if len(item.text) >= ctx.strwidth_txt
+		if strwidth(item.text) >= ctx.strwidth_txt
 			let ctx.strwidth_txt = strwidth(item.text)
 		endif
 	endfor

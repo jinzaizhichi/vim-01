@@ -34,7 +34,6 @@ function! s:layout_horizon(ctx, opts) abort
 	endif
 	let min_height = starter#config#get(a:opts, 'min_height')
 	let max_height = starter#config#get(a:opts, 'max_height')
-	let padding = starter#config#get(a:opts, 'padding')
 	let ypad = padding[1] + padding[3]
 	let min_height -= ypad
 	let max_height -= ypad
@@ -173,6 +172,7 @@ function! starter#layout#fill_page(ctx, opts, start, size, winheight) abort
 		let content += [t]
 	endfor
 	let content += repeat([''], padding[3])
+	let page.cowidth = cowidth
 	let page.content = content
 	return page
 endfunc
