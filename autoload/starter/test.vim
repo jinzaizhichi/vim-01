@@ -196,7 +196,8 @@ function! starter#test#test4() abort
 	let keymap = deepcopy(s:starter_keymap)
 	let ctx = starter#config#compile(keymap, {})
 	call starter#layout#init(ctx, {}, &columns, &lines)
-	let page = starter#layout#fill_page(ctx, {}, 0, len(ctx.keys), 5)
+	call starter#layout#fill_pages(ctx, {})
+	let page = ctx.pages[0]
 	" call asclib#python#pprint(page.content)
 	call asclib#common#print_content(page.content)
 endfunc
