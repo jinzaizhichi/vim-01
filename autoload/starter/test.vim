@@ -194,11 +194,17 @@ endfunc
 
 function! starter#test#test4() abort
 	let keymap = deepcopy(s:starter_keymap)
-	let ctx = starter#config#compile(keymap, {})
-	call starter#layout#init(ctx, {}, &columns, &lines)
-	call starter#layout#fill_pages(ctx, {})
+	let opts = {}
+	let opts.max_height = 2
+	let opts.min_height = 2
+	let opts.vertical = 1
+	let ctx = starter#config#compile(keymap, opts)
+	call starter#layout#init(ctx, opts, &columns, &lines)
+	call starter#layout#fill_pages(ctx, opts)
 	let page = ctx.pages[0]
 	" call asclib#python#pprint(page.content)
 	call asclib#common#print_content(page.content)
+	echo len(ctx.pages)
+	return ctx.pg_count
 endfunc
 

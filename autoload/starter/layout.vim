@@ -199,6 +199,33 @@ function! s:fill_page_vertical(ctx, opts, start, size, winheight) abort
 	let ctx = a:ctx
 	let page = {}
 	let content = []
+	let start = a:start
+	let endup = a:start + a:winheight
+	if endup > start + a:size
+		let endup = start + a:size
+	endif
+	let require = endup - start
+	let minwidth = 0
+	let column = starter#layout#fill_column(ctx, a:opts, start, require, minwidth)
+	let column = starter#layout#just_column(column, a:winheight)
+	let width = 0
+	if len(column) > 0
+		let width = strwidth(column[0])
+	endif
+	let padding = starter#config#get(a:opts, 'padding')
+	let spacing = starter#config#get(a:opts, 'spacing')
+	let space1 = repeat(' ', padding[0])
+	let space2 = repeat(' ', padding[2])
+	let space3 = repeat(' ', spacing)
+	let content = []
+	let content += repeat([''], padding[1])
+	for y in range(a:winheight)
+		let text = space1 . column[y]
+		let content += [text]
+	endfor
+	let content += repeat([''], padding[3])
+	let page.cowidth = [width]
+	let page.content = content
 	return page
 endfunc
 
