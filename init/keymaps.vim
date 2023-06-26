@@ -241,10 +241,10 @@ noremap <silent><space>jm :call Tools_SwitchMakeFile()<cr>
 "----------------------------------------------------------------------
 " tasks
 "----------------------------------------------------------------------
-noremap <silent><s-f11> :AsyncTaskEdit<cr>
-inoremap <silent><s-f11> <ESC>:AsyncTaskEdit<cr>
-noremap <silent><s-f12> :TaskFinder<cr>
-inoremap <silent><s-f12> <ESC>:TaskFinder<cr>
+noremap <silent><s-f12> :AsyncTaskEdit<cr>
+inoremap <silent><s-f12> <ESC>:AsyncTaskEdit<cr>
+noremap <silent><f12> :TaskFinder<cr>
+inoremap <silent><f12> <ESC>:TaskFinder<cr>
 
 noremap <silent><F5> :AsyncTask file-run<cr>
 noremap <silent><F6> :AsyncTask make<cr>
@@ -252,11 +252,13 @@ noremap <silent><F7> :AsyncTask emake<cr>
 noremap <silent><F8> :AsyncTask emake-exe<cr>
 noremap <silent><F9> :AsyncTask file-build<cr>
 noremap <silent><F10> :call asyncrun#quickfix_toggle(6)<cr>
+noremap <silent><F11> :AsyncTask file-debug<cr>
 noremap <silent><s-f5> :AsyncTask project-run<cr>
 noremap <silent><s-f6> :AsyncTask project-test<cr>
 noremap <silent><s-f7> :AsyncTask project-init<cr>
 noremap <silent><s-f8> :AsyncTask project-install<cr>
 noremap <silent><s-f9> :AsyncTask project-build<cr>
+noremap <silent><s-f11> :AsyncTask project-debug<cr>
 
 inoremap <silent><F5> <ESC>:AsyncTask file-run<cr>
 inoremap <silent><F6> <ESC>:AsyncTask make<cr>
@@ -467,11 +469,6 @@ noremap <silent><space>lt :call asclib#html_prettify()<cr>
 "----------------------------------------------------------------------
 " quickmenu
 "----------------------------------------------------------------------
-noremap <silent><F12> :call quickmenu#toggle(0)<cr>
-inoremap <silent><F12> <ESC>:call quickmenu#toggle(0)<cr>
-noremap <silent><F11> :call quickmenu#toggle(1)<cr>
-inoremap <silent><F11> <ESC>:call quickmenu#toggle(1)<cr>
-
 noremap <silent><c-f10> :call quickmenu#toggle(1)<cr>
 inoremap <silent><c-f10> <ESC>:call quickmenu#toggle(1)<cr>
 noremap <silent><c-f11> :call quickmenu#toggle(2)<cr>
