@@ -171,6 +171,7 @@ function! s:term_start_post()
 	if &bt == 'prompt'
 		setlocal bufhidden=wipe
 		exec 'setlocal listchars=tab:\ \ '
+		noremap <buffer>K :GdbHelp<cr>
 	endif
 endfunc
 
