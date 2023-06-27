@@ -65,7 +65,8 @@ endfor
 
 let pending = '!@#$%^&*-=_+;:,./?`~'
 
-for ch in pending
+for i in range(strlen(pending))
+	let ch = pending[i]
 	let s:special_names[ch] = ch
 endfor
 
