@@ -80,6 +80,7 @@ let g:navigator.t = {
 " trigger
 "----------------------------------------------------------------------
 noremap <silent><tab><tab> :call navigator#cmd(g:navigator, '<tab><tab>')<cr>
+" noremap <silent><tab><tab> :Navigator '<tab>'<cr>
 
 
 
