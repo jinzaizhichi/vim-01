@@ -159,7 +159,7 @@ function! navigator#state#select(keymap, path) abort
 				let pg_index = (pg_index >= pg_count)? 0 : pg_index
 			elseif newch == "\<up>"
 				let pg_index -= 1
-				let pg_index = (pg_index < 0)? (pg_index - 1) : pg_index
+				let pg_index = (pg_index < 0)? (pg_count - 1) : pg_index
 			elseif newch == "\<left>"
 				return []
 			endif
