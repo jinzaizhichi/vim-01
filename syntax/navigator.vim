@@ -77,10 +77,10 @@ function! s:color_item(text, pos, width, y) abort
 	let endup = a:pos + a:width + 1
 	if head[0] == '[' && head[size - 1] == ']'
 		exec s:high_region('Operator', y, pos + 0, y, pos + 1, 0)
-		exec s:high_region('Keyword', y, pos + 1, y, pos + 1 + size, 0)
+		exec s:high_region('Special', y, pos + 1, y, pos + 1 + size, 0)
 		exec s:high_region('Operator', y, pos + 1 + size, y, pos + 2 + size, 0)
 	else
-		exec s:high_region('Keyword', y, pos + 0, y, pos + size, 0)
+		exec s:high_region('Special', y, pos + 0, y, pos + size, 0)
 	endif
 	let pos += size + 1
 	if s:icon_separator != ''
@@ -100,7 +100,7 @@ syn clear
 
 call s:color_buffer()
 
-echo s:position
+" echo s:position
 " echo s:icon_separator
 
 
