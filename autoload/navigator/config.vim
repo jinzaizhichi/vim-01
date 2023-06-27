@@ -244,8 +244,13 @@ function! navigator#config#compile(keymap, opts) abort
 		endif
 		let label = navigator#config#rjust(label, ctx.strwidth_key)
 		let text = navigator#config#ljust(text, ctx.strwidth_txt)
-		let item.content = printf('%s %s %s', label, icon_separator, text)
-		let item.compact = printf('%s %s %s', label, icon_separator, item.text)
+		if icon_separator != ''
+			let item.content = printf('%s %s %s', label, icon_separator, text)
+			let item.compact = printf('%s %s %s', label, icon_separator, item.text)
+		else
+			let item.content = printf('%s %s', label, text)
+			let item.compact = printf('%s %s', label, item.text)
+		endif
 		let item.clength = strwidth(item.compact)
 		let stride = strwidth(item.content)
 		let ctx.stride = (ctx.stride >= stride)? ctx.stride : stride
