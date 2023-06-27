@@ -54,10 +54,33 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" internal help
+" value store
 "----------------------------------------------------------------------
+function! navigator#config#store(name, value) abort
+	if !exists('s:internal_variable')
+		let s:internal_variable = {}
+	endif
+	let s:internal_variable[a:name] = a:value
+endfunc
 
+
+"----------------------------------------------------------------------
+" value fetch
+"----------------------------------------------------------------------
+function! navigator#config#fetch(name, default) abort
+	if !exists('s:internal_variable')
+		let s:internal_variable = {}
+	endif
+	if !has_key(s:internal_variable, a:name)
+		return a:default
+	endif
+	return s:internal_variable[a:name]
+endfunc
+
+
+"----------------------------------------------------------------------
 " eval ${...}
+"----------------------------------------------------------------------
 function! s:keymap_eval(keymap) abort
 	let keymap = a:keymap
 	if type(keymap) == v:t_func
@@ -73,22 +96,34 @@ function! s:keymap_eval(keymap) abort
 	return keymap
 endfunc
 
+
+"----------------------------------------------------------------------
 " read config
+"----------------------------------------------------------------------
 function! s:config(opts, key) abort
 	return navigator#config#get(a:opts, a:key)
 endfunc
 
+
+"----------------------------------------------------------------------
 " ljust
+"----------------------------------------------------------------------
 function! navigator#config#ljust(str, size) abort
 	return a:str . repeat(' ', a:size - strwidth(a:str))
 endfunc
 
+
+"----------------------------------------------------------------------
 " rjust
+"----------------------------------------------------------------------
 function! navigator#config#rjust(str, size) abort
 	return repeat(' ', a:size - strwidth(a:str)) . a:str
 endfunc
 
+
+"----------------------------------------------------------------------
 " translate position
+"----------------------------------------------------------------------
 function! navigator#config#position(what) abort
 	let pos = get(s:position_dict, a:what, 3)
 	let position = 'botright'

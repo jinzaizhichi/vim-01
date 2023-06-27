@@ -10,6 +10,12 @@
 
 
 "----------------------------------------------------------------------
+" global
+"----------------------------------------------------------------------
+let navigator#layout#context = {}
+
+
+"----------------------------------------------------------------------
 " horizon: multiple columns per page
 "----------------------------------------------------------------------
 function! s:layout_horizon(ctx, opts) abort
@@ -84,6 +90,15 @@ function! navigator#layout#init(ctx, opts, hspace, vspace) abort
 	else
 		call s:layout_vertical(a:ctx, a:opts)
 	endif
+	let context = {}
+	let context.wincx = a:ctx.wincx
+	let context.wincy = a:ctx.wincy
+	let context.padding = navigator#config#get(a:opts, 'padding')
+	let context.spacing = navigator#config#get(a:opts, 'spacing')
+	let context.vertical = a:ctx.vertical
+	let context.bracket = navigator#config#get(a:opts, 'bracket')
+	let context.ctx = a:ctx
+	call navigator#config#store('context', context)
 endfunc
 
 

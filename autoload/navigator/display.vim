@@ -58,9 +58,6 @@ function! s:win_open() abort
 	exec 'b ' . bid
 	setlocal bt=nofile nobuflisted nomodifiable
 	setlocal nowrap nonumber nolist nocursorline nocursorcolumn noswapfile
-	if exists('+cursorlineopt')
-		setlocal cursorlineopt=both
-	endif
 	if has('signs') && has('patch-7.4.2210')
 		setlocal signcolumn=no 
 	endif
@@ -111,6 +108,7 @@ function! s:win_update(textline, status) abort
 			let m = ' => '
 			let t = join(a:status, m) . m
 			let &l:statusline = 'SELECT: ' . t
+			setlocal ft=navigator
 		endif
 	endif
 endfunc

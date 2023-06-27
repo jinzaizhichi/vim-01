@@ -133,7 +133,10 @@ function! navigator#state#select(keymap, path) abort
 		let map[code] = key
 	endfor
 	let path = s:translate_path(a:path)
+	let context = navigator#config#fetch('context', {})
 	while 1
+		let context.page = ctx.pages[pg_index]
+		let context.index = pg_index
 		if s:vertical == 0
 			call navigator#display#resize(-1, ctx.pg_height)
 		endif
