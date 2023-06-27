@@ -97,6 +97,7 @@ function! navigator#layout#init(ctx, opts, hspace, vspace) abort
 	let context.spacing = navigator#config#get(a:opts, 'spacing')
 	let context.vertical = a:ctx.vertical
 	let context.bracket = navigator#config#get(a:opts, 'bracket')
+	let context.icon_separator = navigator#config#get(a:opts, 'icon_separator')
 	let context.ctx = a:ctx
 	call navigator#config#store('context', context)
 endfunc

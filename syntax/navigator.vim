@@ -17,7 +17,7 @@ let s:padding = s:context.padding
 let s:spacing = s:context.spacing
 let s:page = s:context.page
 let s:content = s:page.content
-let s:icon_separator = navigator#config#get(s:context.ctx, 'icon_separator')
+let s:icon_separator = s:context.icon_separator
 
 let s:position = repeat([0], len(s:page.cowidth))
 let s:width = repeat([0], len(s:page.cowidth))
@@ -76,17 +76,18 @@ function! s:color_item(text, pos, width, y) abort
 	let pos = a:pos + skip + 1
 	let endup = a:pos + a:width + 1
 	if head[0] == '[' && head[size - 1] == ']'
-		exec s:high_region('Operator', y, pos + 0, y, pos + 1, 0)
-		exec s:high_region('Special', y, pos + 1, y, pos + 1 + size, 0)
-		exec s:high_region('Operator', y, pos + 1 + size, y, pos + 2 + size, 0)
+		exec s:high_region('Normal', y, pos + 0, y, pos + 1, 0)
+		exec s:high_region('Special', y, pos + 1, y, pos + 1 + size - 2, 0)
+		exec s:high_region('Normal', y, pos - 1 + size, y, pos + 0 + size, 0)
 	else
 		exec s:high_region('Special', y, pos + 0, y, pos + size, 0)
 	endif
 	let pos += size + 1
 	if s:icon_separator != ''
 		let iw = strlen(s:icon_separator)
-		exec s:high_region('String', y, pos, y, pos + iw, 1)
+		exec s:high_region('Operator', y, pos, y, pos + iw, 1)
 		let pos += iw + 1
+		" echom "fuck: " . s:icon_separator
 	endif
 	let mark = a:text[pos - 1]
 	if mark != '+'

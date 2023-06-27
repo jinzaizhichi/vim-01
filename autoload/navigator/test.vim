@@ -211,7 +211,9 @@ endfunc
 function! navigator#test#test5() abort
 	let keymap = deepcopy(s:navigator_keymap)
 	let opts = {}
-	let ch = navigator#state#open(keymap, {})
+	let opts.bracket = 1
+	let opts.icon_separator = ''
+	let ch = navigator#state#open(keymap, opts)
 	return ch
 endfunc
 
