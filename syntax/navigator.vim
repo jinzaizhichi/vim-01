@@ -85,7 +85,7 @@ function! s:color_item(text, pos, width, y) abort
 	let pos += size + 1
 	if s:icon_separator != ''
 		let iw = strlen(s:icon_separator)
-		exec s:high_region('Operator', y, pos, y, pos + iw, 1)
+		exec s:high_region('Type', y, pos, y, pos + iw, 1)
 		let pos += iw + 1
 	endif
 	let mark = a:text[pos - 1]
