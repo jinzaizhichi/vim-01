@@ -104,9 +104,12 @@ endfunc
 "----------------------------------------------------------------------
 " window update
 "----------------------------------------------------------------------
-function! s:win_update(textline) abort
+function! s:win_update(textline, status) abort
 	if s:bid > 0
 		call starter#utils#update_buffer(s:bid, a:textline)
+		if s:working_wid > 0 && s:working_wid == winnr()
+			let &l:statusline = 'HAHA: ' . a:status
+		endif
 	endif
 endfunc
 
@@ -155,7 +158,7 @@ endfunc
 "----------------------------------------------------------------------
 " 
 "----------------------------------------------------------------------
-function! s:popup_update(content)
+function! s:popup_update(content, status)
 endfunc
 
 
@@ -220,11 +223,11 @@ endfunc
 "----------------------------------------------------------------------
 " update
 "----------------------------------------------------------------------
-function! starter#display#update(content) abort
+function! starter#display#update(content, status) abort
 	if s:popup == 0
-		call s:win_update(a:content)
+		call s:win_update(a:content, a:status)
 	else
-		call s:popup_update(a:content)
+		call s:popup_update(a:content, a:status)
 	endif
 endfunc
 

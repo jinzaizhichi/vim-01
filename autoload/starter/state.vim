@@ -24,7 +24,7 @@ let s:screency = 0
 let s:wincx = 0
 let s:wincy = 0
 let s:state = -1
-let s:opened = 0
+let s:exit = 0
 let s:prefix = ''
 
 
@@ -66,7 +66,7 @@ function! starter#state#init(keymap, opts) abort
 		let s:wincy = winheight(0)
 	endif
 	let s:state = 0
-	let s:opened = 0
+	let s:exit = 0
 	let s:path = []
 	call starter#display#init(s:opts)
 endfunc
@@ -76,10 +76,10 @@ endfunc
 " close window
 "----------------------------------------------------------------------
 function! starter#state#close() abort
-	let s:state = -1
 	if s:state >= 0
 		call starter#display#close()
 	endif
+	let s:state = -1
 endfunc
 
 
@@ -109,8 +109,9 @@ function! starter#state#select(keymap, path) abort
 		let code = item.code
 		let s:map[code] = key
 	endfor
+	let status = '' . join(a:path)
 	while 1
-		call starter#display#update(ctx.pages[pg_index].content)
+		call starter#display#update(ctx.pages[pg_index].content, status)
 		noautocmd redraw
 		try
 			let code = getchar()
@@ -119,7 +120,8 @@ function! starter#state#select(keymap, path) abort
 		endtry
 		let ch = (type(code) == v:t_number)? nr2char(code) : code
 		if ch == "\<ESC>" || ch == "\<c-c>"
-			return "\<esc>"
+			let s:exit = 1
+			return ''
 		elseif has_key(s:translate, ch)
 			let newch = s:translate[ch]
 			if newch == "\<down>"
@@ -135,6 +137,13 @@ function! starter#state#select(keymap, path) abort
 			return key
 		endif
 	endwhile
+endfunc
+
+
+"----------------------------------------------------------------------
+" open keymap
+"----------------------------------------------------------------------
+function! starter#state#open() abort
 endfunc
 
 
