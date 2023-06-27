@@ -211,9 +211,7 @@ endfunc
 function! starter#test#test5() abort
 	let keymap = deepcopy(s:starter_keymap)
 	let opts = {}
-	call starter#state#init(keymap, opts)
-	let ch = starter#state#select(keymap, [])
-	call starter#state#close()
+	let ch = starter#state#open(keymap, {})
 	echo ch
 endfunc
 

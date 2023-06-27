@@ -13,7 +13,6 @@
 " internal
 "----------------------------------------------------------------------
 let s:opts = {}
-let s:keymap = {}
 let s:path = []
 let s:current = {}
 let s:popup = 0
@@ -56,8 +55,7 @@ endfunc
 "----------------------------------------------------------------------
 " init keymap and open window
 "----------------------------------------------------------------------
-function! starter#state#init(keymap, opts) abort
-	let s:keymap = a:keymap
+function! starter#state#init(opts) abort
 	let s:opts = deepcopy(a:opts)
 	let s:popup = get(g:, 'quickui_starter_popup', 0)
 	let s:vertical = s:config('vertical')
@@ -76,6 +74,7 @@ function! starter#state#init(keymap, opts) abort
 	let s:exit = 0
 	let s:path = []
 	call starter#display#init(s:opts)
+	return 0
 endfunc
 
 
@@ -111,7 +110,7 @@ endfunc
 " select: return key array
 "----------------------------------------------------------------------
 function! starter#state#select(keymap, path) abort
-	let keymap = a:keymap
+	let keymap = starter#config#visit(a:keymap, [])
 	let ctx = starter#config#compile(keymap, s:opts)
 	if len(ctx.items) == 0
 		return []
@@ -166,8 +165,8 @@ function! starter#state#select(keymap, path) abort
 			if item.child == 0
 				return [key]
 			endif
-			let keymap = a:keymap[key]
-			let hr = starter#state#select(keymap, path + [key])
+			let km = starter#config#visit(keymap, [key])
+			let hr = starter#state#select(km, path + [key])
 			if hr != []
 				return [key] + hr
 			endif
@@ -184,7 +183,13 @@ endfunc
 "----------------------------------------------------------------------
 function! starter#state#open(keymap, opts) abort
 	let opts = deepcopy(a:opts)
-	let keymap = a:keymap
+	let hr = starter#state#init(opts)
+	if hr != 0
+		return []
+	endif
+	let key_array = starter#state#select(a:keymap, [])
+	call starter#state#close()
+	return key_array
 endfunc
 
 
