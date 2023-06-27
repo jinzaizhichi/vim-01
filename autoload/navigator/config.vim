@@ -98,6 +98,23 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" keymap expand
+"----------------------------------------------------------------------
+function! navigator#config#keymap_expand(keymap) abort
+	let keymap = s:keymap_eval(a:keymap)
+	if type(keymap) == v:t_dict
+		let previous = keymap
+		let keymap = {}
+		for key in keys(previous)
+			let value = previous[key]
+			let keymap[key] = navigator#config#keymap_expand(value)
+		endfor
+	endif
+	return keymap
+endfunc
+
+
+"----------------------------------------------------------------------
 " read config
 "----------------------------------------------------------------------
 function! s:config(opts, key) abort

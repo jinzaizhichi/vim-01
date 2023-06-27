@@ -210,6 +210,7 @@ endfunc
 
 function! navigator#test#test5() abort
 	let keymap = deepcopy(s:navigator_keymap)
+	let keymap = navigator#config#keymap_expand(keymap)
 	let opts = {}
 	" let opts.bracket = 1
 	" let opts.icon_separator = ''
