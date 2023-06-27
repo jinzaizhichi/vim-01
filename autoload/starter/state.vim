@@ -187,6 +187,7 @@ function! starter#state#open(keymap, opts) abort
 	if hr != 0
 		return []
 	endif
+	redraw
 	let key_array = starter#state#select(a:keymap, [])
 	call starter#state#close()
 	return key_array
