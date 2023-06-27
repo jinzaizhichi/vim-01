@@ -41,6 +41,7 @@ let s:translate = {
 			\ "\<down>" : "\<down>",
 			\ "\<c-h>" : "\<left>",
 			\ "\<c-l>" : "\<right>",
+			\ "\<bs>" : "\<left>",
 			\ }
 
 

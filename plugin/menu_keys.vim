@@ -1,0 +1,86 @@
+"======================================================================
+"
+" menu_keys.vim - vim-navigator initialize
+"
+" Created by skywind on 2023/06/27
+" Last Modified: 2023/06/27 22:10:10
+"
+"======================================================================
+
+let g:navigator = {}
+
+
+"----------------------------------------------------------------------
+" buffer
+"----------------------------------------------------------------------
+let g:navigator.b = {
+			\ 'name' : '+buffer' ,
+			\ '1' : ['b1'        , 'buffer 1']        ,
+			\ '2' : ['b2'        , 'buffer 2']        ,
+			\ 'd' : ['bd'        , 'delete-buffer']   ,
+			\ 'f' : ['bfirst'    , 'first-buffer']    ,
+			\ 'h' : ['Startify'  , 'home-buffer']     ,
+			\ 'l' : ['blast'     , 'last-buffer']     ,
+			\ 'n' : ['bnext'     , 'next-buffer']     ,
+			\ 'p' : ['bprevious' , 'previous-buffer'] ,
+			\ '?' : [':Leaderf buffer'   , 'fzf-buffer']      ,
+			\ }
+
+
+"----------------------------------------------------------------------
+" window
+"----------------------------------------------------------------------
+let g:navigator.w = {
+			\ 'name': '+window',
+			\ 'p': ['wincmd p', 'jump-previous-window'],
+			\ 'h': ['wincmd h', 'jump-left-window'],
+			\ 'j': ['wincmd j', 'jump-belowing-window'],
+			\ 'k': ['wincmd k', 'jump-aboving-window'],
+			\ 'l': ['wincmd l', 'jump-right-window'],
+			\ 'H': ['wincmd H', 'move-window-to-left'],
+			\ 'J': ['wincmd J', 'move-window-to-bottom'],
+			\ 'K': ['wincmd K', 'move-window-to-top'],
+			\ 'L': ['wincmd L', 'move-window-to-right'],
+			\ 'n': ['wincmd n', 'new-window'],
+			\ 'q': ['wincmd q', 'close-window'],
+			\ 'w': ['wincmd w', 'jump-next-window'],
+			\ 'o': ['wincmd o', 'close-all-other-windows'],
+			\ 'v': ['wincmd v', 'vertically-split-window'],
+			\ 's': ['wincmd s', 'split-window'],
+			\ '/': [':Leaderf window', 'search-for-a-window'],
+			\ }
+
+
+"----------------------------------------------------------------------
+" tab
+"----------------------------------------------------------------------
+let g:navigator.t = {
+			\ 'name': '+tab',
+			\ 'c' : [':tabnew', 'new-tab'],
+			\ 'q' : [':tabclose', 'close-tab'],
+			\ 'n' : [':tabnext', 'next-tab'],
+			\ 'p' : [':tabprev', 'previous-tab'],
+			\ 'o' : [':tabonly', 'close-all-other-tabs'],
+			\ 'l' : [':-tabmove', 'move-tab-left'],
+			\ 'r' : [':+tabmove', 'move-tab-right'],
+			\ '0' : [':tabn 10', 'switch-to-tab-10'],
+			\ '1' : [':tabn 1', 'switch-to-tab-1'],
+			\ '2' : [':tabn 2', 'switch-to-tab-2'],
+			\ '3' : [':tabn 3', 'switch-to-tab-3'],
+			\ '4' : [':tabn 4', 'switch-to-tab-4'],
+			\ '5' : [':tabn 5', 'switch-to-tab-5'],
+			\ '6' : [':tabn 6', 'switch-to-tab-6'],
+			\ '7' : [':tabn 7', 'switch-to-tab-7'],
+			\ '8' : [':tabn 8', 'switch-to-tab-8'],
+			\ '9' : [':tabn 9', 'switch-to-tab-9'],
+			\ }
+
+
+"----------------------------------------------------------------------
+" trigger
+"----------------------------------------------------------------------
+noremap <silent><tab><tab> :call navigator#cmd(g:navigator, '<tab><tab>')<cr>
+
+
+
+
