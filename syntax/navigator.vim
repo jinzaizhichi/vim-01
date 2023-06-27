@@ -68,7 +68,7 @@ endfunc
 "----------------------------------------------------------------------
 function! s:color_item(text, pos, width, y) abort
 	let part = strpart(a:text, a:pos, a:width)
-	let head = matchstr(part, '^\s*\w\+')
+	let head = matchstr(part, '^\s*\S\+')
 	let skip = strlen(matchstr(head, '^\s*'))
 	let head = strpart(head, skip)
 	let size = strlen(head)
