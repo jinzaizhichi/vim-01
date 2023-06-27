@@ -58,6 +58,7 @@ function! starter#state#init(keymap, opts) abort
 	let s:position = starter#config#position(s:config('position'))
 	let s:screencx = &columns
 	let s:screency = &lines
+	let s:prefix = get(a:opts, 'prefix', '')
 	if s:vertical == 0
 		let s:wincx = s:screencx
 		let s:wincy = s:config('min_height')
@@ -84,17 +85,34 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" 
+"----------------------------------------------------------------------
+function! s:translate_path(path)
+	let path = []
+	if s:prefix != ''
+		let t = starter#charname#get_key_label(s:prefix)
+		let path += [t]
+	endif
+	for p in a:path
+		let t = starter#charname#get_key_label(p)
+		let path += [t]
+	endfor
+	return path
+endfunc
+
+
+"----------------------------------------------------------------------
 " select: return selected key, '' for no select, "\<esc>" for quit
 "----------------------------------------------------------------------
 function! starter#state#select(keymap, path) abort
 	let keymap = a:keymap
 	let ctx = starter#config#compile(keymap, s:opts)
 	if len(ctx.items) == 0
-		return ''
+		return []
 	endif
 	call starter#layout#init(ctx, s:opts, s:wincx, s:wincy)
 	if ctx.pg_count <= 0
-		return ''
+		return []
 	endif
 	let pg_count = ctx.pg_count
 	let pg_size = ctx.pg_size
@@ -109,9 +127,10 @@ function! starter#state#select(keymap, path) abort
 		let code = item.code
 		let s:map[code] = key
 	endfor
-	let status = '' . join(a:path)
+	let s:prefix = '<space>'
+	let path = s:translate_path(a:path)
 	while 1
-		call starter#display#update(ctx.pages[pg_index].content, status)
+		call starter#display#update(ctx.pages[pg_index].content, path)
 		noautocmd redraw
 		try
 			let code = getchar()
@@ -121,7 +140,7 @@ function! starter#state#select(keymap, path) abort
 		let ch = (type(code) == v:t_number)? nr2char(code) : code
 		if ch == "\<ESC>" || ch == "\<c-c>"
 			let s:exit = 1
-			return ''
+			return []
 		elseif has_key(s:translate, ch)
 			let newch = s:translate[ch]
 			if newch == "\<down>"
@@ -144,6 +163,10 @@ endfunc
 " open keymap
 "----------------------------------------------------------------------
 function! starter#state#open() abort
+	let path = []
+	while 1
+		" let keymap = 
+	endwhile
 endfunc
 
 

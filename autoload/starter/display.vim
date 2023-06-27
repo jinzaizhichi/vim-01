@@ -108,7 +108,9 @@ function! s:win_update(textline, status) abort
 	if s:bid > 0
 		call starter#utils#update_buffer(s:bid, a:textline)
 		if s:working_wid > 0 && s:working_wid == winnr()
-			let &l:statusline = 'HAHA: ' . a:status
+			let m = ' => '
+			let t = join(a:status, m) . m
+			let &l:statusline = 'SELECT: ' . t
 		endif
 	endif
 endfunc
