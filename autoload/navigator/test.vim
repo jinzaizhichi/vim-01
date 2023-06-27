@@ -212,7 +212,7 @@ function! navigator#test#test5() abort
 	let keymap = deepcopy(s:navigator_keymap)
 	let opts = {}
 	let ch = navigator#state#open(keymap, {})
-	echo ch
+	return ch
 endfunc
 
 
