@@ -87,7 +87,6 @@ function! s:color_item(text, pos, width, y) abort
 		let iw = strlen(s:icon_separator)
 		exec s:high_region('Operator', y, pos, y, pos + iw, 1)
 		let pos += iw + 1
-		" echom "fuck: " . s:icon_separator
 	endif
 	let mark = a:text[pos - 1]
 	if mark != '+'
