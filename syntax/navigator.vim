@@ -50,20 +50,54 @@ function! s:color_buffer()
 endfunc
 
 
+
+"----------------------------------------------------------------------
+" highlight region
+"----------------------------------------------------------------------
+function! s:high_region(name, srow, scol, erow, ecol, virtual)
+	let sep = (a:virtual == 0)? 'c' : 'v'
+	let cmd = 'syn region ' . a:name . ' '
+	let cmd .= ' start=/\%' . a:srow . 'l\%' . a:scol . sep . '/'
+	let cmd .= ' end=/\%' . a:erow . 'l\%' . a:ecol . sep . '/'
+	return cmd
+endfunc
+
+
 "----------------------------------------------------------------------
 " color item
 "----------------------------------------------------------------------
 function! s:color_item(text, pos, width, y) abort
 	let part = strpart(a:text, a:pos, a:width)
 	let head = strpart(part, 0, 3)
-	" echom printf("%2d,%2d,%2d: %s", a:y, a:pos, a:width, part)
+	let pos = a:pos + 1
+	let endup = pos + a:width
+	let y = a:y + 1
+	if head[0] == '[' && head[2] == ']'
+		exec s:high_region('Operator', y, pos + 0, y, pos + 1, 0)
+		exec s:high_region('Keyword', y, pos + 1, y, pos + 2, 0)
+		exec s:high_region('Operator', y, pos + 2, y, pos + 3, 0)
+	else
+		exec s:high_region('Keyword', y, pos + 0, y, pos + 3, 0)
+	endif
+	let pos += 4
+	if s:icon_separator != ''
+		let iw = strlen(s:icon_separator)
+		exec s:high_region('String', y, pos, y, pos + iw, 1)
+		let pos += iw + 1
+	endif
+	let mark = a:text[pos - 1]
+	if mark != '+'
+		exec s:high_region('Function', y, pos, y, endup, 0)
+	else
+		exec s:high_region('Number', y, pos, y, endup, 0)
+	endif
 endfunc
 
 syn clear
 
 call s:color_buffer()
 
-echo s:position
-echo s:icon_separator
+" echo s:position
+" echo s:icon_separator
 
 
