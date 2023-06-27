@@ -37,7 +37,7 @@ endfor
 function! s:color_buffer()
 	for y in range(len(s:content))
 		let text = s:content[y]
-		if text =~ '^\s*$'
+		if text =~ '^\s\+$'
 			continue
 		endif
 		" unsilent echom 'y: '. y
@@ -68,18 +68,21 @@ endfunc
 "----------------------------------------------------------------------
 function! s:color_item(text, pos, width, y) abort
 	let part = strpart(a:text, a:pos, a:width)
-	let head = strpart(part, 0, 3)
-	let pos = a:pos + 1
-	let endup = pos + a:width
+	let head = matchstr(part, '^\s*\w\+')
+	let skip = strlen(matchstr(head, '^\s*'))
+	let head = strpart(head, skip)
+	let size = strlen(head)
 	let y = a:y + 1
-	if head[0] == '[' && head[2] == ']'
+	let pos = a:pos + skip + 1
+	let endup = a:pos + a:width + 1
+	if head[0] == '[' && head[size - 1] == ']'
 		exec s:high_region('Operator', y, pos + 0, y, pos + 1, 0)
-		exec s:high_region('Keyword', y, pos + 1, y, pos + 2, 0)
-		exec s:high_region('Operator', y, pos + 2, y, pos + 3, 0)
+		exec s:high_region('Keyword', y, pos + 1, y, pos + 1 + size, 0)
+		exec s:high_region('Operator', y, pos + 1 + size, y, pos + 2 + size, 0)
 	else
-		exec s:high_region('Keyword', y, pos + 0, y, pos + 3, 0)
+		exec s:high_region('Keyword', y, pos + 0, y, pos + size, 0)
 	endif
-	let pos += 4
+	let pos += size + 1
 	if s:icon_separator != ''
 		let iw = strlen(s:icon_separator)
 		exec s:high_region('String', y, pos, y, pos + iw, 1)
@@ -97,7 +100,7 @@ syn clear
 
 call s:color_buffer()
 
-" echo s:position
+echo s:position
 " echo s:icon_separator
 
 

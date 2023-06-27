@@ -137,6 +137,7 @@ function! navigator#state#select(keymap, path) abort
 	while 1
 		let context.page = ctx.pages[pg_index]
 		let context.index = pg_index
+		call navigator#config#store('context', context)
 		if s:vertical == 0
 			call navigator#display#resize(-1, ctx.pg_height)
 		endif
