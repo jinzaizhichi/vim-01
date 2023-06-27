@@ -36,6 +36,12 @@ let s:translate = {
 			\ "\<c-k>" : "\<up>",
 			\ "\<PageUp>" : "\<up>",
 			\ "\<PageDown>" : "\<down>",
+			\ "\<left>" : "\<left>",
+			\ "\<right>" : "\<right>",
+			\ "\<up>" : "\<up>",
+			\ "\<down>" : "\<down>",
+			\ "\<c-h>" : "\<left>",
+			\ "\<c-l>" : "\<right>",
 			\ }
 
 
@@ -85,7 +91,7 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" 
+" translate path elements from key to label
 "----------------------------------------------------------------------
 function! s:translate_path(path)
 	let path = []
@@ -102,7 +108,7 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" select: return selected key, '' for no select, "\<esc>" for quit
+" select: return key array
 "----------------------------------------------------------------------
 function! starter#state#select(keymap, path) abort
 	let keymap = a:keymap
@@ -121,15 +127,17 @@ function! starter#state#select(keymap, path) abort
 	if s:vertical == 0
 		call starter#display#resize(-1, ctx.pg_height)
 	endif
-	let s:map = {}
+	let map = {}
 	for key in ctx.keys
 		let item = ctx.items[key]
 		let code = item.code
-		let s:map[code] = key
+		let map[code] = key
 	endfor
-	let s:prefix = '<space>'
 	let path = s:translate_path(a:path)
 	while 1
+		if s:vertical == 0
+			call starter#display#resize(-1, ctx.pg_height)
+		endif
 		call starter#display#update(ctx.pages[pg_index].content, path)
 		noautocmd redraw
 		try
@@ -149,11 +157,23 @@ function! starter#state#select(keymap, path) abort
 			elseif newch == "\<up>"
 				let pg_index -= 1
 				let pg_index = (pg_index < 0)? (pg_index - 1) : pg_index
+			elseif newch == "\<left>"
+				return []
 			endif
-		elseif has_key(s:map, ch)
-			let key = s:map[ch]
+		elseif has_key(map, ch)
+			let key = map[ch]
 			let item = ctx.items[key]
-			return key
+			if item.child == 0
+				return [key]
+			endif
+			let keymap = a:keymap[key]
+			let hr = starter#state#select(keymap, path + [key])
+			if hr != []
+				return [key] + hr
+			endif
+			if s:exit != 0
+				return []
+			endif
 		endif
 	endwhile
 endfunc
@@ -162,11 +182,9 @@ endfunc
 "----------------------------------------------------------------------
 " open keymap
 "----------------------------------------------------------------------
-function! starter#state#open() abort
-	let path = []
-	while 1
-		" let keymap = 
-	endwhile
+function! starter#state#open(keymap, opts) abort
+	let opts = deepcopy(a:opts)
+	let keymap = a:keymap
 endfunc
 
 
