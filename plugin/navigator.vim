@@ -21,7 +21,7 @@ function! s:Navigator(prefix)
 	endif
 	let t = get(g:, 'navigator', {})
 	call navigator#cmd(t, a:prefix)
-	echom "> prefix: " . a:prefix
+	" echom "> prefix: " . a:prefix
 	return 0
 endfunc
 
