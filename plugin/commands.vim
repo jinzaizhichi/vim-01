@@ -278,11 +278,15 @@ command! -nargs=1 -complete=customlist,module#extension#help_complete
 "----------------------------------------------------------------------
 command! -nargs=1 OpenShell call s:OpenShell(<f-args>)
 function! s:OpenShell(what)
+	let what = a:what
 	let root = expand('%:p:h')
+	if what == 'cmdclink' || what == 'clinkcmd'
+		let what = filereadable('c:/drivers/clink/clink.cmd')? 'clink' : 'cmd'
+	endif
 	call asclib#path#push(root)
-	if a:what == 'cmd'
+	if what == 'cmd'
 		exec "silent !start cmd.exe"
-	elseif a:what == 'clink'
+	elseif what == 'clink'
 		let cmd = 'silent AsyncRun -mode=term -pos=hide -cwd=$(VIM_FILEDIR) '
 		let cmd .= " C:\\drivers\\clink\\clink.cmd"
 		exec cmd

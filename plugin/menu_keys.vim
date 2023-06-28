@@ -134,7 +134,8 @@ let g:navigator.h = {
 "----------------------------------------------------------------------
 if has('win32') || has('win64')
 	" let g:navigator.m
-	" let g:navigator[';'] = []
+	let g:navigator[';'] = [':OpenShell cmdclink', 'open-cmd-here']
+	let g:navigator[','] = [':OpenShell explorer', 'open-explorer-here']
 endif
 
 
