@@ -106,7 +106,7 @@ endfunc
 " buffer local object
 "----------------------------------------------------------------------
 function! asclib#buffer#object(bid)
-	let name = '__asclib_local__'
+	let name = '__asclib__'
 	let bid = (a:bid > 0)? a:bid : (bufnr())
 	if bufexists(bid) == 0
 		return v:null

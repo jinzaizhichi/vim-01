@@ -553,31 +553,20 @@ endfunc
 "----------------------------------------------------------------------
 " instance
 "----------------------------------------------------------------------
-function! asclib#core#instance(mode)
-	if a:mode == 0
-		if exists('g:__asclib_inst__')
-			return g:__asclib_inst__
+function! asclib#core#instance(local)
+	let local = a:local
+	if local != 0
+		if exists('t:__asclib__')
+			return t:__asclib__
 		endif
-		let g:__asclib_inst__ = {}
-		return g:__asclib_inst__
-	elseif a:mode == 1
-		if exists('b:__asclib_inst__')
-			return b:__asclib_inst__
-		endif
-		let b:__asclib_inst__ = {}
-		return b:__asclib_inst__
-	elseif a:mode == 2
-		if exists('w:__asclib_inst__')
-			return w:__asclib_inst__
-		endif
-		let w:__asclib_inst__ = {}
-		return w:__asclib_inst__
+		let t:__asclib__ = {}
+		return t:__asclib__
 	else
-		if exists('t:__asclib_inst__')
-			return t:__asclib_inst__
+		if exists('g:__asclib__')
+			return g:__asclib__
 		endif
-		let t:__asclib_inst__ = {}
-		return t:__asclib_inst__
+		let g:__asclib__ = {}
+		return g:__asclib__
 	endif
 endfunc
 
