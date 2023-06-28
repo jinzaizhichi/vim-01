@@ -89,6 +89,8 @@ function! menu#WinOpen(what)
 	exec cd . root
 	if a:what == 'cmd'
 		exec "silent !start cmd.exe"
+	elseif a:what == 'clink'
+
 	else
 		exec "silent !start /b cmd.exe /C start ."
 	endif

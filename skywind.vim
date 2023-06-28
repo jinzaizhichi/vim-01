@@ -122,7 +122,7 @@ if has('win32') || has('win16') || has('win64') || has('win95')
 	noremap <silent><space>hm :FileSwitch -ft=markdown $VIM_ONEDRIVE/quicknote.md<cr>
 	noremap <silent><space>hp :FileSwitch $VIM_ONEDRIVE/personal.gpg<cr>
 	if filereadable('c:/drivers/clink/clink.cmd')
-		noremap <silent><space>gl :silent !start /b cmd /C c:\drivers\Clink\clink.cmd<cr>
+		noremap <silent><space>gl :silent AsyncRun -mode=term -pos=hide -cwd=$(VIM_FILEDIR) c:\drivers\Clink\clink.cmd<cr>
 	endif
 elseif isdirectory('/mnt/c/Users/Linwei/OneDrive/Documents/notes/Vim') 
 	let $VIM_ONEDRIVE = '/mnt/c/Users/Linwei/OneDrive/Documents/notes/Vim'

@@ -66,9 +66,9 @@ function! svnhelp#git_name(target, revision)
 	let filedir = fnamemodify(filename, ':h')
 	let cmd = 'ls-tree --full-name --name-only '.a:revision
 	let cmd.= ' '.shellescape(filename)
-	call asclib#path#push_dir(filedir)
+	call asclib#path#push(filedir)
 	let hr = svnhelp#git(cmd)
-	call asclib#path#pop_dir()
+	call asclib#path#pop()
 	if s:shell_error
 		return ''
 	endif
@@ -86,9 +86,9 @@ function! svnhelp#git_cat(target, revision)
 	let cmd.= ' > '. shellescape(tmp)
 	let filename = fnamemodify(expand(a:target), ':p')
 	let filedir = fnamemodify(filename, ':h')
-	call asclib#path#push_dir(filedir)
+	call asclib#path#push(filedir)
 	call svnhelp#git(cmd)
-	call asclib#path#pop_dir()
+	call asclib#path#pop()
 	if s:shell_error == 0
 		return tmp
 	endif
@@ -287,9 +287,9 @@ function! svnhelp#tinfo() abort
 	if root == ''
 		return info
 	endif
-	call asclib#path#push_dir(root)
+	call asclib#path#push(root)
 	let info.filerel = expand('%')
-	call asclib#path#pop_dir()
+	call asclib#path#pop()
 	let info.filerel = substitute(info.filerel, '\\', '/', 'g')
 	if isdirectory(asclib#path#join(root, '.svn'))
 		let info.mode = 1

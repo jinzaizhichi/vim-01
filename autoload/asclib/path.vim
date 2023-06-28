@@ -438,7 +438,7 @@ endfunc
 "----------------------------------------------------------------------
 " push current dir in stack and switch dir to path
 "----------------------------------------------------------------------
-function! asclib#path#push_dir(path)
+function! asclib#path#push(path)
 	if !exists('s:dir_stack')
 		let s:dir_stack = []
 	endif
@@ -452,7 +452,7 @@ endfunc
 "----------------------------------------------------------------------
 " pop current dir in stack
 "----------------------------------------------------------------------
-function! asclib#path#pop_dir()
+function! asclib#path#pop()
 	if !exists('s:dir_stack')
 		let s:dir_stack = []
 	endif

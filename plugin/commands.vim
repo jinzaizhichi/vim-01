@@ -273,3 +273,23 @@ command! -nargs=1 -complete=customlist,module#extension#help_complete
 			\ Help call module#extension#help(<f-args>)
 
 
+"----------------------------------------------------------------------
+" open shell
+"----------------------------------------------------------------------
+command! -nargs=1 OpenShell call s:OpenShell(<f-args>)
+function! s:OpenShell(what)
+	let root = expand('%:p:h')
+	call asclib#path#push(root)
+	if a:what == 'cmd'
+		exec "silent !start cmd.exe"
+	elseif a:what == 'clink'
+		let cmd = 'silent AsyncRun -mode=term -pos=hide -cwd=$(VIM_FILEDIR) '
+		let cmd .= " C:\\drivers\\clink\\clink.cmd"
+		exec cmd
+	else
+		exec "silent !start /b cmd.exe /C start ."
+	endif
+	call asclib#path#pop()
+endfunc
+
+
