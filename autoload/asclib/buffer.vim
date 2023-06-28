@@ -140,4 +140,40 @@ function! asclib#buffer#list(...)
 endfunc
 
 
+"----------------------------------------------------------------------
+" check if contains variable
+"----------------------------------------------------------------------
+function! asclib#buffer#contains(bid, varname)
+	let obj = asclib#buffer#object(a:bid)
+	if type(obj) == type(v:null)
+		return 0
+	endif
+	return has_key(obj, a:varname)
+endfunc
+
+
+"----------------------------------------------------------------------
+" setbufvar
+"----------------------------------------------------------------------
+function! asclib#buffer#setvar(bid, varname, value)
+	let obj = asclib#buffer#object(a:bid)
+	if type(obj) == 4
+		let obj[a:varname] = a:value
+	endif
+endfunc
+
+
+"----------------------------------------------------------------------
+" getbufvar
+"----------------------------------------------------------------------
+function! asclib#buffer#getvar(bid, varname, default)
+	let obj = asclib#buffer#object(a:bid)
+	if type(obj) == 4
+		return get(obj, a:varname, a:default)
+	endif
+	return a:default
+endfunc
+
+
+
 
