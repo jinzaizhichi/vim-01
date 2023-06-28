@@ -22,15 +22,24 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" help complete
+" list keys
 "----------------------------------------------------------------------
-function! module#extension#help_complete(ArgLead, CmdLine, CursorPos)
+function! module#extension#help_list()
 	let pattern = asclib#path#runtime('site/doc/*.txt')
 	let keys = []
 	for name in split(asclib#path#glob(pattern), "\n")
 		let nm = fnamemodify(name, ':t:r')
 		let keys += [nm]
 	endfor
+	return keys
+endfunc
+
+
+"----------------------------------------------------------------------
+" help complete
+"----------------------------------------------------------------------
+function! module#extension#help_complete(ArgLead, CmdLine, CursorPos)
+	let keys = module#extension#help_list()
 	return asclib#common#complete(a:ArgLead, a:CmdLine, a:CursorPos, keys)
 endfunc
 
