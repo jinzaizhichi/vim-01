@@ -18,7 +18,7 @@ let s:default_config = {
 			\ 'icon_breadcrumb': '>',
 			\ 'max_height': 20,
 			\ 'min_height': 5,
-			\ 'max_width': 60,
+			\ 'max_width': 45,
 			\ 'min_width': 20,
 			\ 'bracket': 0,
 			\ 'padding': [2, 0, 2, 0],
