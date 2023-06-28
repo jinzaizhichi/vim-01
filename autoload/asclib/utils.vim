@@ -387,3 +387,44 @@ function! asclib#utils#git_browse(name, ...)
 endfunc
 
 
+"----------------------------------------------------------------------
+" display help
+"----------------------------------------------------------------------
+function! asclib#utils#display(filename, mods) abort
+	if !filereadable(a:filename)
+		call asclib#common#errmsg("E484: Can't open file " .. a:filename)
+		return -1
+	endif
+	if a:mods == 'tab'
+		exec 'tab split'
+	elseif asclib#buffer#getvar(0, 'is_help', 0) == 0
+		let avail = -1
+		for i in range(winnr('$'))
+			let bid = winbufnr(i + 1)
+			if asclib#buffer#getvar(bid, 'is_help', 0) != 0
+				let avail = i + 1
+				break
+			endif
+		endfor
+		if avail > 0
+			exec avail .. 'wincmd w'
+		elseif a:mods == 'auto'
+			if winwidth(0) >= 160
+				exec 'vsplit'
+			else
+				exec 'split'
+			endif
+		else
+			exec a:mods .. ' split'
+		endif
+	endif
+	exec 'edit ' .. fnameescape(a:filename)
+	setl bt=help readonly nomodifiable nobuflisted noswapfile bufhidden=hide
+	setl nonumber norelativenumber signcolumn=no
+	setl fdc=0 nofen nocursorline nocursorcolumn 
+	call asclib#buffer#setvar(0, 'is_help', 1)
+	return 0
+endfunc
+
+
+
