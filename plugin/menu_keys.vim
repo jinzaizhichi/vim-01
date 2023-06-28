@@ -121,6 +121,7 @@ let g:navigator.p = {
 "----------------------------------------------------------------------
 let g:navigator.h = {
 			\ 'name': '+help',
+			\ 'b' : [':Help bash', 'bash-cheatsheet'],
 			\ 'v' : [':Help vim', 'vim-cheatsheet'],
 			\ 'g' : [':Help gdb', 'gdb-cheatsheet'],
 			\ 'G' : [':Help git', 'git-cheatsheet'],
