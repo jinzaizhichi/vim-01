@@ -133,12 +133,12 @@ let g:navigator.h = {
 " windows
 "----------------------------------------------------------------------
 if has('win32') || has('win64')
-	" let g:navigator.m
 	let g:navigator[','] = [':OpenShell cmdclink', 'open-cmd-here']
 	let g:navigator['-'] = [':OpenShell explorer', 'open-explorer-here']
 endif
 
 let g:navigator[';'] = ['bufferhint#Popup()', 'open-buffer-hint']
+let g:navigator.m = ['feedkeys("\<Plug>(easymotion-bd-w)")', 'easy-motion-bd-w']
 
 
 "----------------------------------------------------------------------

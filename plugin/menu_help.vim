@@ -149,5 +149,7 @@ function! MenuHelp_EasyMotion(what)
 	endif
 endfunc
 
-
+function! MenuHelp_FeedPlug(text)
+	call feedkeys("\<plug>" . a:text)
+endfunc
 
