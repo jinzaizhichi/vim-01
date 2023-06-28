@@ -266,3 +266,10 @@ function! s:SudoWrite(bang) abort
 endfunc
 
 
+"----------------------------------------------------------------------
+" Help
+"----------------------------------------------------------------------
+command! -nargs=1 -complete=customlist,module#extension#help_complete
+			\ Help call module#extension#help(<f-args>)
+
+

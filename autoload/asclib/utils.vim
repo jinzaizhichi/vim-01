@@ -419,7 +419,7 @@ function! asclib#utils#display(filename, mods) abort
 		endif
 	endif
 	exec 'edit ' .. fnameescape(a:filename)
-	setl bt=help readonly nomodifiable nobuflisted noswapfile bufhidden=hide
+	setl bt=help readonly nomodifiable nobuflisted noswapfile
 	setl nonumber norelativenumber signcolumn=no
 	setl fdc=0 nofen nocursorline nocursorcolumn 
 	call asclib#buffer#setvar(0, 'is_help', 1)
