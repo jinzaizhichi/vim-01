@@ -123,8 +123,9 @@ endfunc
 "----------------------------------------------------------------------
 " list buffer bid
 "----------------------------------------------------------------------
-function! asclib#buffer#list()
+function! asclib#buffer#list(...)
 	let l:ls_cli = get(g:, 'asclib#buffer#list_cli', 'ls t')
+	let l:ls_cli = (a:0 > 0)? (a:1) : (l:ls_cli)
 	redir => buflist
 	silent execute l:ls_cli
 	redir END
