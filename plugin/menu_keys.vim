@@ -82,6 +82,23 @@ let g:navigator.t = {
 
 
 "----------------------------------------------------------------------
+" search
+"----------------------------------------------------------------------
+let g:navigator.s = {
+			\ 'name': '+search',
+			\ 's': [':VimScope s', 'gscope-find-symbol'],
+			\ 'g': [':VimScope g', 'gscope-find-definition'],
+			\ 'c': [':VimScope c', 'gscope-find-calling'],
+			\ 'd': [':VimScope d', 'gscope-find-called'],
+			\ 'e': [':VimScope e', 'gscope-find-pattern'],
+			\ 't': [':VimScope t', 'gscope-find-text'],
+			\ 'a': [':VimScope a', 'gscope-find-assigned'],
+			\ 'f': [':VimScope f', 'gscope-find-file'],
+			\ 'i': [':VimScope i', 'gscope-find-include'],
+			\ }
+
+
+"----------------------------------------------------------------------
 " trigger
 "----------------------------------------------------------------------
 noremap <silent><tab><tab> :call navigator#cmd(g:navigator, '<tab><tab>')<cr>
