@@ -34,6 +34,97 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" returns nearest parent directory contains one of the markers
+"----------------------------------------------------------------------
+function! asclib#utils#search_parent(name, markers, strict)
+	let name = fnamemodify((a:name != '')? a:name : bufname('%'), ':p')
+	let finding = ''
+	" iterate all markers
+	for marker in a:markers
+		if marker != ''
+			" search as a file
+			let x = findfile(marker, name . '/;')
+			let x = (x == '')? '' : fnamemodify(x, ':p:h')
+			" search as a directory
+			let y = finddir(marker, name . '/;')
+			let y = (y == '')? '' : fnamemodify(y, ':p:h:h')
+			" which one is the nearest directory ?
+			let z = (strchars(x) > strchars(y))? x : y
+			" keep the nearest one in finding
+			let finding = (strchars(z) > strchars(finding))? z : finding
+		endif
+	endfor
+	if finding == ''
+		let path = (a:strict == 0)? fnamemodify(name, ':h') : ''
+	else
+		let path = fnamemodify(finding, ':p')
+	endif
+	if has('win32') || has('win16') || has('win64') || has('win95')
+		let path = substitute(path, '\/', '\', 'g')
+	endif
+	if path =~ '[\/\\]$'
+		let path = fnamemodify(path, ':h')
+	endif
+	return path
+endfunc
+
+
+"----------------------------------------------------------------------
+" switch file
+"----------------------------------------------------------------------
+function! asclib#utils#file_switch(args)
+	let filename = ''
+	let opts = {}
+	let cmds = []
+	for p in a:args
+		let p = asclib#string#strip(p)
+		if strpart(p, 0, 1) == '-'
+			let text = strpart(p, 1)
+			let [opt, sep, val] = asclib#string#partition(text, '=')
+			let opt = asclib#string#strip(opt)
+			let opts[opt] = asclib#string#strip(val)
+		elseif strpart(p, 0, 1) == '+'
+			let cmds += [strpart(p, 1)]
+		else
+			let filename = p
+		endif
+	endfor
+	if filename == ''
+		call asclib#core#errmsg('require file name')
+		return 0
+	endif
+	if !empty(cmds)
+		let opts.command = cmds
+	endif
+	call asclib#core#switch(expand(filename), opts)
+endfunc
+
+
+"----------------------------------------------------------------------
+" returns shebang
+"----------------------------------------------------------------------
+function! asclib#utils#script_shebang(script)
+	let script = a:script
+	if !filereadable(script)
+		return ''
+	endif
+	let textlist = readfile(script, '', 20)
+	let shebang = ''
+	for text in textlist
+		let text = asclib#string#strip(text)
+		if text =~ '^#'
+			let text = asclib#string#strip(strpart(text, 1))
+			if text =~ '^!'
+				let shebang = asclib#string#strip(strpart(text, 1))
+				break
+			endif
+		endif
+	endfor
+	return shebang
+endfunc
+
+
+"----------------------------------------------------------------------
 " call terminal.py
 "----------------------------------------------------------------------
 function! asclib#utils#terminal(mode, cmd, wait, ...) abort
@@ -119,87 +210,6 @@ function! asclib#utils#emacs_gdb(exename)
 		let gdb = asclib#setting#get('gdb', 'gdb')
 		call asclib#utils#shell_invoke(2, '-E', emacs, gdb, a:exename)
 	endif
-endfunc
-
-
-"----------------------------------------------------------------------
-" list script
-"----------------------------------------------------------------------
-function! s:list_script()
-	let path = get(g:, 'vimmake_path', expand('~/.vim/script'))
-	let names = []
-	if s:windows
-		for name in split(glob(asclib#path#join(path, '*.cmd')), '\n')
-			let item = {}
-			let item.name = fnamemodify(name, ':t')
-			let item.path = name
-			let item.cmd = 'call '. shellescape(name)
-			if item.name =~ '^vimmake\.'
-				continue
-			endif
-			let names += [item]
-		endfor
-		for name in split(glob(asclib#path#join(path, '*.bat')), '\n')
-			let item = {}
-			let item.name = fnamemodify(name, ':t')
-			let item.path = name
-			let item.cmd = 'call '. shellescape(name)
-			let names += [item]
-		endfor
-	else
-		for name in split(glob(asclib#path#join(path, '*.sh')), '\n')
-			let item = {}
-			let item.name = fnamemodify(name, ':t')
-			let item.path = name
-			let item.cmd = 'bash ' . shellescape(name)
-			let names += [item]
-		endfor
-	endif
-
-	for name in split(glob(asclib#path#join(path, '*.py')), '\n')
-		let item = {}
-		let item.name = fnamemodify(name, ':t')
-		let item.path = name
-		let item.cmd = 'python ' . shellescape(name)
-		let names += [item]
-	endfor
-
-	for name in split(glob(asclib#path#join(path, '*.rb')), '\n')
-		let item = {}
-		let item.name = fnamemodify(name, ':t')
-		let item.path = name
-		let item.cmd = 'ruby ' . shellescape(name)
-		let names += [item]
-	endfor
-
-	for name in split(glob(asclib#path#join(path, '*.pl')), '\n')
-		let item = {}
-		let item.name = fnamemodify(name, ':t')
-		let item.path = name
-		let item.cmd = 'perl ' . shellescape(name)
-		let names += [item]
-	endfor
-
-	return names
-endfunc
-
-
-function! asclib#utils#script_menu()
-	if &bt == 'nofile' && &ft == 'quickmenu'
-		call quickmenu#toggle(0)
-		return
-	endif
-	call quickmenu#current('script')
-	call quickmenu#reset()
-
-	call quickmenu#append('# Scripts', '')
-	
-	for item in s:list_script()
-		let cmd = 'AsyncRun -raw ' . item.cmd
-		call quickmenu#append(item.name, cmd, 'run ' . item.name)	
-	endfor
-
-	call quickmenu#toggle('script')
 endfunc
 
 
@@ -375,98 +385,5 @@ function! asclib#utils#git_browse(name, ...)
 	endif
 	return ''
 endfunc
-
-
-"----------------------------------------------------------------------
-" switch file
-"----------------------------------------------------------------------
-function! asclib#utils#file_switch(args)
-	let filename = ''
-	let opts = {}
-	let cmds = []
-	for p in a:args
-		let p = asclib#string#strip(p)
-		if strpart(p, 0, 1) == '-'
-			let text = strpart(p, 1)
-			let [opt, sep, val] = asclib#string#partition(text, '=')
-			let opt = asclib#string#strip(opt)
-			let opts[opt] = asclib#string#strip(val)
-		elseif strpart(p, 0, 1) == '+'
-			let cmds += [strpart(p, 1)]
-		else
-			let filename = p
-		endif
-	endfor
-	if filename == ''
-		call asclib#core#errmsg('require file name')
-		return 0
-	endif
-	if !empty(cmds)
-		let opts.command = cmds
-	endif
-	call asclib#core#switch(expand(filename), opts)
-endfunc
-
-
-
-"----------------------------------------------------------------------
-" returns shebang
-"----------------------------------------------------------------------
-function! asclib#utils#script_shebang(script)
-	let script = a:script
-	if !filereadable(script)
-		return ''
-	endif
-	let textlist = readfile(script, '', 20)
-	let shebang = ''
-	for text in textlist
-		let text = asclib#string#strip(text)
-		if text =~ '^#'
-			let text = asclib#string#strip(strpart(text, 1))
-			if text =~ '^!'
-				let shebang = asclib#string#strip(strpart(text, 1))
-				break
-			endif
-		endif
-	endfor
-	return shebang
-endfunc
-
-
-"----------------------------------------------------------------------
-" returns nearest parent directory contains one of the markers
-"----------------------------------------------------------------------
-function! asclib#utils#search_parent(name, markers, strict)
-	let name = fnamemodify((a:name != '')? a:name : bufname('%'), ':p')
-	let finding = ''
-	" iterate all markers
-	for marker in a:markers
-		if marker != ''
-			" search as a file
-			let x = findfile(marker, name . '/;')
-			let x = (x == '')? '' : fnamemodify(x, ':p:h')
-			" search as a directory
-			let y = finddir(marker, name . '/;')
-			let y = (y == '')? '' : fnamemodify(y, ':p:h:h')
-			" which one is the nearest directory ?
-			let z = (strchars(x) > strchars(y))? x : y
-			" keep the nearest one in finding
-			let finding = (strchars(z) > strchars(finding))? z : finding
-		endif
-	endfor
-	if finding == ''
-		let path = (a:strict == 0)? fnamemodify(name, ':h') : ''
-	else
-		let path = fnamemodify(finding, ':p')
-	endif
-	if has('win32') || has('win16') || has('win64') || has('win95')
-		let path = substitute(path, '\/', '\', 'g')
-	endif
-	if path =~ '[\/\\]$'
-		let path = fnamemodify(path, ':h')
-	endif
-	return path
-endfunc
-
 
 
