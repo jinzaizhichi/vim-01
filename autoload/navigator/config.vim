@@ -36,7 +36,7 @@ let s:position_dict = {
 			\ 'leftabove': 0, 'aboveleft': 0, 'lefta': 0, 'abo': 0,
 			\ 'rightbelow': 1, 'belowright': 1, 'rightb': 1, 'bel': 1,
 			\ 'topleft': 2, 'to': 2,
-			\ 'botright': 3, 'bo': 3,
+			\ 'botright': 3, 'bo': 3, 'bottom': 3, 'rightbot': 3,
 			\ }
 
 
