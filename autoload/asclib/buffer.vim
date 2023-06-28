@@ -103,21 +103,39 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" buffer local object
+"----------------------------------------------------------------------
+function! asclib#buffer#object(bid)
+	let name = '__asclib_local__'
+	let bid = (a:bid > 0)? a:bid : (bufnr())
+	if bufexists(bid) == 0
+		return v:null
+	endif
+	let obj = getbufvar(bid, name)
+	if type(obj) != v:t_dict
+		call setbufvar(bid, name, {})
+		let obj = getbufvar(bid, name)
+	endif
+	return obj
+endfunc
+
+
+"----------------------------------------------------------------------
 " list buffer bid
 "----------------------------------------------------------------------
 function! asclib#buffer#list()
-    let l:ls_cli = get(g:, 'asclib#buffer#list_cli', 'ls t')
-    redir => buflist
-    silent execute l:ls_cli
-    redir END
-    let bids = []
-    for curline in split(buflist, '\n')
-        if curline =~ '^\s*\d\+'
-            let bid = str2nr(matchstr(curline, '^\s*\zs\d\+'))
-            let bids += [bid]
-        endif
-    endfor
-    return bids
+	let l:ls_cli = get(g:, 'asclib#buffer#list_cli', 'ls t')
+	redir => buflist
+	silent execute l:ls_cli
+	redir END
+	let bids = []
+	for curline in split(buflist, '\n')
+		if curline =~ '^\s*\d\+'
+			let bid = str2nr(matchstr(curline, '^\s*\zs\d\+'))
+			let bids += [bid]
+		endif
+	endfor
+	return bids
 endfunc
 
 

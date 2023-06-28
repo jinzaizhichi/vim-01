@@ -551,6 +551,56 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" instance
+"----------------------------------------------------------------------
+function! asclib#core#instance(mode)
+	if a:mode == 0
+		if exists('g:__asclib_inst__')
+			return g:__asclib_inst__
+		endif
+		let g:__asclib_inst__ = {}
+		return g:__asclib_inst__
+	elseif a:mode == 1
+		if exists('b:__asclib_inst__')
+			return b:__asclib_inst__
+		endif
+		let b:__asclib_inst__ = {}
+		return b:__asclib_inst__
+	elseif a:mode == 2
+		if exists('w:__asclib_inst__')
+			return w:__asclib_inst__
+		endif
+		let w:__asclib_inst__ = {}
+		return w:__asclib_inst__
+	else
+		if exists('t:__asclib_inst__')
+			return t:__asclib_inst__
+		endif
+		let t:__asclib_inst__ = {}
+		return t:__asclib_inst__
+	endif
+endfunc
+
+
+"----------------------------------------------------------------------
+" buffer local object
+"----------------------------------------------------------------------
+function! asclib#core#object(bid)
+	let name = '__asclib__'
+	let bid = (a:bid > 0)? a:bid : (bufnr())
+	if bufexists(bid) == 0
+		return v:null
+	endif
+	let obj = getbufvar(bid, name)
+	if type(obj) != v:t_dict
+		call setbufvar(bid, name, {})
+		let obj = getbufvar(bid, name)
+	endif
+	return obj
+endfunc
+
+
+"----------------------------------------------------------------------
 " switch buffer
 "----------------------------------------------------------------------
 function! asclib#core#switch(filename, opts)
