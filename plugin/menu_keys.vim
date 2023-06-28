@@ -138,6 +138,8 @@ if has('win32') || has('win64')
 	let g:navigator[','] = [':OpenShell explorer', 'open-explorer-here']
 endif
 
+let g:navigator['-'] = ['bufferhint#Popup()', 'open-buffer-hint']
+
 
 "----------------------------------------------------------------------
 " trigger
