@@ -42,7 +42,7 @@ function! navigator#open(keymap, prefix, ...) abort
 		endif
 	endfor
 	let keymap = navigator#config#keymap_expand(a:keymap)
-	let opts.prefix = a:prefix
+	" let opts.prefix = a:prefix
 	return navigator#state#open(keymap, opts)
 endfunc
 
