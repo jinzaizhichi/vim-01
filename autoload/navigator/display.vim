@@ -149,7 +149,7 @@ function! s:win_update(textline, status) abort
 		if s:working_wid > 0 && s:working_wid == winnr()
 			let m = ' => '
 			let t = join(a:status, m) . m
-			let t .= ' %=(C-j/k paging, BS return, ESC quit)'
+			let t .= ' %=(C-j/k: paging, BS: return, ESC: quit)'
 			let &l:statusline = 'Navigator: ' . t
 			setlocal ft=navigator
 		endif
