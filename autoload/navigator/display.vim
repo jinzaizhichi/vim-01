@@ -71,8 +71,10 @@ function! s:win_open() abort
 	endif
 	if vertical == 0
 		exec printf('%s %dsplit', position, min_height)
+		exec printf('resize %d', min_height)
 	else
 		exec printf('%s %dvsplit', position, min_width)
+		exec printf('vertical resize %d', min_width)
 	endif
 	if keep
 		call navigator#utils#restore_view()
