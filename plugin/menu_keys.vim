@@ -116,6 +116,7 @@ let g:navigator.p = {
 			\ 'c' : ['module#project#open("CMakeLists.txt")', 'edit-cmake-lists'],
 			\ 't' : ['module#project#open(".tasks")', 'edit-task-list'],
 			\ 'r' : ['module#project#open("README.md")', 'edit-readme-md'],
+			\ 'i' : ['module#project#open(".gitignore")', 'edit-git-ignore'],
 			\ }
 
 
