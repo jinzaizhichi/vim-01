@@ -113,6 +113,9 @@ let g:navigator.o = {
 "----------------------------------------------------------------------
 let g:navigator.p = {
 			\ 'name': '+project',
+			\ 'c' : ['module#project#open("CMakeLists.txt")', 'edit-cmake-lists'],
+			\ 't' : ['module#project#open(".tasks")', 'edit-task-list'],
+			\ 'r' : ['module#project#open("README.md")', 'edit-readme-md'],
 			\ }
 
 

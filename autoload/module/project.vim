@@ -32,7 +32,7 @@ endfunc
 "----------------------------------------------------------------------
 function! module#project#open(name) abort
 	let p = module#project#path(a:name)
-	call asclib#utils#file_switch(p)
+	call asclib#utils#file_switch(['-switch=useopen,auto', p])
 endfunc
 
 
