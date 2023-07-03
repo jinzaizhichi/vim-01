@@ -76,7 +76,12 @@ function! asclib#utils#file_switch(args)
 	let filename = ''
 	let opts = {}
 	let cmds = []
-	for p in a:args
+	if type(a:args) == type('')
+		let args = [a:args]
+	else
+		let args = a:args
+	endif
+	for p in args
 		let p = asclib#string#strip(p)
 		if strpart(p, 0, 1) == '-'
 			let text = strpart(p, 1)
