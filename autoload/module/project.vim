@@ -12,7 +12,7 @@
 " get path
 "----------------------------------------------------------------------
 function! module#project#path(path) abort
-	let r = asclib#path#get_root('')
+	let r = asclib#path#get_root('%')
 	let p = asclib#path#join(r, a:path)
 	return asclib#path#normalize(p)
 endfunc
