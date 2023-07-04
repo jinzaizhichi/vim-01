@@ -297,3 +297,9 @@ function! s:OpenShell(what)
 endfunc
 
 
+"----------------------------------------------------------------------
+" toggle Reading Mode
+"----------------------------------------------------------------------
+command! -nargs=0 ToggleReadingMode call module#extension#toggle_reading_mode()
+
+

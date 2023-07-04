@@ -44,3 +44,21 @@ function! module#extension#help_complete(ArgLead, CmdLine, CursorPos)
 endfunc
 
 
+"----------------------------------------------------------------------
+" read txt mode
+"----------------------------------------------------------------------
+function! module#extension#toggle_reading_mode()
+	if &l:wrap == 0
+		setlocal wrap
+		noremap <buffer>j gj
+		noremap <buffer>k gk
+		echo "reading mode enabled" 
+	else
+		setlocal nowrap
+		unmap <buffer>j
+		unmap <buffer>k
+		echo "reading mode disabled" 
+	endif
+endfunc
+
+
