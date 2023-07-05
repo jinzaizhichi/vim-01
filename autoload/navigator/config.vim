@@ -288,3 +288,24 @@ endfunc
 
 
 
+"----------------------------------------------------------------------
+" initialize opts
+"----------------------------------------------------------------------
+function! navigator#config#init(opts) abort
+	let opts = deepcopy(a:opts)
+	let opts.vertical = navigator#config#get(a:opts, 'vertical')
+	let opts.position = navigator#config#get(a:opts, 'position')
+	let opts.position = navigator#config#position(opts.position)
+	let opts.popup = navigator#config#get(a:opts, 'popup')
+	let opts.popup_position = navigator#config#get(a:opts, 'popup_position')
+	if opts.popup_position == '' || opts.popup_position == 'bottom'
+		let opts.popup_position = 'bottom'
+	else
+		let opts.popup_position = 'center'
+	endif
+	let w = navigator#config#get(opts, 'popup_width')
+	let h = navigator#config#get(opts, 'popup_height')
+	return opts
+endfunc
+
+
