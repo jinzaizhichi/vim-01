@@ -57,7 +57,7 @@ endfunc
 " init keymap and open window
 "----------------------------------------------------------------------
 function! navigator#state#init(opts) abort
-	let s:opts = deepcopy(a:opts)
+	let s:opts = navigator#config#init(a:opts)
 	let s:popup = get(g:, 'quickui_navigator_popup', 0)
 	let s:vertical = s:config('vertical')
 	let s:position = navigator#config#position(s:config('position'))

@@ -287,6 +287,22 @@ function! navigator#config#compile(keymap, opts) abort
 endfunc
 
 
+"----------------------------------------------------------------------
+" string to integer
+"----------------------------------------------------------------------
+function! navigator#config#atoi(text, maxvalue) abort
+	let t = a:text
+	if type(t) == 0
+		return t
+	elseif t =~ '%$'
+		let x = str2nr(t)
+		let y = (x * a:maxvalue) / 100
+		return (type(y) != 5)? y : float2nr(y)
+	else
+		return str2nr(t)
+	endif
+endfunc
+
 
 "----------------------------------------------------------------------
 " initialize opts
@@ -305,6 +321,8 @@ function! navigator#config#init(opts) abort
 	endif
 	let w = navigator#config#get(opts, 'popup_width')
 	let h = navigator#config#get(opts, 'popup_height')
+	let opts.popup_width = navigator#config#atoi(w, &columns)
+	let opts.popup_height = navigator#config#atoi(w, &lines)
 	return opts
 endfunc
 
