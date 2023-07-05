@@ -15,14 +15,14 @@ let g:navigator = {}
 "----------------------------------------------------------------------
 let g:navigator.b = {
 			\ 'name' : '+buffer' ,
-			\ '1' : ['b1'        , 'buffer 1']        ,
-			\ '2' : ['b2'        , 'buffer 2']        ,
-			\ 'd' : ['bd'        , 'delete-buffer']   ,
-			\ 'f' : ['bfirst'    , 'first-buffer']    ,
-			\ 'h' : ['Startify'  , 'home-buffer']     ,
-			\ 'l' : ['blast'     , 'last-buffer']     ,
-			\ 'n' : ['bnext'     , 'next-buffer']     ,
-			\ 'p' : ['bprevious' , 'previous-buffer'] ,
+			\ '1' : [':b1'        , 'buffer 1']        ,
+			\ '2' : [':b2'        , 'buffer 2']        ,
+			\ 'd' : [':bd'        , 'delete-buffer']   ,
+			\ 'f' : [':bfirst'    , 'first-buffer']    ,
+			\ 'h' : [':Startify'  , 'home-buffer']     ,
+			\ 'l' : [':blast'     , 'last-buffer']     ,
+			\ 'n' : [':bnext'     , 'next-buffer']     ,
+			\ 'p' : [':bprevious' , 'previous-buffer'] ,
 			\ '?' : [':Leaderf buffer'   , 'fzf-buffer']      ,
 			\ }
 

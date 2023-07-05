@@ -24,6 +24,11 @@ let s:bid = -1
 let s:previous_wid = -1
 let s:working_wid = -1
 
+let s:popup_main = {}
+let s:popup_foot = {}
+let s:popup_head = {}
+let s:popup_split = {}
+
 
 "----------------------------------------------------------------------
 " internal functions
@@ -60,10 +65,10 @@ endfunc
 "----------------------------------------------------------------------
 function! s:win_open() abort
 	let opts = s:opts
-	let vertical = navigator#config#get(opts, 'vertical')
-	let position = navigator#config#get(opts, 'position')
-	let min_height = navigator#config#get(opts, 'min_height')
-	let min_width = navigator#config#get(opts, 'min_width')
+	let vertical = s:config('vertical')
+	let position = s:config('position')
+	let min_height = s:config('min_height')
+	let min_width = s:config('min_width')
 	let s:previous_wid = winnr()
 	let keep = s:need_keep(vertical, position)
 	if keep
@@ -178,23 +183,45 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" 
+" popup: open
 "----------------------------------------------------------------------
 function! s:popup_open() abort
+	let vertical = s:config('vertical')
+	let position = s:config('position')
+	let min_height = s:config('min_height')
+	let min_width = s:config('min_width)
+	let opts = {}
+	if vertical == 0
+		let opts.x = 0
+		let opts.y = &lines - min_height - 2
+		let opts.w = &columns
+		let opts.h = min_height
+	else
+		let opts.x = &columns - min_width
+		let opts.y = 1
+		let opts.w = min_width
+		let opts.h = &lines - 2
+	endif
+	let s:popup_main = quickui#window#new()
+	call win.open([], opts)
 endfunc
 
 
 "----------------------------------------------------------------------
-" 
+" win: close
 "----------------------------------------------------------------------
 function! s:popup_close() abort
+	call win.close()
 endfunc
 
 
 "----------------------------------------------------------------------
-" 
+" resize
 "----------------------------------------------------------------------
 function! s:popup_resize(width, height)
+	if vertical == 0
+	else
+	endif
 endfunc
 
 
@@ -216,10 +243,8 @@ endfunc
 " initialize
 "----------------------------------------------------------------------
 function! navigator#display#init(opts) abort
-	let s:config_popup = get(g:, 'quickui_navigator_popup', 0)
-	let s:config_opts = a:opts
 	let s:opts = a:opts
-	let s:popup = get(g:, 'quickui_navigator_popup', 0)
+	let s:popup = s:config('popup')
 	let s:vertical = s:config('vertical')
 	let s:position = navigator#config#position(s:config('position'))
 	let s:screencx = &columns

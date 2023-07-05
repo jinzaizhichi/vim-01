@@ -23,6 +23,7 @@ let s:config_name = {
 			\ 'padding': [2, 0, 2, 0],
 			\ 'spacing': 3,
 			\ 'vertical': 0,
+			\ 'popup': 0,
 			\ 'position': 'botright',
 			\ 'splitmod': '',
 			\ }
