@@ -282,6 +282,7 @@ function! navigator#config#compile(keymap, opts) abort
 	let ctx.position = navigator#config#get(a:opts, 'position')
 	let ctx.position = navigator#config#position(ctx.position)
 	let ctx.popup = navigator#config#get(a:opts, 'popup')
+	let ctx.popup_position = navigator#config#get(a:opts, 'popup_position')
 	return ctx
 endfunc
 
