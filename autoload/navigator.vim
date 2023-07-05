@@ -60,9 +60,11 @@ function! navigator#cmd(keymap, prefix, ...) abort
 	if type(hr) == v:t_list
 		let cmd = (len(hr) > 0)? hr[0] : ''
 		try
-			if cmd =~ '^.\+(.*)$'
+			if cmd =~ '^[a-zA-Z0-9_#]\+(.*)$'
+				" echom "cmd1: " . cmd
 				exec 'call ' . cmd
 			else
+				" echom "cmd2: " . cmd
 				exec cmd
 			endif
 		catch

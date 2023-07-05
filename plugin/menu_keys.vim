@@ -86,15 +86,16 @@ let g:navigator.t = {
 "----------------------------------------------------------------------
 let g:navigator.s = {
 			\ 'name': '+search',
-			\ 's': [':VimScope s', 'gscope-find-symbol'],
-			\ 'g': [':VimScope g', 'gscope-find-definition'],
-			\ 'c': [':VimScope c', 'gscope-find-calling'],
-			\ 'd': [':VimScope d', 'gscope-find-called'],
-			\ 'e': [':VimScope e', 'gscope-find-pattern'],
-			\ 't': [':VimScope t', 'gscope-find-text'],
-			\ 'a': [':VimScope a', 'gscope-find-assigned'],
-			\ 'f': [':VimScope f', 'gscope-find-file'],
-			\ 'i': [':VimScope i', 'gscope-find-include'],
+			\ 's': [':call MenuHelp_Fscope("s")', 'gscope-find-symbol'],
+			\ 'g': [':call MenuHelp_Fscope("g")', 'gscope-find-definition'],
+			\ 'c': [':call MenuHelp_Fscope("c")', 'gscope-find-calling'],
+			\ 'd': [':call MenuHelp_Fscope("d")', 'gscope-find-called'],
+			\ 'e': [':call MenuHelp_Fscope("e")', 'gscope-find-pattern'],
+			\ 't': [':call MenuHelp_Fscope("t")', 'gscope-find-text'],
+			\ 'a': [':call MenuHelp_Fscope("a")', 'gscope-find-assigned'],
+			\ 'f': [':call MenuHelp_Fscope("f")', 'gscope-find-file'],
+			\ 'i': ['MenuHelp_Fscope("i")', 'gscope-find-include'],
+			\ 'z': ['MenuHelp_Fscope("z")', 'gscope-find-ctags'],
 			\ }
 
 
