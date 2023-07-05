@@ -189,8 +189,9 @@ function! s:popup_open() abort
 	let vertical = s:config('vertical')
 	let position = s:config('position')
 	let min_height = s:config('min_height')
-	let min_width = s:config('min_width)
+	let min_width = s:config('min_width')
 	let opts = {}
+	let opts.color = 'Normal'
 	if vertical == 0
 		let opts.x = 0
 		let opts.y = &lines - min_height - 2
@@ -203,7 +204,7 @@ function! s:popup_open() abort
 		let opts.h = &lines - 2
 	endif
 	let s:popup_main = quickui#window#new()
-	call win.open([], opts)
+	call s:popup_main.open([], opts)
 endfunc
 
 
@@ -211,7 +212,7 @@ endfunc
 " win: close
 "----------------------------------------------------------------------
 function! s:popup_close() abort
-	call win.close()
+	call s:popup_main.close()
 endfunc
 
 
@@ -219,23 +220,30 @@ endfunc
 " resize
 "----------------------------------------------------------------------
 function! s:popup_resize(width, height)
+	let vertical = s:config('vertical')
 	if vertical == 0
+		call s:popup_main.resize(s:popup_main.w, a:height)
+		call s:popup_main.move(0, &lines - a:height - 2)
 	else
 	endif
 endfunc
 
 
 "----------------------------------------------------------------------
-" 
+" update content and statusline 
 "----------------------------------------------------------------------
 function! s:popup_update(content, status)
+	call s:popup_main.set_text(a:content)
+	" call s:popup_main.show(1)
+	call s:popup_main.execute('setlocal ft=navigator')
 endfunc
 
 
 "----------------------------------------------------------------------
-" 
+" execute command
 "----------------------------------------------------------------------
 function! s:popup_execute(command)
+	call s:popup_main.execute(a:command)
 endfunc
 
 
