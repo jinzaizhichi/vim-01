@@ -25,6 +25,9 @@ let s:default_config = {
 			\ 'spacing': 3,
 			\ 'vertical': 0,
 			\ 'popup': 0,
+			\ 'popup_width': '70%',
+			\ 'popup_height': '50%',
+			\ 'popup_position': 'bottom',
 			\ 'position': 'botright',
 			\ 'splitmod': '',
 			\ }
@@ -36,7 +39,7 @@ let s:default_config = {
 let s:position_dict = {
 			\ 'leftabove': 0, 'aboveleft': 0, 'lefta': 0, 'abo': 0,
 			\ 'rightbelow': 1, 'belowright': 1, 'rightb': 1, 'bel': 1,
-			\ 'topleft': 2, 'to': 2,
+			\ 'topleft': 2, 'to': 2, 'top': 2,
 			\ 'botright': 3, 'bo': 3, 'bottom': 3, 'rightbot': 3,
 			\ }
 
@@ -145,10 +148,12 @@ endfunc
 function! navigator#config#position(what) abort
 	let pos = get(s:position_dict, a:what, 3)
 	let position = 'botright'
-	if pos <= 1
+	if pos < 2
 		let position = (pos == 0)? 'leftabove' : 'rightbelow'
-	else
+	elseif pos < 4
 		let position = (pos == 2)? 'topleft' : 'botright'
+	else
+		let position = 'center'
 	endif
 	return position
 endfunc
@@ -276,6 +281,7 @@ function! navigator#config#compile(keymap, opts) abort
 	let ctx.vertical = navigator#config#get(a:opts, 'vertical')
 	let ctx.position = navigator#config#get(a:opts, 'position')
 	let ctx.position = navigator#config#position(ctx.position)
+	let ctx.popup = navigator#config#get(a:opts, 'popup')
 	return ctx
 endfunc
 
