@@ -205,8 +205,13 @@ function! s:popup_open() abort
 	let opts.color = 'Normal'
 	let opts.bordercolor = 'Normal'
 	if position == 'bottom'
-		let opts.x = 0
+		let opts.x = 1
 		let opts.y = &lines - min_height - 2
+		let opts.w = &columns
+		let opts.h = min_height
+	elseif position == 'top'
+		let opts.x = 0
+		let opts.y = 0
 		let opts.w = &columns
 		let opts.h = min_height
 	else
@@ -231,6 +236,19 @@ function! s:popup_open() abort
 		let op.bordercolor = 'StatusLine'
 		call s:popup_foot.open([], op)
 		let op.y = &lines - 3 - min_height
+		let op.color = 'StatusLineNC'
+		let op.bordercolor = 'StatusLineNC'
+		call s:popup_head.open([], op)
+	elseif position == 'top'
+		let op = {}
+		let op.w = opts.w
+		let op.h = 1
+		let op.x = 0
+		let op.y = opts.h + 1
+		let op.color = 'StatusLine'
+		let op.bordercolor = 'StatusLine'
+		call s:popup_foot.open([], op)
+		let op.y = 0
 		let op.color = 'StatusLineNC'
 		let op.bordercolor = 'StatusLineNC'
 		call s:popup_head.open([], op)
@@ -272,6 +290,10 @@ function! s:popup_resize(width, height) abort
 		call s:popup_main.resize(s:popup_main.w, a:height)
 		call s:popup_main.move(0, &lines - a:height - 2)
 		call s:popup_head.move(0, &lines - a:height - 3)
+	elseif position == 'top'
+		call s:popup_main.resize(s:popup_main.w, a:height)
+		call s:popup_main.move(0, 1)
+		call s:popup_foot.move(0, 1 + s:popup_main.h)
 	else
 		" call s:popup_main.resize(s:popup
 		call s:popup_head.move(s:popup_main.x, s:popup_main.y - 1)

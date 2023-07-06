@@ -318,7 +318,7 @@ function! navigator#config#init(opts) abort
 	let h = navigator#config#get(opts, 'popup_height')
 	let opts.popup_width = navigator#config#atoi(w, &columns)
 	let opts.popup_height = navigator#config#atoi(h, &lines)
-	if opts.popup_position != 'center'
+	if index(['center', 'top'], opts.popup_position) < 0
 		let opts.popup_position = 'bottom'
 	endif
 	return opts
