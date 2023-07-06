@@ -28,6 +28,8 @@ let g:lightline.component = {
 			\ 'lineinfo': '%3l:%-2v',
 			\ }
 
+" let g:lightline.component.fullname = '%{pathshorten(expand("%:F"))}'
+
 
 "----------------------------------------------------------------------
 " switch

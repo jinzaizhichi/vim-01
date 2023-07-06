@@ -212,14 +212,19 @@ function! s:popup_open() abort
 	else
 		let opts.w = s:config('popup_width')
 		let opts.h = s:config('popup_height')
+		" let opts.h = 2
 		let opts.x = (&columns - opts.w) / 2
 		let opts.y = (&lines * 4 / 5 - opts.h) / 2
 		let opts.center = 1
-		let opts.border = 1
+		" let opts.color = 'ErrorMsg'
+		" let opts.border = 1
+		let opts.y = (opts.y < 1)? 1 : opts.y
 		" let opts.title = ' Navigator '
 	endif
 	let s:popup_main = quickui#window#new()
 	call s:popup_main.open([], opts)
+	let s:popup_foot = quickui#window#new()
+	let s:popup_head = quickui#window#new()
 	if position == 'bottom'
 		let op = {}
 		let op.w = opts.w
@@ -228,14 +233,25 @@ function! s:popup_open() abort
 		let op.y = &lines - 2
 		let op.color = 'StatusLine'
 		let op.bordercolor = 'StatusLine'
-		let s:popup_foot = quickui#window#new()
 		call s:popup_foot.open([], op)
 		let op.y = &lines - 3 - min_height
 		let op.color = 'StatusLineNC'
 		let op.bordercolor = 'StatusLineNC'
-		let s:popup_head = quickui#window#new()
 		call s:popup_head.open([], op)
 	else
+		let op = {}
+		let op.w = opts.w
+		let op.h = 1
+		let op.x = s:popup_main.x
+		let op.y = s:popup_main.y + s:popup_main.h
+		" echom printf("%d/%d %d", opts.y, opts.h, op.y)
+		let op.color = 'StatusLine'
+		let op.bordercolor = 'StatusLine'
+		call s:popup_foot.open([''], op)
+		let op.y = s:popup_main.y - 1
+		let op.color = 'StatusLineNC'
+		let op.bordercolor = op.color
+		call s:popup_head.open([''], op)
 	endif
 endfunc
 
@@ -246,11 +262,8 @@ endfunc
 function! s:popup_close() abort
 	let position = s:config('popup_position')
 	call s:popup_main.close()
-	if position == 'bottom'
-		call s:popup_foot.close()
-		call s:popup_head.close()
-	else
-	endif
+	call s:popup_foot.close()
+	call s:popup_head.close()
 endfunc
 
 
@@ -264,7 +277,13 @@ function! s:popup_resize(width, height) abort
 		call s:popup_main.move(0, &lines - a:height - 2)
 		call s:popup_head.move(0, &lines - a:height - 3)
 	else
+		" call s:popup_main.resize(s:popup
+		call s:popup_head.move(s:popup_main.x, s:popup_main.y - 1)
+		call s:popup_foot.move(s:popup_main.x, s:popup_main.y + s:popup_main.h)
 	endif
+	call s:popup_main.show(1)
+	call s:popup_foot.show(1)
+	call s:popup_head.show(1)
 endfunc
 
 
@@ -288,16 +307,20 @@ function! s:popup_update(content, info) abort
 	call s:popup_main.set_text(a:content)
 	" call s:popup_main.show(1)
 	call s:popup_main.execute('setlocal ft=navigator')
+	let t = join(a:info.path, ' => ') . ' => '
+	let t = printf('Navigator (%s): %s', p, t)
+	let r = '(C-j/k: paging, BS: return, ESC: quit)'
 	if position == 'bottom'
-		let t = join(a:info.path, ' => ') . ' => '
-		let t = printf('Navigator (%s): %s', p, t)
-		let r = '(C-j/k: paging, BS: return, ESC: quit)'
 		let w = s:popup_foot.w
 		let size = strlen(t) + strlen(r)
 		let t = t . repeat(' ', w - size) . r
 		call s:popup_foot.set_text([t])
 		" let t = '
 	else
+		call s:popup_foot.set_text([t])
+		let w = s:popup_foot.w
+		let t = repeat(' ', w - strlen(r)) . r
+		call s:popup_head.set_text([t])
 	endif
 endfunc
 
