@@ -44,7 +44,7 @@ endfunc
 function! s:need_keep(vertical, position) abort
 	let keep = 0
 	if a:vertical == 0
-		if index(['bottom', 'botright'], a:position) >= 0
+		if index(['bottom', 'botright', 'rightbot'], a:position) >= 0
 			let keep = (&splitbelow == 0)? 1 : 0
 		else
 			let keep = (&splitbelow != 0)? 1 : 0
