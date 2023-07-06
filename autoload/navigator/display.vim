@@ -305,7 +305,6 @@ function! s:popup_update(content, info) abort
 	let position = s:config('popup_position')
 	let p = printf('page %d/%d', a:info.pg_index + 1, a:info.pg_count)
 	call s:popup_main.set_text(a:content)
-	" call s:popup_main.show(1)
 	call s:popup_main.execute('setlocal ft=navigator')
 	let t = join(a:info.path, ' => ') . ' => '
 	let t = printf('Navigator (%s): %s', p, t)
