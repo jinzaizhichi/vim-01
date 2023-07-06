@@ -197,22 +197,21 @@ endfunc
 " popup: open
 "----------------------------------------------------------------------
 function! s:popup_open() abort
-	let vertical = s:config('vertical')
-	let position = s:config('position')
+	let position = s:config('popup_position')
 	let min_height = s:config('min_height')
 	let min_width = s:config('min_width')
 	let opts = {}
 	let opts.color = 'Normal'
-	if vertical == 0
+	if position == 'bottom'
 		let opts.x = 0
 		let opts.y = &lines - min_height - 2
 		let opts.w = &columns
 		let opts.h = min_height
 	else
-		let opts.x = &columns - min_width
-		let opts.y = 1
-		let opts.w = min_width
-		let opts.h = &lines - 2
+		let opts.w = s:config('popup_width')
+		let opts.h = s:config('popup_height')
+		let opts.x = (&columns - opts.w) / 2
+		let opts.y = (&lines * 4 / 5 - opts.h) / 2
 	endif
 	let s:popup_main = quickui#window#new()
 	call s:popup_main.open([], opts)
@@ -231,8 +230,8 @@ endfunc
 " resize
 "----------------------------------------------------------------------
 function! s:popup_resize(width, height) abort
-	let vertical = s:config('vertical')
-	if vertical == 0
+	let position = s:config('popup_position')
+	if position == 'bottom'
 		call s:popup_main.resize(s:popup_main.w, a:height)
 		call s:popup_main.move(0, &lines - a:height - 2)
 	else
@@ -246,7 +245,8 @@ endfunc
 function! s:popup_getsize() abort
 	let size = {}
 	let size.w = s:popup_main.w
-	let size.h = s:popup_main.y
+	let size.h = s:popup_main.h
+	return size
 endfunc
 
 
