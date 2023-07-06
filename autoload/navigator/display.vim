@@ -212,14 +212,10 @@ function! s:popup_open() abort
 	else
 		let opts.w = s:config('popup_width')
 		let opts.h = s:config('popup_height')
-		" let opts.h = 2
 		let opts.x = (&columns - opts.w) / 2
 		let opts.y = (&lines * 4 / 5 - opts.h) / 2
 		let opts.center = 1
-		" let opts.color = 'ErrorMsg'
-		" let opts.border = 1
 		let opts.y = (opts.y < 1)? 1 : opts.y
-		" let opts.title = ' Navigator '
 	endif
 	let s:popup_main = quickui#window#new()
 	call s:popup_main.open([], opts)
