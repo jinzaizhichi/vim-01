@@ -25,7 +25,7 @@ let s:default_config = {
 			\ 'spacing': 3,
 			\ 'vertical': 0,
 			\ 'popup': 0,
-			\ 'popup_width': '60%',
+			\ 'popup_width': '65%',
 			\ 'popup_height': '40%',
 			\ 'popup_position': 'bottom',
 			\ 'position': 'botright',
