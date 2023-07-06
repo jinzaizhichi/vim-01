@@ -160,7 +160,7 @@ endfunc
 " window update
 "----------------------------------------------------------------------
 function! s:win_update(textline, info) abort
-	let p = printf('page %d of %d', a:info.pg_index + 1, a:info.pg_count)
+	let p = printf('page %d/%d', a:info.pg_index + 1, a:info.pg_count)
 	if s:bid > 0
 		call navigator#utils#update_buffer(s:bid, a:textline)
 		if s:working_wid > 0 && s:working_wid == winnr()
@@ -284,7 +284,7 @@ endfunc
 "----------------------------------------------------------------------
 function! s:popup_update(content, info) abort
 	let position = s:config('popup_position')
-	let p = printf('page %d of %d', a:info.pg_index + 1, a:info.pg_count)
+	let p = printf('page %d/%d', a:info.pg_index + 1, a:info.pg_count)
 	call s:popup_main.set_text(a:content)
 	" call s:popup_main.show(1)
 	call s:popup_main.execute('setlocal ft=navigator')
