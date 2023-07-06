@@ -64,17 +64,18 @@ function! navigator#state#init(opts) abort
 	let s:screencx = &columns
 	let s:screency = &lines
 	let s:prefix = get(a:opts, 'prefix', '')
+	call navigator#display#init(s:opts)
+	let s:winsize = navigator#display#getsize()
 	if s:vertical == 0
-		let s:wincx = s:screencx
+		let s:wincx = s:winsize.w
 		let s:wincy = s:config('min_height')
 	else
 		let s:wincx = s:config('min_width')
-		let s:wincy = winheight(0)
+		let s:wincy = s:winsize.h
 	endif
 	let s:state = 0
 	let s:exit = 0
 	let s:path = []
-	call navigator#display#init(s:opts)
 	return 0
 endfunc
 

@@ -146,6 +146,17 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" window get size
+"----------------------------------------------------------------------
+function! s:win_getsize() abort
+	let size = {}
+	let size.w = winwidth(0)
+	let size.h = winheight(0)
+	return size
+endfunc
+
+
+"----------------------------------------------------------------------
 " window update
 "----------------------------------------------------------------------
 function! s:win_update(textline, status) abort
@@ -219,13 +230,23 @@ endfunc
 "----------------------------------------------------------------------
 " resize
 "----------------------------------------------------------------------
-function! s:popup_resize(width, height)
+function! s:popup_resize(width, height) abort
 	let vertical = s:config('vertical')
 	if vertical == 0
 		call s:popup_main.resize(s:popup_main.w, a:height)
 		call s:popup_main.move(0, &lines - a:height - 2)
 	else
 	endif
+endfunc
+
+
+"----------------------------------------------------------------------
+" get size
+"----------------------------------------------------------------------
+function! s:popup_getsize() abort
+	let size = {}
+	let size.w = s:popup_main.w
+	let size.h = s:popup_main.y
 endfunc
 
 
@@ -292,6 +313,18 @@ function! navigator#display#resize(width, height) abort
 		call s:win_resize(a:width, a:height)
 	else
 		call s:popup_resize(a:width, a:height)
+	endif
+endfunc
+
+
+"----------------------------------------------------------------------
+" get size
+"----------------------------------------------------------------------
+function! navigator#display#getsize() abort
+	if s:popup == 0
+		return s:win_getsize()
+	else
+		return s:popup_getsize()
 	endif
 endfunc
 
