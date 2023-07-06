@@ -219,6 +219,21 @@ function! s:popup_open() abort
 	endif
 	let s:popup_main = quickui#window#new()
 	call s:popup_main.open([], opts)
+	if position == 'bottom'
+		let op = {}
+		let op.w = opts.w
+		let op.h = 1
+		let op.x = 0
+		let op.y = &lines - 2
+		let op.color = 'StatusLine'
+		let op.bordercolor = 'StatusLine'
+		let s:popup_foot = quickui#window#new()
+		call s:popup_foot.open([], op)
+		let op.y = &lines - 3 - min_height
+		let s:popup_head = quickui#window#new()
+		call s:popup_head.open([], op)
+	else
+	endif
 endfunc
 
 
@@ -226,7 +241,13 @@ endfunc
 " win: close
 "----------------------------------------------------------------------
 function! s:popup_close() abort
+	let position = s:config('popup_position')
 	call s:popup_main.close()
+	if position == 'bottom'
+		call s:popup_foot.close()
+		call s:popup_head.close()
+	else
+	endif
 endfunc
 
 
@@ -238,6 +259,7 @@ function! s:popup_resize(width, height) abort
 	if position == 'bottom'
 		call s:popup_main.resize(s:popup_main.w, a:height)
 		call s:popup_main.move(0, &lines - a:height - 2)
+		call s:popup_head.move(0, &lines - a:height - 3)
 	else
 	endif
 endfunc
@@ -257,10 +279,21 @@ endfunc
 "----------------------------------------------------------------------
 " update content and statusline 
 "----------------------------------------------------------------------
-function! s:popup_update(content, status)
+function! s:popup_update(content, status) abort
+	let position = s:config('popup_position')
 	call s:popup_main.set_text(a:content)
 	" call s:popup_main.show(1)
 	call s:popup_main.execute('setlocal ft=navigator')
+	if position == 'bottom'
+		let t = join(a:status, ' => ') . ' => '
+		let t = 'Navigator: ' . t
+		let r = '(C-j/k: paging, BS: return, ESC: quit)'
+		let w = s:popup_foot.w
+		let size = strlen(t) + strlen(r)
+		let t = t . repeat(' ', w - size) . r
+		call s:popup_foot.set_text([t])
+	else
+	endif
 endfunc
 
 
