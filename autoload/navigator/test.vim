@@ -237,8 +237,9 @@ function! navigator#test#test7() abort
 	let keymap = navigator#config#keymap_expand(keymap)
 	let opts = {}
 	let opts.popup = 1
-	let opts.popup_position = 'center'
+	" let opts.popup_position = 'center'
 	let opts.max_width = 35
+	" let opts.padding = [2, 2, 2, 2]
 	" let opts.bracket = 1
 	" let opts.icon_separator = ''
 	let ch = navigator#state#open(keymap, opts)

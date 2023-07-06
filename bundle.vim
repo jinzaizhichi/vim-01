@@ -506,7 +506,7 @@ if has_key(s:enabled, 'games')
 	Plug 'vim-scripts/Mines'
 endif
 
-if has_key(s:enabled, 'which_key')
+if has_key(s:enabled, 'whichkey')
 	Plug 'liuchengxu/vim-which-key'
 	IncScript site/bundle/which_key.vim
 endif
