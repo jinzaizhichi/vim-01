@@ -315,7 +315,6 @@ function! s:popup_update(content, info) abort
 		let size = strlen(t) + strlen(r)
 		let t = t . repeat(' ', w - size) . r
 		call s:popup_foot.set_text([t])
-		" let t = '
 	else
 		call s:popup_foot.set_text([t])
 		let w = s:popup_foot.w
