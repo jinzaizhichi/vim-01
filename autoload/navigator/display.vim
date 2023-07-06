@@ -159,14 +159,15 @@ endfunc
 "----------------------------------------------------------------------
 " window update
 "----------------------------------------------------------------------
-function! s:win_update(textline, status) abort
+function! s:win_update(textline, info) abort
+	let p = printf('page %d of %d', a:info.pg_index + 1, a:info.pg_count)
 	if s:bid > 0
 		call navigator#utils#update_buffer(s:bid, a:textline)
 		if s:working_wid > 0 && s:working_wid == winnr()
 			let m = ' => '
-			let t = join(a:status, m) . m
+			let t = join(a:info.path, m) . m
 			let t .= ' %=(C-j/k: paging, BS: return, ESC: quit)'
-			let &l:statusline = 'Navigator: ' . t
+			let &l:statusline = printf('Navigator (%s): %s', p, t)
 			setlocal ft=navigator
 		endif
 	endif
@@ -281,14 +282,15 @@ endfunc
 "----------------------------------------------------------------------
 " update content and statusline 
 "----------------------------------------------------------------------
-function! s:popup_update(content, status) abort
+function! s:popup_update(content, info) abort
 	let position = s:config('popup_position')
+	let p = printf('page %d of %d', a:info.pg_index + 1, a:info.pg_count)
 	call s:popup_main.set_text(a:content)
 	" call s:popup_main.show(1)
 	call s:popup_main.execute('setlocal ft=navigator')
 	if position == 'bottom'
-		let t = join(a:status, ' => ') . ' => '
-		let t = 'Navigator: ' . t
+		let t = join(a:info.path, ' => ') . ' => '
+		let t = printf('Navigator (%s): %s', p, t)
 		let r = '(C-j/k: paging, BS: return, ESC: quit)'
 		let w = s:popup_foot.w
 		let size = strlen(t) + strlen(r)
@@ -372,11 +374,11 @@ endfunc
 "----------------------------------------------------------------------
 " update
 "----------------------------------------------------------------------
-function! navigator#display#update(content, status) abort
+function! navigator#display#update(content, info) abort
 	if s:popup == 0
-		call s:win_update(a:content, a:status)
+		call s:win_update(a:content, a:info)
 	else
-		call s:popup_update(a:content, a:status)
+		call s:popup_update(a:content, a:info)
 	endif
 endfunc
 

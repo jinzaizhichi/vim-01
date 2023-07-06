@@ -157,7 +157,11 @@ function! navigator#state#select(keymap, path) abort
 		let context.index = pg_index
 		call navigator#config#store('context', context)
 		call navigator#state#resize(ctx)
-		call navigator#display#update(ctx.pages[pg_index].content, path)
+		let info = {}
+		let info.path = path
+		let info.pg_index = pg_index
+		let info.pg_count = pg_count
+		call navigator#display#update(ctx.pages[pg_index].content, info)
 		noautocmd redraw
 		try
 			let code = getchar()
