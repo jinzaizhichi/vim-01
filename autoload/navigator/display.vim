@@ -230,6 +230,8 @@ function! s:popup_open() abort
 		let s:popup_foot = quickui#window#new()
 		call s:popup_foot.open([], op)
 		let op.y = &lines - 3 - min_height
+		let op.color = 'StatusLineNC'
+		let op.bordercolor = 'StatusLineNC'
 		let s:popup_head = quickui#window#new()
 		call s:popup_head.open([], op)
 	else
