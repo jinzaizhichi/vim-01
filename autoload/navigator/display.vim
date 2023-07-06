@@ -271,24 +271,25 @@ endfunc
 "----------------------------------------------------------------------
 " initialize
 "----------------------------------------------------------------------
-function! navigator#display#init(opts) abort
+function! navigator#display#open(opts) abort
 	let s:opts = a:opts
 	let s:popup = s:config('popup')
 	let s:vertical = s:config('vertical')
 	let s:position = navigator#config#position(s:config('position'))
 	let s:screencx = &columns
 	let s:screency = &lines
-	if s:vertical == 0
-		let s:wincx = s:screencx
-		let s:wincy = s:config('min_height')
-	else
-		let s:wincx = s:config('min_width')
-		let s:wincy = winheight(0)
-	endif
 	if s:popup == 0
 		call s:win_open()
 	else
 		call s:popup_open()
+	endif
+	let size = navigator#display#getsize()
+	if s:vertical == 0
+		let s:wincx = size.w
+		let s:wincy = s:config('min_height')
+	else
+		let s:wincx = s:config('min_width')
+		let s:wincy = size.h
 	endif
 endfunc
 

@@ -16,7 +16,7 @@ let s:default_config = {
 			\ 'icon_separator': '=>',
 			\ 'icon_group': '+',
 			\ 'icon_breadcrumb': '>',
-			\ 'max_height': 20,
+			\ 'max_height': 10,
 			\ 'min_height': 5,
 			\ 'max_width': 45,
 			\ 'min_width': 20,

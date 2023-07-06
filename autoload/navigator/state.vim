@@ -64,7 +64,7 @@ function! navigator#state#init(opts) abort
 	let s:screencx = &columns
 	let s:screency = &lines
 	let s:prefix = get(a:opts, 'prefix', '')
-	call navigator#display#init(s:opts)
+	call navigator#display#open(s:opts)
 	let s:winsize = navigator#display#getsize()
 	if s:vertical == 0
 		let s:wincx = s:winsize.w
