@@ -202,6 +202,7 @@ function! s:popup_open() abort
 	let min_width = s:config('min_width')
 	let opts = {}
 	let opts.color = 'Normal'
+	let opts.bordercolor = 'Normal'
 	if position == 'bottom'
 		let opts.x = 0
 		let opts.y = &lines - min_height - 2
@@ -212,6 +213,9 @@ function! s:popup_open() abort
 		let opts.h = s:config('popup_height')
 		let opts.x = (&columns - opts.w) / 2
 		let opts.y = (&lines * 4 / 5 - opts.h) / 2
+		let opts.center = 1
+		let opts.border = 1
+		" let opts.title = ' Navigator '
 	endif
 	let s:popup_main = quickui#window#new()
 	call s:popup_main.open([], opts)
