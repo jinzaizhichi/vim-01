@@ -67,6 +67,9 @@ function! navigator#cmd(keymap, prefix, ...) abort
 			if cmd =~ '^[a-zA-Z0-9_#]\+(.*)$'
 				" echom "cmd1: " . cmd
 				exec 'call ' . cmd
+			elseif cmd =~ '^<key>'
+				let keys = strpart(cmd, 5)
+				call feedkeys(keys)
 			elseif cmd =~ '^@'
 				let keys = strpart(cmd, 1)
 				call feedkeys(keys)
