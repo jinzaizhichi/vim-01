@@ -70,6 +70,9 @@ function! navigator#cmd(keymap, prefix, ...) abort
 			elseif cmd =~ '^@'
 				let keys = strpart(cmd, 1)
 				call feedkeys(keys)
+			elseif cmd =~ '^<plug>'
+				let keys = strpart(cmd, 6)
+				call feedkeys("\<plug>" . keys)
 			else
 				" echom "cmd2: " . cmd
 				exec cmd
