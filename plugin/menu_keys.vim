@@ -138,6 +138,7 @@ let g:navigator.h = {
 " Easymotion
 "----------------------------------------------------------------------
 let g:navigator.m = ['<plug>(easymotion-bd-w)', 'easy-motion-bd-w']
+let g:navigator.n = ['<plug>(easymotion-s)', 'easy-motion-s']
 
 
 "----------------------------------------------------------------------
