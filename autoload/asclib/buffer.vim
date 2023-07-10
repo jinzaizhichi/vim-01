@@ -10,6 +10,14 @@
 
 
 "----------------------------------------------------------------------
+" internal
+"----------------------------------------------------------------------
+let s:has_deletebufline = exists('*deletebufline')
+let s:has_setbufline = exists('*setbufline')
+let s:has_appendbufline = exists('*appendbufline')
+
+
+"----------------------------------------------------------------------
 " alloc a new buffer
 "----------------------------------------------------------------------
 function! asclib#buffer#alloc()
@@ -66,7 +74,7 @@ function! asclib#buffer#update(bid, textlist)
 	endif
 	let old = getbufvar(a:bid, '&modifiable', 0)
 	call setbufvar(a:bid, '&modifiable', 1)
-	if exists('*deletebufline') && exists('*setbufline')
+	if s:has_deletebufline && s:has_setbufline
 		call deletebufline(a:bid, 1, '$')
 		call setbufline(a:bid, 1, textlist)
 	elseif a:bid == bufnr('%')
@@ -200,7 +208,7 @@ endfunc
 " append buffer
 "----------------------------------------------------------------------
 function! asclib#buffer#append(bid, lnum, text) abort
-	if exists('*appendbufline')
+	if s:has_appendbufline
 		call appendbufline(a:bid, a:lnum, a:text)
 	elseif bufnr('%') == a:bid
 		call appendline(a:lnum, a:text)

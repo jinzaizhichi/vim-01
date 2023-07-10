@@ -13,9 +13,9 @@
 "----------------------------------------------------------------------
 function! s:append(bid, text) abort
 	let check = bufnr('%')
-	" let check = -1
+	let check = -1
 	if check == a:bid
-		call appendline(line('$') - 1, a:text)
+		call append(line('$') - 1, a:text)
 	else
 		let lastline = asclib#buffer#linecount(a:bid)
 		if lastline > 0
@@ -50,8 +50,10 @@ function! s:callback(task, event, data) abort
 					stopinsert
 				endif
 			endif
+			call asclib#buffer#append(bid, '$', ["", "(process exited)"])
 			call setbufvar(bid, '&modifiable', 0)
 			call setbufvar(bid, '&modified', 0)
+			call feedkeys("\<c-l>", 'n')
 			echom "here: " . bid
 		endif
 	endif
@@ -96,6 +98,7 @@ function! module#prompt#open(cmdline, opts) abort
 	if task.status() != 'none'
 		call setbufvar(bid, '&modified', 1)
 	endif
+	call feedkeys("a\<esc>")
 endfunc
 
 
