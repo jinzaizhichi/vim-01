@@ -92,7 +92,7 @@ function! s:color_item(text, pos, width, y) abort
 	if mark != '+'
 		exec s:high_region('NavigatorItem', y, pos, y, endup, 0)
 	else
-		exec s:high_region('NavigatorChild', y, pos, y, endup, 0)
+		exec s:high_region('NavigatorGroup', y, pos, y, endup, 0)
 	endif
 endfunc
 
@@ -111,7 +111,7 @@ highlight default link NavigatorKey Special
 highlight default link NavigatorBracket Normal
 highlight default link NavigatorSeparator Type
 highlight default link NavigatorItem Function
-highlight default link NavigatorChild Number
+highlight default link NavigatorGroup Number
 
 highlight default link NavigatorPopup Normal
 highlight default link NavigatorFoot StatusLine
