@@ -202,8 +202,8 @@ function! s:popup_open() abort
 	let min_height = s:config('min_height')
 	let min_width = s:config('min_width')
 	let opts = {}
-	let opts.color = 'Normal'
-	let opts.bordercolor = 'Normal'
+	let opts.color = 'NavigaorPopup'
+	let opts.bordercolor = opts.color
 	if position == 'bottom'
 		let opts.x = 1
 		let opts.y = &lines - min_height - 2
@@ -232,12 +232,12 @@ function! s:popup_open() abort
 		let op.h = 1
 		let op.x = 0
 		let op.y = &lines - 2
-		let op.color = 'StatusLine'
-		let op.bordercolor = 'StatusLine'
+		let op.color = 'NavigatorFoot'
+		let op.bordercolor = op.color
 		call s:popup_foot.open([], op)
 		let op.y = &lines - 3 - min_height
-		let op.color = 'StatusLineNC'
-		let op.bordercolor = 'StatusLineNC'
+		let op.color = 'NavigatorHead'
+		let op.bordercolor = op.color
 		call s:popup_head.open([], op)
 	elseif position == 'top'
 		let op = {}
@@ -245,12 +245,12 @@ function! s:popup_open() abort
 		let op.h = 1
 		let op.x = 0
 		let op.y = opts.h + 1
-		let op.color = 'StatusLine'
-		let op.bordercolor = 'StatusLine'
+		let op.color = 'NavigatorFoot'
+		let op.bordercolor = op.color
 		call s:popup_foot.open([], op)
 		let op.y = 0
-		let op.color = 'StatusLineNC'
-		let op.bordercolor = 'StatusLineNC'
+		let op.color = 'NavigatorHead'
+		let op.bordercolor = op.color
 		call s:popup_head.open([], op)
 	else
 		let op = {}
@@ -259,11 +259,11 @@ function! s:popup_open() abort
 		let op.x = s:popup_main.x
 		let op.y = s:popup_main.y + s:popup_main.h
 		" echom printf("%d/%d %d", opts.y, opts.h, op.y)
-		let op.color = 'StatusLine'
-		let op.bordercolor = 'StatusLine'
+		let op.color = 'NavigatorFoot'
+		let op.bordercolor = op.color
 		call s:popup_foot.open([''], op)
 		let op.y = s:popup_main.y - 1
-		let op.color = 'StatusLineNC'
+		let op.color = 'NavigatorHead'
 		let op.bordercolor = op.color
 		call s:popup_head.open([''], op)
 	endif
