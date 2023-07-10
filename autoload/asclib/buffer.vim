@@ -12,11 +12,11 @@
 "----------------------------------------------------------------------
 " internal
 "----------------------------------------------------------------------
-let s:has_appendbufline = exists('*appendbufline')
-let s:has_deletebufline = exists('*deletebufline')
+let s:has_getbufinfo = exists('*getbufinfo')
 let s:has_setbufline = exists('*setbufline')
 let s:has_getbufline = exists('*getbufline')
-let s:has_getbufinfo = exists('*getbufinfo')
+let s:has_deletebufline = exists('*deletebufline')
+let s:has_appendbufline = exists('*appendbufline')
 
 
 "----------------------------------------------------------------------
