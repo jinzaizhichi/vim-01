@@ -180,5 +180,20 @@ function! asclib#buffer#getvar(bid, varname, default)
 endfunc
 
 
+"----------------------------------------------------------------------
+" autocmd
+"----------------------------------------------------------------------
+function! asclib#buffer#autocmd(bid, group, funcname) abort
+	exec printf('autocmd %s <buffer=%d> call %s()', a:group, a:bid, a:funcname)
+endfunc
+
+
+"----------------------------------------------------------------------
+" remove all autocmd
+"----------------------------------------------------------------------
+function! asclib#buffer#remove_autocmd(bid, group) abort
+	exec printf('autocmd! %s <buffer=%d>', a:group, a:bid)
+endfunc
+
 
 
