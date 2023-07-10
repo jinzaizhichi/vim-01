@@ -14,9 +14,11 @@
 function! s:callback(task, event, data) abort
 	let task = a:task
 	let bid = task.bid
+	echom [a:event, a:data]
 	if a:event == 'stdout'
 		call appendbufline(bid, line("$") - 1, a:data)
 		echom "stdout: " . a:data
+		" call setbufvar(bid, '&modified', 0)
 	elseif a:event == 'stderr'
 		call appendbufline(bid, line("$") - 1, a:data)
 		echom "stderr: " . a:data
@@ -52,7 +54,8 @@ function! module#prompt#open(cmdline, opts) abort
 	exec 'new'
 	let bid = bufnr('%')
 	let task.bid = bid
-	setlocal bt=prompt
+	setlocal bt=prompt nobuflisted
+	setlocal nonumber nolist nocursorline nocursorcolumn noswapfile
 	let object = asclib#buffer#object(bid)
 	let object.prompt_task = task
 	call prompt_setcallback(bid, function('s:text_enter'))
