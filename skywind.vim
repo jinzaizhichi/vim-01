@@ -222,6 +222,8 @@ let g:quickui_tags_indent = {
 
 let g:quickui_color_scheme = 'papercol-light'
 
+let g:navigator_hide_cursor = 1
+
 
 "----------------------------------------------------------------------
 " completion
@@ -229,6 +231,7 @@ let g:quickui_color_scheme = 'papercol-light'
 let g:apc_enable_ft = get(g:, 'apc_enable_ft', {})
 let g:apc_enable_ft.text = 1
 let g:apc_enable_ft.markdown = 1
+
 
 let g:ycm_filetype_blacklist = get(g:, 'ycm_filetype_blacklist', {})
 let g:ycm_filetype_blacklist['lua'] = 1

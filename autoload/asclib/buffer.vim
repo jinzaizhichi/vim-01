@@ -280,6 +280,8 @@ function! asclib#buffer#linecount(bid) abort
 	endif
 	if getbufnr('%') == a:bid
 		return line('$')
+	elseif s:has_getbufline
+		return len(getbufline(a:bid, 1, '$'))
 	endif
 	return 0
 endfunc

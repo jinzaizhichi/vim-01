@@ -18,6 +18,7 @@ function! s:append(bid, text) abort
 		call append(line('$') - 1, a:text)
 	else
 		let lastline = asclib#buffer#linecount(a:bid)
+		" let lastline = len(getbufline(a:bid, 1, '$'))
 		if lastline > 0
 			let lastline -= 1
 		endif
