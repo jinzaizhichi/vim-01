@@ -12,7 +12,9 @@
 let s:windows = has('win32') || has('win64') || has('win16') || has('win95')
 
 if v:version >= 800
-	set cscopequickfix=s+,c+,d+,i+,t+,e+,g+,f+,a+
+	if has('nvim') == 0
+		set cscopequickfix=s+,c+,d+,i+,t+,e+,g+,f+,a+
+	endif
 else
 	set cscopequickfix=s+,c+,d+,i+,t+,e+,g+,f+
 endif

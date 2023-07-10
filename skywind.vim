@@ -247,7 +247,9 @@ if has('win32') || has('win16') || has('win64') || has('win95')
 		let g:vimwiki_path = test
 	endif
 	if has('gui_running') && v:version >= 801
-		set tbis=large
+		if !has('nvim')
+			set tbis=large
+		endif
 	endif
 	if executable('c:/drivers/clink/clink.cmd')
 		let g:terminal_shell='cmd /s /k "c:\drivers\clink\clink.cmd inject"'

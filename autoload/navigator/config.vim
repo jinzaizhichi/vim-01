@@ -50,7 +50,7 @@ let s:position_dict = {
 function! navigator#config#get(opts, key) abort
 	if type(a:opts) == v:t_dict
 		let opts = a:opts
-	elseif type(a:opts) == v:t_none
+	elseif type(a:opts) == type(v:null)
 		let opts = get(g:, 'quickui_navigator', {})
 	endif
 	return get(opts, a:key, s:default_config[a:key])
@@ -165,8 +165,8 @@ endfunc
 function! navigator#config#visit(keymap, path) abort
 	let keymap = a:keymap
 	let path = a:path
-	if type(keymap) == v:t_none || type(path) == v:t_none
-		return v:none
+	if type(keymap) == type(v:null) || type(path) == type(v:null)
+		return v:null
 	endif
 	let index = 0
 	while 1
@@ -176,7 +176,7 @@ function! navigator#config#visit(keymap, path) abort
 		endif
 		let key = path[index]
 		if !has_key(keymap, key)
-			return v:none
+			return v:null
 		endif
 		let keymap = keymap[key]
 		let index += 1
@@ -203,7 +203,7 @@ function! navigator#config#compile(keymap, opts) abort
 			continue
 		endif
 		let key_code = navigator#charname#get_key_code(key)
-		if type(key_code) == v:t_none
+		if type(key_code) == type(v:null)
 			continue
 		endif
 		let ctx.keys += [key]

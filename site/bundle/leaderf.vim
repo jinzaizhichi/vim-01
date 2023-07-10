@@ -20,6 +20,9 @@ noremap <m-n> :cclose<cr>:Leaderf! --nowrap buffer<cr>
 noremap <m-m> :cclose<cr>:Leaderf --nowrap tag<cr>
 let g:Lf_MruMaxFiles = 2048
 let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+" let g:Lf_PreviewHorizontalPosition = 'center'
+let g:Lf_PopupPreviewPosition='bottom'
+let g:Lf_PreviewInPopup = 0
 
 noremap <m-g> :Leaderf --nowrap tasks<cr>
 inoremap <m-g> <esc>:Leaderf --nowrap tasks<cr>
