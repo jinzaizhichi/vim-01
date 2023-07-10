@@ -367,12 +367,17 @@ function! s:task.start(command, opts) abort
 	let macros['VIM_FILENAME'] = expand("%:t")
 	let macros['VIM_FILEDIR'] = expand("%:p:h")
 	let macros['VIM_FILENOEXT'] = expand("%:t:r")
+	let macros['VIM_PATHNOEXT'] = expand("%:p:r")
 	let macros['VIM_FILEEXT'] = "." . expand("%:e")
 	let macros['VIM_CWD'] = getcwd()
 	let macros['VIM_CWORD'] = expand("<cword>")
+	let macros['VIM_RELDIR'] = expand("%:h:.")
+	let macros['VIM_RELNAME'] = expand("%:p:.")
 	let macros['VIM_VERSION'] = ''.v:version
 	let macros['VIM_SVRNAME'] = v:servername
 	let macros['VIM_COLUMNS'] = ''.&columns
+	let macros['VIM_DIRNAME'] = fnamemodify(macros['VIM_CWD'], ':t')
+	let macros['VIM_PWD'] = l:macros['VIM_CWD']
 	let macros['VIM_LINES'] = ''.&lines
 	let macros['VIM_GUI'] = has('gui_running')? 1 : 0
 	let ss = getcwd()
