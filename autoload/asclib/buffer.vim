@@ -15,6 +15,7 @@
 let s:has_deletebufline = exists('*deletebufline')
 let s:has_setbufline = exists('*setbufline')
 let s:has_appendbufline = exists('*appendbufline')
+let s:has_getbufinfo = exists('*getbufinfo')
 
 
 "----------------------------------------------------------------------
@@ -220,9 +221,21 @@ endfunc
 " get line count
 "----------------------------------------------------------------------
 function! asclib#buffer#linecount(bid) abort
-	let info = getbufinfo(a:bid)
-	if len(info) > 0
-		return get(info[0], 'linecount', 0)
+	if !s:has_getbufinfo
+		if getbufnr('%') == a:bid
+			return line('$')
+		endif
+	else
+		let info = getbufinfo(a:bid)
+		if len(info) > 0
+			let item = info[0]
+			if has_key(item, 'linecount')
+				return item.linecount
+			endif
+		endif
+	endif
+	if getbufnr('%') == a:bid
+		return line('$')
 	endif
 	return 0
 endfunc
