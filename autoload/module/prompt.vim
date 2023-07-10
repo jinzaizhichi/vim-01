@@ -14,15 +14,16 @@
 function! s:callback(task, event, data) abort
 	let task = a:task
 	let bid = task.bid
-	echom [a:event, a:data]
+	" echom [a:event, a:data]
 	if a:event == 'stdout'
 		call appendbufline(bid, line("$") - 1, a:data)
-		echom "stdout: " . a:data
+		" echom "stdout: " . a:data
 		" call setbufvar(bid, '&modified', 0)
 	elseif a:event == 'stderr'
 		call appendbufline(bid, line("$") - 1, a:data)
-		echom "stderr: " . a:data
+		" echom "stderr: " . a:data
 	elseif a:event == 'exit'
+		echom "exit: " . a:data
 	endif
 endfunc
 
@@ -61,5 +62,43 @@ function! module#prompt#open(cmdline, opts) abort
 	call prompt_setcallback(bid, function('s:text_enter'))
 	call task.start(a:cmdline, a:opts)
 endfunc
+
+
+"----------------------------------------------------------------------
+" event: unload
+"----------------------------------------------------------------------
+function! s:event_unload()
+	let bid = str2nr(expand('<abuf>'))
+	let object = asclib#buffer#object(bid)
+	if !has_key(object, 'prompt_task')
+		return
+	endif
+	let task = object.prompt_task
+	let status = task.status()
+	if status != 'none'
+		call task.stop('term')
+		echom 'task stop'
+	endif
+endfunc
+
+
+"----------------------------------------------------------------------
+" event: delete
+"----------------------------------------------------------------------
+function! s:event_delete()
+	let bid = str2nr(expand('<abuf>'))
+	let object = asclib#buffer#object(bid)
+	unsilent echom "buffer delete " . bid
+endfunc
+
+
+"----------------------------------------------------------------------
+" events
+"----------------------------------------------------------------------
+augroup ModulePromptEvent
+	au!
+	au BufUnload * call s:event_unload()
+	au BufDelete * call s:event_delete()
+augroup END
 
 
