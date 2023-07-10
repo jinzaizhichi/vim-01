@@ -107,11 +107,11 @@ call s:color_buffer()
 "----------------------------------------------------------------------
 " highlighting
 "----------------------------------------------------------------------
-highlight default link NavigatorKey Special
+highlight default link NavigatorKey Number
 highlight default link NavigatorBracket Normal
 highlight default link NavigatorSeparator Type
-highlight default link NavigatorItem Function
-highlight default link NavigatorGroup Number
+highlight default link NavigatorItem Identifier
+highlight default link NavigatorGroup Function
 
 highlight default link NavigatorPopup Normal
 highlight default link NavigatorFoot StatusLine
