@@ -72,8 +72,8 @@ function! module#prompt#open(cmdline, opts) abort
 	let object = asclib#buffer#object(bid)
 	let object.prompt_task = task
 	call prompt_setcallback(bid, function('s:text_enter'))
-	call asclib#buffer#autocmd(bid, 'BufUnload', function('s:event_unload'))
-	call asclib#buffer#autocmd(bid, 'BufDelete', function('s:event_delete'))
+	" call asclib#buffer#autocmd(bid, 'BufUnload', function('s:event_unload'))
+	" call asclib#buffer#autocmd(bid, 'BufDelete', function('s:event_delete'))
 	call task.start(a:cmdline, a:opts)
 	if task.status() != 'none'
 		call setbufvar(bid, '&modified', 1)
@@ -107,6 +107,17 @@ function! s:event_delete()
 	let object = asclib#buffer#object(bid)
 	unsilent echom "buffer delete " . bid
 endfunc
+
+
+
+"----------------------------------------------------------------------
+" events
+"----------------------------------------------------------------------
+augroup ModulePromptEvents
+	au!
+	autocmd BufUnload * call s:event_unload()
+	autocmd BufDelete * call s:event_delete()
+augroup END
 
 
 
