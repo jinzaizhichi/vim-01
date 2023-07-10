@@ -50,7 +50,6 @@ function! s:callback(task, event, data) abort
 					stopinsert
 				endif
 			endif
-
 			call setbufvar(bid, '&modifiable', 0)
 			call setbufvar(bid, '&modified', 0)
 			echom "here: " . bid
