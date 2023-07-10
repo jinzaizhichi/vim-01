@@ -92,6 +92,7 @@ function! s:win_open() abort
 		else
 			exec 'enew'
 			let s:bid = bufnr('%')
+			setlocal nobuflisted nomodifiable bufhidden=hide
 		endif
 	endif
 	let bid = s:bid
