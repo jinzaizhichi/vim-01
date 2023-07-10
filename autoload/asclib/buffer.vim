@@ -196,4 +196,28 @@ function! asclib#buffer#remove_autocmd(bid, group) abort
 endfunc
 
 
+"----------------------------------------------------------------------
+" append buffer
+"----------------------------------------------------------------------
+function! asclib#buffer#append(bid, lnum, text) abort
+	if exists('*appendbufline')
+		call appendbufline(a:bid, a:lnum, a:text)
+	elseif bufnr('%') == a:bid
+		call appendline(a:lnum, a:text)
+	endif
+endfunc
+
+
+"----------------------------------------------------------------------
+" get line count
+"----------------------------------------------------------------------
+function! asclib#buffer#linecount(bid) abort
+	let info = getbufinfo(a:bid)
+	if len(info) > 0
+		return get(info[0], 'linecount', 0)
+	endif
+	return 0
+endfunc
+
+
 

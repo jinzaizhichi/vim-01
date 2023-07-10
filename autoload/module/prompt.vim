@@ -9,6 +9,24 @@
 
 
 "----------------------------------------------------------------------
+" append to prompt buffer
+"----------------------------------------------------------------------
+function! s:append(bid, text) abort
+	let check = bufnr('%')
+	" let check = -1
+	if check == a:bid
+		call appendline(line('$') - 1, a:text)
+	else
+		let lastline = asclib#buffer#linecount(a:bid)
+		if lastline > 0
+			let lastline -= 1
+		endif
+		call asclib#buffer#append(a:bid, lastline, a:text)
+	endif
+endfunc
+
+
+"----------------------------------------------------------------------
 " callback
 "----------------------------------------------------------------------
 function! s:callback(task, event, data) abort
@@ -16,24 +34,25 @@ function! s:callback(task, event, data) abort
 	let bid = task.bid
 	" echom [a:event, a:data]
 	if a:event == 'stdout'
-		call appendbufline(bid, line("$") - 1, a:data)
+		call s:append(bid, a:data)
 		echom "stdout: " . a:data
 		" call setbufvar(bid, '&modified', 0)
 	elseif a:event == 'stderr'
-		call appendbufline(bid, line("$") - 1, a:data)
+		call s:append(bid, a:data)
 		" echom "stderr: " . a:data
 	elseif a:event == 'exit'
 		echom "exit: " . a:data
 		if bufexists(bid)
 			" call setbufvar(bid, '&bt', 'nofile')
-			call setbufvar(bid, '&modifiable', 0)
-			call setbufvar(bid, '&modified', 0)
 			call setbufvar(bid, '&readonly', 1)
 			if bufnr('%') == bid
 				if mode(1) =~ 'i'
 					stopinsert
 				endif
 			endif
+
+			call setbufvar(bid, '&modifiable', 0)
+			call setbufvar(bid, '&modified', 0)
 			echom "here: " . bid
 		endif
 	endif
