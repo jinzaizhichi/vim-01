@@ -15,6 +15,7 @@
 let s:has_deletebufline = exists('*deletebufline')
 let s:has_setbufline = exists('*setbufline')
 let s:has_appendbufline = exists('*appendbufline')
+let s:has_getbufline = exists('*getbufline')
 let s:has_getbufinfo = exists('*getbufinfo')
 
 
@@ -212,7 +213,50 @@ function! asclib#buffer#append(bid, lnum, text) abort
 	if s:has_appendbufline
 		call appendbufline(a:bid, a:lnum, a:text)
 	elseif bufnr('%') == a:bid
-		call appendline(a:lnum, a:text)
+		call append(a:lnum, a:text)
+	endif
+endfunc
+
+
+"----------------------------------------------------------------------
+" deletebufline
+"----------------------------------------------------------------------
+function! asclib#buffer#deleteline(bid, lnum) abort
+	if s:has_deletebufline
+		return deletebufline(a:bid, a:lnum)
+	endif
+	return -1
+endfunc
+
+
+"----------------------------------------------------------------------
+" setbufline
+"----------------------------------------------------------------------
+function! asclib#buffer#setline(bid, lnum, text) abort
+	if s:has_setbufline
+		return setbufline(a:bid, a:lnum, a:text)
+	elseif bufnr('%') == a:bid
+		return setline(a:lnum, a:text)
+	endif
+endfunc
+
+
+"----------------------------------------------------------------------
+" getbufline({buf}, {lnum} [, {end}])
+"----------------------------------------------------------------------
+function! asclib#buffer#getline(bid, lnum, ...) abort
+	if s:has_getbufline
+		if a:0 == 0
+			return getbufline(a:bid, a:lnum)
+		else
+			return getbufline(a:bid, a:lnum, a:1)
+		endif
+	elseif bufnr('%') == a:bid
+		if a:0 == 0
+			return getline(a:lnum)
+		else
+			return getline(a:lnum, a:1)
+		endif
 	endif
 endfunc
 
