@@ -14,15 +14,21 @@
 function! s:append(bid, text) abort
 	let check = bufnr('%')
 	let check = -1
+	let text = a:text
+	let encoding = get(g:, 'asyncrun_encs', '')
+	if encoding != ''
+		let text = iconv(text, encoding, &encoding)
+	endif
+	" echom text
 	if check == a:bid
-		call append(line('$') - 1, a:text)
+		call append(line('$') - 1, text)
 	else
 		let lastline = asclib#buffer#linecount(a:bid)
 		" let lastline = len(getbufline(a:bid, 1, '$'))
 		if lastline > 0
 			let lastline -= 1
 		endif
-		call asclib#buffer#append(a:bid, lastline, a:text)
+		call asclib#buffer#append(a:bid, lastline, text)
 	endif
 endfunc
 
@@ -36,7 +42,7 @@ function! s:callback(task, event, data) abort
 	" echom [a:event, a:data]
 	if a:event == 'stdout'
 		call s:append(bid, a:data)
-		echom "stdout: " . a:data
+		" echom "stdout: " . a:data
 		" call setbufvar(bid, '&modified', 0)
 	elseif a:event == 'stderr'
 		call s:append(bid, a:data)
