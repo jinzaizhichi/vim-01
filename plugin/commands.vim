@@ -303,3 +303,30 @@ endfunc
 command! -nargs=0 ToggleReadingMode call module#extension#toggle_reading_mode()
 
 
+"----------------------------------------------------------------------
+" 
+"----------------------------------------------------------------------
+command! -nargs=0 CloseRightTabs call s:CloseRightTabs()
+function! s:CloseRightTabs() abort
+	let tid = tabpagenr()
+	while 1
+		let last = tabpagenr('$')
+		if last == tid
+			break
+		endif
+		exec printf('tabclose %d', last)
+	endwhile
+endfunc
+
+
+"----------------------------------------------------------------------
+" 
+"----------------------------------------------------------------------
+command! -nargs=0 CloseLeftTabs call s:CloseLeftTabs()
+function! s:CloseLeftTabs()
+	while tabpagenr() != 1
+		exec 'tabclose 1'
+	endwhile
+endfunc
+
+

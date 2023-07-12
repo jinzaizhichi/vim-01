@@ -62,12 +62,14 @@ let g:navigator.w = {
 let g:navigator.t = {
 			\ 'name': '+tab',
 			\ 'c' : [':tabnew', 'new-tab'],
-			\ 'q' : [':tabclose', 'close-tab'],
+			\ 'q' : [':tabclose', 'close-current-tab'],
 			\ 'n' : [':tabnext', 'next-tab'],
 			\ 'p' : [':tabprev', 'previous-tab'],
 			\ 'o' : [':tabonly', 'close-all-other-tabs'],
 			\ 'l' : [':-tabmove', 'move-tab-left'],
 			\ 'r' : [':+tabmove', 'move-tab-right'],
+			\ 'L' : [':CloseLeftTabs', 'close-left-tabs'],
+			\ 'R' : [':CloseRightTabs', 'close-right-tabs'],
 			\ '0' : [':tabn 10', 'tab-10'],
 			\ '1' : ['<key>1gt', 'tab-1'],
 			\ '2' : ['<key>2gt', 'tab-2'],
@@ -114,7 +116,8 @@ let g:navigator.o = {
 "----------------------------------------------------------------------
 let g:navigator.p = {
 			\ 'name': '+project',
-			\ 'c' : ['module#project#open("CMakeLists.txt")', 'edit-cmake-lists'],
+			\ 'c' : ['CdToProjectRoot', 'cd-to-project-root'],
+			\ 'e' : ['module#project#open("CMakeLists.txt")', 'edit-cmake-lists'],
 			\ 't' : ['module#project#open(".tasks")', 'edit-task-list'],
 			\ 'r' : ['module#project#open("README.md")', 'edit-readme-md'],
 			\ 'i' : ['module#project#open(".gitignore")', 'edit-git-ignore'],
