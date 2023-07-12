@@ -131,8 +131,8 @@ let g:navigator.h = {
 			\ 'name': '+help',
 			\ 'b' : [':Help bash', 'bash-cheatsheet'],
 			\ 'v' : [':Help vim', 'vim-cheatsheet'],
-			\ 'g' : [':Help gdb', 'gdb-cheatsheet'],
-			\ 'G' : [':Help git', 'git-cheatsheet'],
+			\ 'G' : [':Help gdb', 'gdb-cheatsheet'],
+			\ 'g' : [':Help git', 'git-cheatsheet'],
 			\ 'n' : [':Help nano', 'nano-cheatsheet'],
 			\ }
 
