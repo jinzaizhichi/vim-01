@@ -476,8 +476,6 @@ noremap <silent><c-f10> :call quickmenu#toggle(1)<cr>
 inoremap <silent><c-f10> <ESC>:call quickmenu#toggle(1)<cr>
 noremap <silent><c-f11> :call quickmenu#toggle(2)<cr>
 inoremap <silent><c-f11> <ESC>:call quickmenu#toggle(2)<cr>
-" noremap <silent><c-f12> :call asclib#utils#script_menu()<cr>
-" inoremap <silent><c-f12> <ESC>:call asclib#utils#script_menu()<cr>
 nnoremap <silent>g5 :PreviewTag<cr>
 nnoremap <silent><space>ww :call asclib#touch_file('wsgi')<cr>
 
