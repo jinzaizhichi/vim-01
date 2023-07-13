@@ -148,7 +148,7 @@ if [[ -z "$DISABLE_Z_PLUGIN" ]]; then
 		if [[ -n "$BASH_VERSION" ]]; then
 			eval "$($INIT_LUA $HOME/.local/etc/z.lua --init bash once enhanced fzf)"
 		elif [[ -n "$ZSH_VERSION" ]]; then
-			eval "$($INIT_LUA $HOME/.local/etc/z.lua --init zsh once enhanced)"
+			eval "$($INIT_LUA $HOME/.local/etc/z.lua --init zsh once enhanced fzf)"
 		else
 			eval "$($INIT_LUA $HOME/.local/etc/z.lua --init auto once enhanced)"
 		fi
