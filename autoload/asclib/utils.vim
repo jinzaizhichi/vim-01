@@ -395,18 +395,20 @@ endfunc
 "----------------------------------------------------------------------
 " display help
 "----------------------------------------------------------------------
-function! asclib#utils#display(filename, mods) abort
-	if !filereadable(a:filename)
-		call asclib#common#errmsg("E484: Can't open file " .. a:filename)
-		return -1
+function! asclib#utils#display(name, mods) abort
+	if type(a:name) == type('')
+		if !filereadable(a:name)
+			call asclib#common#errmsg("E484: Can't open file " .. a:name)
+			return -1
+		endif
 	endif
 	if a:mods == 'tab'
 		exec 'tab split'
-	elseif asclib#buffer#getvar(0, 'is_help', 0) == 0
+	elseif asclib#buffer#getvar(0, '_for_display', 0) == 0
 		let avail = -1
 		for i in range(winnr('$'))
 			let bid = winbufnr(i + 1)
-			if asclib#buffer#getvar(bid, 'is_help', 0) != 0
+			if asclib#buffer#getvar(bid, '_for_display', 0) != 0
 				let avail = i + 1
 				break
 			endif
@@ -423,13 +425,23 @@ function! asclib#utils#display(filename, mods) abort
 			exec a:mods .. ' split'
 		endif
 	endif
-	exec 'edit ' .. fnameescape(a:filename)
-	setl bt=help readonly nomodifiable nobuflisted noswapfile
-	setl nonumber norelativenumber signcolumn=no
-	setl fdc=0 nofen nocursorline nocursorcolumn 
-	call asclib#buffer#setvar(0, 'is_help', 1)
+	if type(a:name) == type(0)
+		exec printf('buffer %d', a:name)
+	else 
+		exec 'edit ' .. fnameescape(a:name)
+	endif
+	call asclib#buffer#setvar(0, '_for_display', 1)
 	return 0
 endfunc
 
+
+"----------------------------------------------------------------------
+" make current buffer infomation buffer
+"----------------------------------------------------------------------
+function! asclib#utils#make_info_buf() abort
+	setl bt=help nomodifiable nobuflisted noswapfile readonly 
+	setl nonumber norelativenumber signcolumn=no
+	setl fdc=0 nofen nocursorline nocursorcolumn 
+endfunc
 
 

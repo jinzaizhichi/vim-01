@@ -16,7 +16,12 @@ function! module#extension#help(name)
 	if !filereadable(path)
 		call asclib#common#errmsg('E149: Sorry, no help for ' . a:name)
 	else
-		call asclib#utils#display(path, 'auto')
+		if asclib#utils#display(path, 'auto') == 0
+			call asclib#utils#make_info_buf()
+			noremap <buffer>c :close<cr>
+			noremap <buffer>q :close<cr>
+			noremap <buffer><bs> :close<cr>
+		endif
 	endif
 endfunc
 
