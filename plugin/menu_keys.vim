@@ -149,7 +149,7 @@ let g:navigator.y = {
 " escript 
 "----------------------------------------------------------------------
 let g:navigator.e = {
-			\ 'name': '+escript-programs',
+			\ 'name': '+escript-runner',
 			\ 'l' : ['EScript list_rtp', 'list-runtime-path'],
 			\ 'p' : ['EScript lua_package', 'list-lua-package'],
 			\ 's' : ['EScript script_names', 'list-loaded-scripts'],
