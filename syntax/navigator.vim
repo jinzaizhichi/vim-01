@@ -69,9 +69,9 @@ endfunc
 function! s:color_item(text, pos, width, y) abort
 	let part = strpart(a:text, a:pos, a:width)
 	let head = matchstr(part, '^\s*\S\+')
-	let skip = strlen(matchstr(head, '^\s*'))
+	let skip = strcharlen(matchstr(head, '^\s*'))
 	let head = strpart(head, skip)
-	let size = strlen(head)
+	let size = strcharlen(head)
 	let y = a:y + 1
 	let pos = a:pos + skip + 1
 	let endup = a:pos + a:width + 1
@@ -85,7 +85,7 @@ function! s:color_item(text, pos, width, y) abort
 	let pos += size + 1
 	if s:icon_separator != ''
 		let iw = strlen(s:icon_separator)
-		exec s:high_region('NavigatorSeparator', y, pos, y, pos + iw, 1)
+		exec s:high_region('NavigatorSeparator', y, pos, y, pos + iw, 0)
 		let pos += iw + 1
 	endif
 	let mark = a:text[pos - 1]
