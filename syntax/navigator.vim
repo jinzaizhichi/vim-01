@@ -71,7 +71,7 @@ function! s:color_item(text, pos, width, y) abort
 	let head = matchstr(part, '^\s*\S\+')
 	let skip = strcharlen(matchstr(head, '^\s*'))
 	let head = strpart(head, skip)
-	let size = strcharlen(head)
+	let size = strwidth(head)
 	let y = a:y + 1
 	let pos = a:pos + skip + 1
 	let endup = a:pos + a:width + 1
