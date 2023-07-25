@@ -216,6 +216,9 @@ function! asclib#python#reload(module_name)
 		call asclib#python#checkhealth()
 		return 0
 	endif
+	if s:py_inited == 0
+		call asclib#python#init()
+	endif
 	if s:py_version == 3
 		exec s:py_cmd 'import importlib as __imp'
 	else
