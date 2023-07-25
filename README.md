@@ -64,7 +64,6 @@ Windows 下修改对应目录。
 
 本配置依个人习惯，将 tabsize shiftwidth 等设置成了 4个字节宽度，并且关闭了 expandtab，不喜欢的话可以在 source 了两个文件以后覆盖该设置。
 
-## Keymap
 
 ## 主目录
 
@@ -86,6 +85,7 @@ ESC 离开目录，按对应字母触发功能，CTRL+j/k 翻页，BackSpace 可
 
 （需要 Vim 8.0+）
 
+## Keymap
 
 ### 光标移动
 
