@@ -30,7 +30,7 @@ for i in range(len(s:position))
 	let startx += s:spacing
 endfor
 
-messages clear
+" messages clear
 " echom printf("%s, %s, %s", s:position, s:width, 0)
 
 
