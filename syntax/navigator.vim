@@ -117,6 +117,10 @@ function! s:color_with_separator()
 endfunc
 
 
+
+"----------------------------------------------------------------------
+" main
+"----------------------------------------------------------------------
 syn clear
 
 if s:icon_separator == ''
@@ -124,6 +128,9 @@ if s:icon_separator == ''
 else
 	call s:color_with_separator()
 endif
+
+let b:current_syntax = 'navigator'
+
 
 " echo s:position
 " echo s:icon_separator
