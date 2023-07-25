@@ -151,7 +151,7 @@ ESC 离开目录，按对应字母触发功能，CTRL+j/k 翻页，BackSpace 可
 还可以使用 ALT+1 到 ALT+9 来切换，前提是终端软件需要配置一下，有些终端 ALT_1 到 ALT_9 被用来切换 connection 的 tab，那么可以把 ALT+SHIFT+1-9 配置成发送字符串：`\0331` 到 `\0339` 等几个不同字符串，其中 `\033` 是 ESC键的编码，这样不影响终端软件的 ALT_1-9 情况下，用 ALT_SHIFT_1-9 来代替。
 
 
-### 通用按键
+### 功能键
 
 | Key    | Task | Description                                                                     |
 | :-----: | --| ----                                                                    |
@@ -167,9 +167,9 @@ ESC 离开目录，按对应字母触发功能，CTRL+j/k 翻页，BackSpace 可
 | S-F8 | project-install | 测试当前项目，请用 S-F12 编辑当前项目 .tasks 文件中的 project-install 方法 |
 | S-F9 | project-build | 测试当前项目，请用 S-F12 编辑当前项目 .tasks 文件中的 project-build 方法 |
 | S-F11   | project-debug | 调试当前项目 |
-| F10   | 打开/关闭 quickfix                        |
-| F12 | | 打开所有任务，让你选择 |
-| S-F12 | | 编辑当前项目的 task | 
+| F10   | 非任务| 打开/关闭 quickfix                        |
+| F12 | 非任务| 打开所有任务，让你选择 |
+| S-F12 | 非任务| 编辑当前项目的 task | 
 
 全局任务配置文件在本仓库根目录的 `tasks.ini` 里描述。
 
