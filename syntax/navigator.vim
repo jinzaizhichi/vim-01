@@ -123,10 +123,10 @@ endfunc
 "----------------------------------------------------------------------
 syn clear
 
-if s:icon_separator == ''
-	call s:color_buffer()
-else
+if s:icon_separator != ''
 	call s:color_with_separator()
+else
+	call s:color_buffer()
 endif
 
 let b:current_syntax = 'navigator'
