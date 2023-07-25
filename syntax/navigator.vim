@@ -30,6 +30,9 @@ for i in range(len(s:position))
 	let startx += s:spacing
 endfor
 
+messages clear
+" echom printf("%s, %s, %s", s:position, s:width, 0)
+
 
 "----------------------------------------------------------------------
 " color the hole buffer
@@ -55,7 +58,7 @@ endfunc
 " highlight region
 "----------------------------------------------------------------------
 function! s:high_region(name, srow, scol, erow, ecol, virtual)
-	let sep = (a:virtual == 0)? 'c' : 'v'
+	let sep = (a:virtual != 0)? 'c' : 'v'
 	let cmd = 'syn region ' . a:name . ' '
 	let cmd .= ' start=/\%' . a:srow . 'l\%' . a:scol . sep . '/'
 	let cmd .= ' end=/\%' . a:erow . 'l\%' . a:ecol . sep . '/'
@@ -69,12 +72,17 @@ endfunc
 function! s:color_item(text, pos, width, y) abort
 	let part = strpart(a:text, a:pos, a:width)
 	let head = matchstr(part, '^\s*\S\+')
-	let skip = strcharlen(matchstr(head, '^\s*'))
+	let skip = strlen(matchstr(head, '^\s*'))
 	let head = strpart(head, skip)
 	let size = strwidth(head)
 	let y = a:y + 1
 	let pos = a:pos + skip + 1
 	let endup = a:pos + a:width + 1
+	if 1
+		" exec s:high_region('ErrorMsg', y, a:pos + 1, y, endup, 0)
+		" return 0
+	endif
+	" echom printf("start pos=%d skip=%d: '%s'", pos, skip, part)
 	if head[0] == '[' && head[size - 1] == ']'
 		exec s:high_region('NavigatorBracket', y, pos + 0, y, pos + 1, 0)
 		exec s:high_region('NavigatorKey', y, pos + 1, y, pos + 1 + size - 2, 0)
@@ -96,9 +104,26 @@ function! s:color_item(text, pos, width, y) abort
 	endif
 endfunc
 
+
+"----------------------------------------------------------------------
+" 
+"----------------------------------------------------------------------
+function! s:color_with_separator()
+	let sep = s:icon_separator
+	exec 'syntax match NavigatorSeparator /'. sep . '/ contained'
+	exec 'syntax match NavigatorKey' '/\(^\s*\|\s\{2,}\)\S.\{-}'.sep.'/' 'contains=NavigatorSeparator'
+	syntax match NavigatorGroup / +[0-9A-Za-z_/-]*/
+	syntax region NavigatorItem start="^" end="$" contains=NavigatorKey, NavigatorGroup, NavigatorSeparator
+endfunc
+
+
 syn clear
 
-call s:color_buffer()
+if s:icon_separator == ''
+	call s:color_buffer()
+else
+	call s:color_with_separator()
+endif
 
 " echo s:position
 " echo s:icon_separator
