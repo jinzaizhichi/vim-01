@@ -495,16 +495,16 @@ endfunc
 " check
 "----------------------------------------------------------------------
 function! asclib#path#busybox(exename, ...)
-	if !exists('g:asc_busybox')
-		let g:asc_busybox = 'busybox'
+	if !exists('g:asclib_busybox')
+		let g:asclib_busybox = 'busybox'
 		if asclib#path#executable('busybox') == ''
-			let g:asc_busybox = ''
+			let g:asclib_busybox = ''
 		endif
 	endif
 	if !exists('s:busybox')
 		let s:busybox = [{}, {}, {}, {}]
 	endif
-	let mode = get(g:, 'asc_busybox_mode', 0)
+	let mode = get(g:, 'asclib_busybox_mode', 0)
 	let mode = (a:0 > 0)? (a:1) : mode
 	let mode = (mode == 0)? 0 : 1
 	if has_key(s:busybox[mode], a:exename)
@@ -515,8 +515,8 @@ function! asclib#path#busybox(exename, ...)
 		let s:busybox[0][a:exename] = a:exename
 		return s:busybox[0][a:exename]
 	endif
-	if g:asc_busybox != ''
-		let path = g:asc_busybox . ' ' . a:exename
+	if g:asclib_busybox != ''
+		let path = g:asclib_busybox . ' ' . a:exename
 	endif
 	let s:busybox[1][a:exename] = path
 	return path
