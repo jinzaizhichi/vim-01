@@ -23,6 +23,12 @@ let g:asclib#core#has_vim9script = (v:version >= 900) && has('vim9script')
 
 
 "----------------------------------------------------------------------
+" Internal
+"----------------------------------------------------------------------
+let s:has_execute = exists('*execute')
+
+
+"----------------------------------------------------------------------
 " Get Instance
 "----------------------------------------------------------------------
 function! asclib#core#instance(mode, name)
@@ -76,6 +82,38 @@ function! asclib#core#getcd()
 		let cmd = haslocaldir()? ((haslocaldir() == 1)? 'lcd' : 'tcd') : 'cd'
 	endif
 	return cmd
+endfunc
+
+
+"----------------------------------------------------------------------
+" execute ex command
+"----------------------------------------------------------------------
+function! asclib#core#execute(cmd, ...)
+	if s:has_execute
+		if a:0 == 0
+			return execute(a:cmd)
+		else
+			return execute(a:cmd, a:1)
+		endif
+	else
+		if type(a:cmd) == type([])
+			let cmd = join(a:cmd, "\n")
+		else
+			let cmd = a:cmd
+		endif
+		redir => l:hr
+		if a:0 == 0
+			exec cmd
+		elseif a:1 == 'silent'
+			silent exec cmd
+		elseif a:1 == 'silent!'
+			silent! exec cmd
+		else
+			exec cmd
+		endif
+		redir END
+		return l:hr
+	endif
 endfunc
 
 
