@@ -66,9 +66,25 @@ Windows 下修改对应目录。
 
 ## Keymap
 
-大部分内置功能可以按两次空格键（`<space><space>`）展开的主目录里找到，主目录可以用 hjkl 来浏览，按 ESC 离开（需要 Vim 8.2 +）
+## 主目录
 
-扩展目录是连续按两次 TAB 键可以看到，ESC 离开目录（需要 Vim 8.0+），字母出发功能，CTRL+j/k 翻页。
+主目录位于顶部，连续按两次空格 `<space><space>` 展开：
+
+![picture-vim-menu](https://skywind3000.github.io/images/p/misc/2023/vim-menu.png)
+
+主目录可以用 hjkl 来浏览，空格或者回车选中，按 ESC 离开，大部分功能都能在这里找到。
+
+（需要 Vim 8.2 +）
+
+## 扩展目录
+
+扩展目录位于底部，连续按两次 TAB 键可以看到：
+
+![picture-vim-menu2](https://skywind3000.github.io/images/p/misc/2023/vim-menu2.png)
+
+ESC 离开目录，按对应字母触发功能，CTRL+j/k 翻页，BackSpace 可以回到上一级
+
+（需要 Vim 8.0+）
 
 
 ### 光标移动
