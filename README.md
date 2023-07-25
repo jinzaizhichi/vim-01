@@ -157,8 +157,8 @@ ESC 离开目录，按对应字母触发功能，CTRL+j/k 翻页，BackSpace 可
 | :-----: | --| ----                                                                    |
 | F5      | file-run | 运行当前程序，自动检测 C/Python/Ruby/Shell/JavaScript，并调用正确命令运行 |
 | F6      | make | 运行 make 任务 |
-| F7      | emake | 调用 emake 编译当前项目， $PATH 中需要有 emake 可执行                     |
-| F8      | emake-exe | 调用 emake 运行当前项目， $PATH 中需要有 emake 可执行                     |
+| F7      | emake | 调用 emake 编译当前项目文件， $PATH 中需要有 emake 可执行                     |
+| F8      | emake-exe | 调用 emake 运行当前项目文件， $PATH 中需要有 emake 可执行                     |
 | F9      | file-build | 调用 gcc 编译当前 C/C++ 程序，$PATH 中需要有 gcc可执行，编译到当前目录下  |
 | F11   | file-debug | 调试当前程序 |
 | S-F5 | project-run | 运行当前项目，请用 S-F12 编辑当前项目 .tasks 文件中的 project-run 方法 |
