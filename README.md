@@ -153,14 +153,25 @@ ESC 离开目录，按对应字母触发功能，CTRL+j/k 翻页，BackSpace 可
 
 ### 通用按键
 
-| 按键    | 说 明                                                                     |
-| :-----: | ------                                                                    |
-| F5      | 运行当前程序，自动检测 C/Python/Ruby/Shell/JavaScript，并调用正确命令运行 |
-| F7      | 调用 emake 编译当前项目， $PATH 中需要有 emake 可执行                     |
-| F9      | 调用 gcc 编译当前 C/C++ 程序，$PATH 中需要有 gcc可执行，编译到当前目录下  |
+| Key    | Task | Description                                                                     |
+| :-----: | --| ----                                                                    |
+| F5      | file-run | 运行当前程序，自动检测 C/Python/Ruby/Shell/JavaScript，并调用正确命令运行 |
+| F6      | make | 运行 make 任务 |
+| F7      | emake | 调用 emake 编译当前项目， $PATH 中需要有 emake 可执行                     |
+| F8      | emake-exe | 调用 emake 运行当前项目， $PATH 中需要有 emake 可执行                     |
+| F9      | file-build | 调用 gcc 编译当前 C/C++ 程序，$PATH 中需要有 gcc可执行，编译到当前目录下  |
+| F11   | file-debug | 调试当前程序 |
+| S-F5 | project-run | 运行当前项目，请用 S-F12 编辑当前项目 .tasks 文件中的 project-run 方法 |
+| S-F6 | project-test | 测试当前项目，请用 S-F12 编辑当前项目 .tasks 文件中的 project-test 方法 |
+| S-F7 | project-init | 测试当前项目，请用 S-F12 编辑当前项目 .tasks 文件中的 project-init 方法 |
+| S-F8 | project-install | 测试当前项目，请用 S-F12 编辑当前项目 .tasks 文件中的 project-install 方法 |
+| S-F9 | project-build | 测试当前项目，请用 S-F12 编辑当前项目 .tasks 文件中的 project-build 方法 |
+| S-F11   | project-debug | 调试当前项目 |
 | F10   | 打开/关闭 quickfix                        |
-| F11   | 打开【开发者目录】 |
-| F12/S-F10 | 打开【主目录】|
+| F12 | | 打开所有任务，让你选择 |
+| S-F12 | | 编辑当前项目的 task | 
+
+全局任务配置文件在本仓库根目录的 `tasks.ini` 里描述。
 
 
 
