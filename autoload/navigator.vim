@@ -105,3 +105,21 @@ endfunc
 
 
 
+"----------------------------------------------------------------------
+" start command
+"----------------------------------------------------------------------
+function! navigator#start(visual, bang, line1, line2, count) abort
+	let vis = (a:visual)? 'gv' : ''
+	let line1 = a:line1
+	let line2 = a:line2
+	let opts = {}
+	let path = navigator#open(a:keymap, a:prefix, opts)
+	if path == []
+		return 0
+	endif
+	let hr = navigator#config#visit(a:keymap, path)
+
+endfunc
+
+
+

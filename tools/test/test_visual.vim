@@ -27,21 +27,34 @@ function! DemoVisual(line1, line2, mods, args)
 	exec 'normal gv'
 	let t = printf("mode=%s line1=%d line2=%d mods=%s", mode(1), a:line1, a:line2, a:mods)
 	let t .= printf(' l1=%s l2=%s', getpos("'<"), getpos("'>"))
-	let t .= printf(' x1=%d x2=%d', x1, x2)
+	let t .= printf(' x1=%d x2=%d count=%d', x1, x2, count)
 	let t .= printf(' args="%s"', a:args)
 	exec 'echom t'
-	call feedkeys('=')
+	" call feedkeys('=')
 endfunc
 
 
 command! TestVisual1 call TestVisual()
-command! -rang -count TestVisual2 call TestVisual()
-command! -nargs=* -rang DemoVisual call DemoVisual(<line1>, <line2>, '<q-mods>', <q-args>)
+command! -rang=0 TestVisual2 call TestVisual()
+command! -nargs=* -rang=0 -count DemoVisual call DemoVisual(<line1>, <line2>, '<q-mods>', <q-args>)
 
 vnoremap <space>kk :TestVisual2<cr>
-vnoremap <space>hh :DemoVisual \<esc><cr>
+vnoremap <space>hh :DemoVisual haha<cr>
 vnoremap <space>l1 :call DemoVisual(1, 2, '3')<cr>
 
 messages clear
+
+
+"----------------------------------------------------------------------
+" 
+"----------------------------------------------------------------------
+function! DetectVisual()
+	echom printf('visualmode=%s', visualmode())
+endfunc
+
+command! -range DetectVisual call DetectVisual()
+
+" vnoremap <space>nn :DetectVisual<cr>
+nnoremap <space>nn :DetectVisual<cr>
 
 
