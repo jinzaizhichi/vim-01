@@ -203,6 +203,14 @@ let g:navigator_visual['='] = ['<key>=', 'align-block']
 let g:navigator_visual['r'] = ['<key>>', 'move-right']
 let g:navigator_visual['l'] = ['<key><', 'move-left']
 
+let g:navigator_visual.p = {
+			\ 'name': '+text-process',
+			\ 'j' : ['TP format_json', 'format-json'],
+			\ 'h' : ['TP format_html', 'format-html'],
+			\ 'm' : ['TP html2markdown', 'html-to-markdown'],
+			\ 't' : ['TP html_to_text', 'html-to-plain-text'],
+			\ }
+
 
 "----------------------------------------------------------------------
 " trigger
