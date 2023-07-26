@@ -219,6 +219,12 @@ let g:navigator_visual.p = {
 			\ 't' : ['TP! html_to_text', 'preview-html-to-plain-text'],
 			\ }
 
+let g:navigator_visual.c = {
+			\ 'name': '+c/cpp',
+			\ 'b' : ['CppBraceExpand', 'cpp-brace-expand'],
+			\ 'c' : ['CppClassInsert', 'cpp-class-insert'],
+			\ }
+
 
 "----------------------------------------------------------------------
 " trigger
