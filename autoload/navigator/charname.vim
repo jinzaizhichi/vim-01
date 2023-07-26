@@ -191,6 +191,7 @@ endfunc
 "----------------------------------------------------------------------
 function! navigator#charname#mapname(content) abort
 	let content = a:content
+	let xcount = 1000
 	while 1
 		let p1 = stridx(content, '<')
 		if p1 < 0
@@ -202,8 +203,16 @@ function! navigator#charname#mapname(content) abort
 		endif
 		let text = strpart(content, p1 + 1, p2 - p1 - 1)
 		let mark = '<' . text . '>'
-		let replace = eval('"\' . mark . '"')
+		try
+			let replace = eval('"\' . mark . '"')
+		catch
+			break
+		endtry
 		let content = s:replace(content, mark, replace)
+		let xcount -= 1
+		if xcount <= 0
+			break
+		endif
 	endwhile
 	return content
 endfunc
