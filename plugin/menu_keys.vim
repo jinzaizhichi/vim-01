@@ -230,6 +230,8 @@ let g:navigator_visual.f = {
 			\ 'f' : ['<key>gq', 'format-with-formatprg'],
 			\ }
 
+" let g:navigator_visual.config = {'popup':1, 'popup_position':'center'}
+
 
 "----------------------------------------------------------------------
 " trigger

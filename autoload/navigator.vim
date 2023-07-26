@@ -58,6 +58,16 @@ function! navigator#open(keymap, prefix, ...) abort
 			endif
 		endif
 	endif
+	if has_key(keymap, 'config')
+		let config = keymap.config
+		if type(config) == type({})
+			for name in keys(s:config_name)
+				if has_key(config, name)
+					let opts[name] = config[name]
+				endif
+			endfor
+		endif
+	endif
 	let hr = navigator#state#open(keymap, opts)
 	if qf != 0
 	endif
