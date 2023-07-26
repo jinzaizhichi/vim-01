@@ -58,3 +58,13 @@ command! -range DetectVisual call DetectVisual()
 nnoremap <space>nn :DetectVisual<cr>
 
 
+"----------------------------------------------------------------------
+" 
+"----------------------------------------------------------------------
+function! FeedKey(...)
+	echom printf("feed: %s", a:000)
+endfunc
+
+command! -nargs=* FeedKey call FeedKey(<f-args>)
+
+

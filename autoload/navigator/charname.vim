@@ -80,6 +80,8 @@ for key in keys(s:special_names)
 	let s:special_keys[ch] = key
 endfor
 
+" echo keys(s:special_keys)
+
 let s:char_display = {
 			\ "<cr>" : "RET",
 			\ "<space>" : "SPC",
@@ -173,5 +175,40 @@ function! navigator#charname#sort(keys)
 	endfor
 	return result
 endfunc
+
+
+"----------------------------------------------------------------------
+" replace string
+"----------------------------------------------------------------------
+function! s:replace(text, old, new)
+	let l:data = split(a:text, a:old, 1)
+	return join(l:data, a:new)
+endfunc
+
+
+"----------------------------------------------------------------------
+" convert '<tab>hh' to "\<tab>hh"
+"----------------------------------------------------------------------
+function! navigator#charname#mapname(content) abort
+	let content = a:content
+	while 1
+		let p1 = stridx(content, '<')
+		if p1 < 0
+			break
+		endif
+		let p2 = stridx(content, '>', p1)
+		if p2 < 0
+			break
+		endif
+		let text = strpart(content, p1 + 1, p2 - p1 - 1)
+		let mark = '<' . text . '>'
+		let replace = eval('"\' . mark . '"')
+		let content = s:replace(content, mark, replace)
+	endwhile
+	return content
+endfunc
+
+
+
 
 
