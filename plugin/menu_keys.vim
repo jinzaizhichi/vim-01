@@ -8,6 +8,10 @@
 "======================================================================
 
 let g:navigator = {}
+let g:navigator_visual = {}
+
+let g:navigator.prefix = "\<tab>\<tab>"
+let g:navigator_visual.prefix = "\<tab>\<tab>"
 
 
 "----------------------------------------------------------------------
@@ -193,10 +197,18 @@ let g:navigator.x = {
 
 
 "----------------------------------------------------------------------
+" visual
+"----------------------------------------------------------------------
+let g:navigator_visual['='] = ['<key>=', 'align-block']
+let g:navigator_visual['r'] = ['<key>>', 'move-right']
+let g:navigator_visual['l'] = ['<key><', 'move-left']
+
+
+"----------------------------------------------------------------------
 " trigger
 "----------------------------------------------------------------------
-noremap <silent><tab><tab> :call navigator#cmd(g:navigator, '<tab><tab>')<cr>
-" noremap <silent><tab><tab> :Navigator '<tab>'<cr>
+nnoremap <silent><tab><tab> :Navigator g:navigator<cr>
+vnoremap <silent><tab><tab> :NavigatorVisual g:navigator_visual<cr>
 
 
 

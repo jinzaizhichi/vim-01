@@ -108,18 +108,70 @@ endfunc
 "----------------------------------------------------------------------
 " start command
 "----------------------------------------------------------------------
-function! navigator#start(visual, bang, line1, line2, count) abort
+function! navigator#start(visual, bang, args, line1, line2, count) abort
 	let vis = (a:visual)? 'gv' : ''
 	let line1 = a:line1
 	let line2 = a:line2
 	let opts = {}
-	let path = navigator#open(a:keymap, a:prefix, opts)
+	let keymap = eval(a:args)
+	let prefix = get(keymap, 'prefix', '')
+	let path = navigator#open(keymap, prefix, opts)
 	if path == []
 		return 0
 	endif
-	let hr = navigator#config#visit(a:keymap, path)
-
+	let hr = navigator#config#visit(keymap, path)
+	if vis != ''
+		exec 'normal! ' . vis
+	endif
+	let range = ''
+	if a:line1 != a:line2
+		let range = printf("%d,%d", a:line1, a:line2)
+	elseif a:count > 0
+		let range = printf("%d", a:count)
+	endif
+	if type(hr) == v:t_list
+		let cmd = (len(hr) > 0)? hr[0] : ''
+		try
+			if cmd =~ '^[a-zA-Z0-9_#]\+(.*)$'
+				exec printf('%scall %s', range, cmd)
+			elseif cmd =~ '^<key>'
+				let keys = strpart(cmd, 5)
+				call feedkeys(keys)
+			elseif cmd =~ '^@'
+				let keys = strpart(cmd, 1)
+				call feedkeys(keys)
+			elseif cmd =~ '^<plug>'
+				let keys = strpart(cmd, 6)
+				call feedkeys("\<plug>" . keys)
+			else
+				exec printf('%s%s', range, cmd)
+			endif
+		catch
+			redraw
+			echohl ErrorMsg
+			echo v:exception
+			echohl None
+		endtry
+	elseif prefix != ''
+		let keys = s:key_translate([prefix] + path)
+		call feedkeys(keys)
+	endif
 endfunc
 
+
+"----------------------------------------------------------------------
+" translate key name array to key code string
+"----------------------------------------------------------------------
+function! s:key_translate(array) abort
+	let output = []
+	for cc in array
+		let ch = navigator#charname#get_key_code(cc)
+		if ch == ''
+			let ch = cc
+		endif
+		let output += [ch]
+	endfor
+	return join(output, '')
+endfunc
 
 

@@ -21,13 +21,13 @@ endfunc
 "----------------------------------------------------------------------
 " 
 "----------------------------------------------------------------------
-function! DemoVisual(line1, line2, mods, args)
+function! DemoVisual(line1, line2, mods, count, args)
 	let x1 = line('v')
 	let x2 = line('.')
 	exec 'normal gv'
 	let t = printf("mode=%s line1=%d line2=%d mods=%s", mode(1), a:line1, a:line2, a:mods)
 	let t .= printf(' l1=%s l2=%s', getpos("'<"), getpos("'>"))
-	let t .= printf(' x1=%d x2=%d count=%d', x1, x2, count)
+	let t .= printf(' x1=%d x2=%d count=%d', x1, x2, a:count)
 	let t .= printf(' args="%s"', a:args)
 	exec 'echom t'
 	" call feedkeys('=')
@@ -36,7 +36,7 @@ endfunc
 
 command! TestVisual1 call TestVisual()
 command! -rang=0 TestVisual2 call TestVisual()
-command! -nargs=* -rang=0 -count DemoVisual call DemoVisual(<line1>, <line2>, '<q-mods>', <q-args>)
+command! -nargs=* -rang=0 DemoVisual call DemoVisual(<line1>, <line2>, <q-mods>, <count>, <q-args>)
 
 vnoremap <space>kk :TestVisual2<cr>
 vnoremap <space>hh :DemoVisual haha<cr>
