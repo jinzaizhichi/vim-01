@@ -197,18 +197,18 @@ let g:navigator.x = {
 
 
 "----------------------------------------------------------------------
-" visual
+" visual mode
 "----------------------------------------------------------------------
 let g:navigator_visual['='] = ['<key>=', 'align-block']
 " let g:navigator_visual['r'] = ['<key>>', 'move-right']
 " let g:navigator_visual['l'] = ['<key><', 'move-left']
 
-let g:navigator_visual.f = {
+let g:navigator_visual.t = {
 			\ 'name': '+text-filter',
 			\ 'j' : ['TP format_json', 'format-json'],
 			\ 'h' : ['TP format_html', 'format-html'],
 			\ 'm' : ['TP html2markdown', 'html-to-markdown'],
-			\ 't' : ['TP html_to_text', 'html-to-plain-text'],
+			\ 't' : ['TP html_to_text', 'html-to-text'],
 			\ }
 
 let g:navigator_visual.p = {
@@ -216,7 +216,7 @@ let g:navigator_visual.p = {
 			\ 'j' : ['TP! format_json', 'preview-format-json'],
 			\ 'h' : ['TP! format_html', 'preview-format-html'],
 			\ 'm' : ['TP! html2markdown', 'preview-html-to-markdown'],
-			\ 't' : ['TP! html_to_text', 'preview-html-to-plain-text'],
+			\ 't' : ['TP! html_to_text', 'preview-html-to-text'],
 			\ }
 
 let g:navigator_visual.c = {
