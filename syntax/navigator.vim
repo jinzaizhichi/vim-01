@@ -148,6 +148,7 @@ highlight default link NavigatorGroup Function
 highlight default link NavigatorPopup Normal
 highlight default link NavigatorFoot StatusLine
 highlight default link NavigatorHead StatusLineNC
+highlight default link NavigatorBorder Normal
 
 
 
