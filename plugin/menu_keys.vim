@@ -225,6 +225,11 @@ let g:navigator_visual.c = {
 			\ 'c' : ['CppClassInsert', 'cpp-class-insert'],
 			\ }
 
+let g:navigator_visual.f = {
+			\ 'name': '+format',
+			\ 'f' : ['<key>gq', 'format-with-formatprg'],
+			\ }
+
 
 "----------------------------------------------------------------------
 " trigger
