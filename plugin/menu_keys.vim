@@ -200,15 +200,23 @@ let g:navigator.x = {
 " visual
 "----------------------------------------------------------------------
 let g:navigator_visual['='] = ['<key>=', 'align-block']
-let g:navigator_visual['r'] = ['<key>>', 'move-right']
-let g:navigator_visual['l'] = ['<key><', 'move-left']
+" let g:navigator_visual['r'] = ['<key>>', 'move-right']
+" let g:navigator_visual['l'] = ['<key><', 'move-left']
 
-let g:navigator_visual.p = {
-			\ 'name': '+text-process',
+let g:navigator_visual.f = {
+			\ 'name': '+text-filter',
 			\ 'j' : ['TP format_json', 'format-json'],
 			\ 'h' : ['TP format_html', 'format-html'],
 			\ 'm' : ['TP html2markdown', 'html-to-markdown'],
 			\ 't' : ['TP html_to_text', 'html-to-plain-text'],
+			\ }
+
+let g:navigator_visual.p = {
+			\ 'name': '+text-preview',
+			\ 'j' : ['TP! format_json', 'preview-format-json'],
+			\ 'h' : ['TP! format_html', 'preview-format-html'],
+			\ 'm' : ['TP! html2markdown', 'preview-html-to-markdown'],
+			\ 't' : ['TP! html_to_text', 'preview-html-to-plain-text'],
 			\ }
 
 
