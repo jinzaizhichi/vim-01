@@ -175,7 +175,7 @@ if has_key(s:enabled, 'inter')
 	Plug 'hrj/vim-DrawIt'
 	Plug 'lambdalisue/vim-gista', { 'on': 'Gista' }
 	if has('patch-8.2.1') || has('nvim')
-		Plug 'rbong/vim-flog'
+		Plug 'rbong/vim-flog', { 'branch': 'v1' }
 	endif
 
 	if 1
