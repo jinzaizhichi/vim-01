@@ -168,6 +168,7 @@ function! navigator#start(visual, bang, args, line1, line2, count) abort
 			echohl None
 		endtry
 	elseif prefix != ''
+		let prefix = navigator#charname#mapname(prefix)
 		let keys = s:key_translate([prefix] + path)
 		let keys = navigator#charname#mapname(keys)
 		call feedkeys(keys)
