@@ -236,8 +236,8 @@ let g:navigator_visual.f = {
 "----------------------------------------------------------------------
 " trigger
 "----------------------------------------------------------------------
-nnoremap <silent><tab><tab> :Navigator g:navigator<cr>
-vnoremap <silent><tab><tab> :NavigatorVisual g:navigator_visual<cr>
+nnoremap <silent><tab><tab> :Navigator! navigator<cr>
+vnoremap <silent><tab><tab> :NavigatorVisual! navigator_visual<cr>
 
 
 
