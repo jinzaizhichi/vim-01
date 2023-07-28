@@ -1,9 +1,9 @@
 "======================================================================
 "
-" keymaps.vim - keymaps start with using <space>
+" keymaps.vim - keymaps starting with <space>
 "
 " Created by skywind on 2016/10/12
-" Last Modified: 2018/05/02 13:05
+" Last Modified: 2023/07/28 23:26
 "
 "======================================================================
 
