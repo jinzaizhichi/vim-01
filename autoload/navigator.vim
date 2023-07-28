@@ -127,7 +127,15 @@ function! navigator#start(visual, bang, args, line1, line2, count) abort
 	let line2 = a:line2
 	let opts = {}
 	if a:args !~ '^\*:[A-Za-z0-9#_]\+$'
-		let keymap = eval(a:args)
+		try
+			let keymap = eval(a:args)
+		catch
+			redraw
+			echohl ErrorMsg
+			echo printf('navigator#start:%s', v:exception)
+			echohl None
+			return
+		endtry
 	else
 		let oname = strpart(a:args, 2)
 		let gname = 'g:' . oname
