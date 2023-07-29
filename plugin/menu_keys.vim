@@ -122,7 +122,7 @@ let g:navigator.p = {
 			\ 'name': '+project',
 			\ 'c' : ['CdToProjectRoot', 'cd-to-project-root'],
 			\ 'e' : ['module#project#open("CMakeLists.txt")', 'edit-cmake-lists'],
-			\ 't' : ['module#project#open(".tasks")', 'edit-task-list'],
+			\ 't' : [':AsyncTaskEdit', 'edit-task-list'],
 			\ 'r' : ['module#project#open("README.md")', 'edit-readme-md'],
 			\ 'i' : ['module#project#open(".gitignore")', 'edit-git-ignore'],
 			\ }
@@ -241,7 +241,12 @@ let g:navigator_visual.f = {
 let g:navigator_insert = {}
 let g:navigator_insert.prefix = '<tab><tab>'
 
-let g:navigator_insert.s = [':Leaderf snippet', 'snippet']
+let g:navigator_insert.x = [':Leaderf snippet', 'snippet-select']
+
+let g:navigator_insert.s = {
+			\ 'name': '+snippet',
+			\ 't' : ['echo 123', 'test-123'],
+			\ }
 
 
 "----------------------------------------------------------------------
@@ -249,8 +254,6 @@ let g:navigator_insert.s = [':Leaderf snippet', 'snippet']
 "----------------------------------------------------------------------
 nnoremap <silent><tab><tab> :Navigator *:navigator<cr>
 vnoremap <silent><tab><tab> :NavigatorVisual *:navigator_visual<cr>
-
-inoremap <silent><c-x><c-x> <c-\><c-o>:Navigator *:navigator_insert<cr>
 inoremap <silent><c-\><c-\> <c-\><c-o>:Navigator *:navigator_insert<cr>
 
 
