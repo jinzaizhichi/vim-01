@@ -222,7 +222,7 @@ function! navigator#config#compile(keymap, opts) abort
 			let value = call(value, [])
 		elseif type(value) == v:t_string
 			let value = quickui#core#string_strip(value)
-			if value =~ '\v^\$\{(.*)\}$'
+			if value =~ '\v^\%\{(.*)\}$'
 				let t = strpart(value, 2, strlen(value) - 3)
 				unlet value
 				let value = eval(t)
