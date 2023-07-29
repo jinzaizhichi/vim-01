@@ -88,7 +88,8 @@ let g:Lf_PreviewResult = {
 		\ 'Line': 0,
 		\ 'Colorscheme': 0,
 		\ 'Rg': 0,
-		\ 'Gtags': 0
+		\ 'Gtags': 0,
+		\ 'Snippet': 0,
 		\}
 
 

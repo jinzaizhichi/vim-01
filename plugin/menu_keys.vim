@@ -10,8 +10,8 @@
 let g:navigator = {}
 let g:navigator_visual = {}
 
-let g:navigator.prefix = "\<tab>\<tab>"
-let g:navigator_visual.prefix = "\<tab>\<tab>"
+let g:navigator.prefix = "<tab><tab>"
+let g:navigator_visual.prefix = "<tab><tab>"
 
 
 "----------------------------------------------------------------------
@@ -177,7 +177,7 @@ let g:navigator.n = ['<plug>(easymotion-s)', 'easy-motion-s']
 
 
 "----------------------------------------------------------------------
-" windows
+" misc
 "----------------------------------------------------------------------
 if has('win32') || has('win64')
 	let g:navigator[','] = [':OpenShell cmdclink', 'open-cmd-here']
@@ -185,6 +185,7 @@ if has('win32') || has('win64')
 endif
 
 let g:navigator[';'] = ['bufferhint#Popup()', 'open-buffer-hint']
+let g:navigator["."] = ['<plug>(choosewin)', 'switch-tab-window']
 
 
 "----------------------------------------------------------------------
@@ -197,9 +198,10 @@ let g:navigator.x = {
 
 
 "----------------------------------------------------------------------
-" visual mode
+" VISUAL mode
 "----------------------------------------------------------------------
 let g:navigator_visual['='] = ['<key>=', 'align-block']
+let g:navigator_visual['*'] = ['<key>*', 'search-selected-text']
 " let g:navigator_visual['r'] = ['<key>>', 'move-right']
 " let g:navigator_visual['l'] = ['<key><', 'move-left']
 
@@ -234,10 +236,22 @@ let g:navigator_visual.f = {
 
 
 "----------------------------------------------------------------------
+" INSERT mode
+"----------------------------------------------------------------------
+let g:navigator_insert = {}
+let g:navigator_insert.prefix = '<tab><tab>'
+
+let g:navigator_insert.s = [':Leaderf snippet', 'snippet']
+
+
+"----------------------------------------------------------------------
 " trigger
 "----------------------------------------------------------------------
 nnoremap <silent><tab><tab> :Navigator *:navigator<cr>
 vnoremap <silent><tab><tab> :NavigatorVisual *:navigator_visual<cr>
+
+inoremap <silent><c-x><c-x> <c-\><c-o>:Navigator *:navigator_insert<cr>
+inoremap <silent><c-\><c-\> <c-\><c-o>:Navigator *:navigator_insert<cr>
 
 
 
