@@ -15,7 +15,7 @@
 " optional arg2: return this value if buffer has no filename
 "  But why not use the template in this case, too?
 "  Doesn't make sense to me
-function! asclib#snippet#filename(...)
+function! snippet#filename(...)
 	let template = get(a:000, 0, "$1")
 	let arg2 = get(a:000, 1, "")
 
@@ -27,5 +27,6 @@ function! asclib#snippet#filename(...)
 		return substitute(template, '$1', basename, 'g')
 	endif
 endfunc
+
 
 
