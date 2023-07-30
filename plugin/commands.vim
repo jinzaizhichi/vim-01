@@ -330,3 +330,15 @@ function! s:CloseLeftTabs()
 endfunc
 
 
+"----------------------------------------------------------------------
+" http://www.drchip.org/astronaut/vim/index.html#Maps 
+"----------------------------------------------------------------------
+command! -nargs=0 DisplayHighlightGroup call s:DisplayHighlightGroup()
+function! s:DisplayHighlightGroup() abort
+	let h1 = synIDattr(synID(line("."), col("."),1), "name")
+	let h2 = synIDattr(synID(line("."), col("."),0), "name")
+	let h3 = synIDattr(synIDtrans(synID(line("."), col("."), 1)), "name")
+	echo printf('hi<%s> trans<%s> lo<%s>', h1, h2, h3)
+endfunc
+
+

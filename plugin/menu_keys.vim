@@ -194,17 +194,24 @@ let g:navigator["."] = ['<plug>(choosewin)', 'switch-tab-window']
 let g:navigator.x = {
 			\ 'name': '+extension',
 			\ 's': ['syntax sync fromstart', 'sync-syntax-fromstart'],
-			\ 'i': ['<key>:tabonly<cr>:h index<cr><c-w>o<c-w>v<space>hk', 'init-layout']
+			\ 'i': ['<key>:tabonly<cr>:h index<cr><c-w>o<c-w>v<space>hk', 'init-layout'],
+			\ 'h': [':DisplayHighlightGroup', 'display-highlight-group'],
 			\ }
 
 
 "----------------------------------------------------------------------
 " VISUAL mode
 "----------------------------------------------------------------------
-let g:navigator_visual['='] = ['<key>=', 'align-block']
+let g:navigator_visual['='] = ['<key>=', 'indent-block']
 let g:navigator_visual['*'] = ['<key>*', 'search-selected-text']
 " let g:navigator_visual['r'] = ['<key>>', 'move-right']
 " let g:navigator_visual['l'] = ['<key><', 'move-left']
+
+let g:navigator_visual.a = {
+			\ 'name': '+align-selected-text',
+			\ '=': [':Tabularize /=', 'align-with-equal'],
+			\ ':': [':Tabularize /:', 'align-with-colon'],
+			\ }
 
 let g:navigator_visual.t = {
 			\ 'name': '+text-filter',
@@ -215,7 +222,7 @@ let g:navigator_visual.t = {
 			\ }
 
 let g:navigator_visual.p = {
-			\ 'name': '+text-preview',
+			\ 'name': '+filter-preview',
 			\ 'j' : ['TP! format_json', 'preview-format-json'],
 			\ 'h' : ['TP! format_html', 'preview-format-html'],
 			\ 'm' : ['TP! html2markdown', 'preview-html-to-markdown'],
@@ -233,6 +240,7 @@ let g:navigator_visual.f = {
 			\ 'f' : ['<key>gq', 'format-with-formatprg'],
 			\ }
 
+
 " let g:navigator_visual.config = {'popup':1, 'popup_position':'center'}
 
 
@@ -248,6 +256,13 @@ let g:navigator_insert.s = {
 			\ 'name': '+snippet',
 			\ 't' : ['echo 123', 'test-123'],
 			\ }
+
+let g:navigator_insert.i = {
+			\ 'name': '+insert-text',
+			\ 'd': ['<key><c-r>=strftime("%Y-%m-%d")<cr>', 'insert-year-month-day'],
+			\ 't': ['<key><c-r>=strftime("%H:%M:%S")<cr>', 'insert-year-month-day'],
+			\ }
+
 
 
 "----------------------------------------------------------------------
