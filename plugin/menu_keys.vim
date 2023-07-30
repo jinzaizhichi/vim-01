@@ -196,6 +196,7 @@ let g:navigator.x = {
 			\ 's': ['syntax sync fromstart', 'sync-syntax-fromstart'],
 			\ 'i': ['<key>:tabonly<cr>:h index<cr><c-w>o<c-w>v<space>hk', 'init-layout'],
 			\ 'h': [':DisplayHighlightGroup', 'display-highlight-group'],
+			\ 't': ['<plug>TranslateW', 'translate-current-word'],
 			\ }
 
 
@@ -209,10 +210,13 @@ let g:navigator_visual['*'] = ['<key>*', 'search-selected-text']
 
 let g:navigator_visual.a = {
 			\ 'name': '+align-selected-text',
-			\ '=': [':Tabularize /=', 'align-with-equal'],
-			\ ':': [':Tabularize /:', 'align-with-colon'],
-			\ '/': [':Tabularize /\/\//l4c1', 'align-with-cpp-comment'],
-			\ '*': [':Tabularize /\/\*/l4c1', 'align-with-c-comment'],
+			\ '=': [':Tabularize /=', 'align-to-equal'],
+			\ ':': [':Tabularize /:', 'align-to-colon'],
+			\ '/': [':Tabularize /\/\//l4c1', 'align-to-cpp-comment'],
+			\ '*': [':Tabularize /\/\*/l4c1', 'align-to-c-comment'],
+			\ ',': [':Tabularize /,/r0l1', 'align-to-comma'],
+			\ 'l': [':Tabularize /\|', 'align-to-bar'],
+			\ '#': [':Tabularize /#/l4c1', 'align-to-sharp'],
 			\ }
 
 let g:navigator_visual.t = {
@@ -240,6 +244,14 @@ let g:navigator_visual.c = {
 let g:navigator_visual.f = {
 			\ 'name': '+format',
 			\ 'f' : ['<key>gq', 'format-with-formatprg'],
+			\ }
+
+let g:navigator_visual.m = ['<plug>MarkSet', 'mark-selected']
+let g:navigator.M = [':MarkClear', 'mark-clear']
+
+let g:navigator_visual.x = {
+			\ 'name': '+extension',
+			\ 't': ['<Plug>Translate', 'translate-selected'],
 			\ }
 
 

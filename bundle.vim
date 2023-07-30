@@ -202,7 +202,6 @@ if has_key(s:enabled, 'inter')
 	if !isdirectory(expand('~/.vim/notes'))
 		silent! call mkdir(expand('~/.vim/notes'), 'p')
 	endif
-
 endif
 
 
@@ -321,20 +320,6 @@ if has_key(s:enabled, 'neodebug')
 	IncScript site/bundle/neodebug.vim
 endif
 
-" deoplete
-if has_key(s:enabled, 'deoplete')
-	if has('nvim')
-		Plug 'Shougo/deoplete.nvim'
-	else
-		Plug 'Shougo/deoplete.nvim'
-		Plug 'roxma/nvim-yarp'
-		Plug 'roxma/vim-hug-neovim-rpc'
-	endif
-	" Plug 'zchee/deoplete-clang'
-	Plug 'zchee/deoplete-jedi'
-	IncScript site/bundle/deoplete.vim
-endif
-
 " echodoc
 if has_key(s:enabled, 'echodoc')
 	Plug 'Shougo/echodoc.vim'
@@ -431,16 +416,22 @@ if has_key(s:enabled, 'splitjoin')
 endif
 
 if has_key(s:enabled, 'neocomplete')
-	Plug 'Shougo/neocomplete.vim'
-	let g:neocomplete#enable_at_startup = 1
-	let g:neocomplete#sources#syntax#min_keyword_length = 2
-	inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-	inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-	inoremap <expr><C-g><C-g> neocomplete#undo_completion()
-	inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-	function! s:my_cr_function()
-		return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-	endfunction
+	if !has('patch-8.2.1065')
+		Plug 'Shougo/neocomplete.vim'
+		let g:neocomplete#enable_at_startup = 1
+		let g:neocomplete#sources#syntax#min_keyword_length = 2
+		inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+		inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+		inoremap <expr><C-g><C-g> neocomplete#undo_completion()
+		inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+		function! s:my_cr_function()
+			return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+		endfunction
+	else
+		echohl ErrorMsg
+		echom 'ERROR: neocomplete is incompatible with vim-8.2.1065+'
+		echohl None
+	endif
 endif
 
 if has_key(s:enabled, 'omni')
