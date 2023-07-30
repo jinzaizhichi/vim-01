@@ -15,21 +15,20 @@ snippet gtest
 		return RUN_ALL_TESTS();
 	}
 
-
 snippet class
-	class ${1}
+	class ${1:`asclib#snippet#filename('$1', 'ClassName')`}
 	{
 	public:
-		~${1}();
+		virtual ~${1}();
 		${1}();
 	};
 	${0}
 
-snippet class-virtual
-	class ${1}
+snippet class-no-virtual
+	class ${1:ClassName}
 	{
 	public:
-		virtual ~${1}();
+		~${1}();
 		${1}();
 	};
 	${0}
