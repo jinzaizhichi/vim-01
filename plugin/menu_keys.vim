@@ -211,6 +211,8 @@ let g:navigator_visual.a = {
 			\ 'name': '+align-selected-text',
 			\ '=': [':Tabularize /=', 'align-with-equal'],
 			\ ':': [':Tabularize /:', 'align-with-colon'],
+			\ '/': [':Tabularize /\/\//l4c1', 'align-with-cpp-comment'],
+			\ '*': [':Tabularize /\/\*/l4c1', 'align-with-c-comment'],
 			\ }
 
 let g:navigator_visual.t = {
