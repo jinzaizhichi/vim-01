@@ -287,5 +287,3 @@ vnoremap <silent><tab><tab> :NavigatorVisual *:navigator_visual<cr>
 inoremap <silent><c-\><c-\> <c-\><c-o>:Navigator *:navigator_insert<cr>
 
 
-
-

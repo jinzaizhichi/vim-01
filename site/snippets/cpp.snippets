@@ -1,3 +1,5 @@
+extends c
+
 snippet gtest
 	#include <stdio.h>
 	#include <gtest/gtest.h>
@@ -12,5 +14,24 @@ snippet gtest
 		testing::InitGoogleTest(&argc, argv);
 		return RUN_ALL_TESTS();
 	}
+
+
+snippet class
+	class ${1}
+	{
+	public:
+		~${1}();
+		${1}();
+	};
+	${0}
+
+snippet class-virtual
+	class ${1}
+	{
+	public:
+		virtual ~${1}();
+		${1}();
+	};
+	${0}
 
 
