@@ -94,7 +94,7 @@ endfunc
 " start command
 "----------------------------------------------------------------------
 function! navigator#start(visual, bang, args, line1, line2, count) abort
-	let vis = (a:visual)? 'gv' : ''
+	let visual = (a:visual)? 'normal! gv' : ''
 	let line1 = a:line1
 	let line2 = a:line2
 	let opts = {}
@@ -145,16 +145,16 @@ function! navigator#start(visual, bang, args, line1, line2, count) abort
 			elseif cmd =~# '^<key>'
 				let keys = strpart(cmd, 5)
 				let keys = navigator#charname#mapname(keys)
-				exec printf((vis != '')? ('normal! ' . vis) : '')
+				exec visual
 				call feedkeys(keys)
 			elseif cmd =~# '^<KEY>'
 				let keys = strpart(cmd, 5)
 				let keys = navigator#charname#mapname(keys)
-				exec printf((vis != '')? ('normal! ' . vis) : '')
+				exec visual
 				call feedkeys(keys, 'n')
 			elseif cmd =~ '^<plug>'
 				let keys = strpart(cmd, 6)
-				exec printf((vis != '')? ('normal! ' . vis) : '')
+				exec visual
 				call feedkeys("\<plug>" . keys)
 			else
 				exec printf('%s%s', range, cmd)
@@ -169,7 +169,7 @@ function! navigator#start(visual, bang, args, line1, line2, count) abort
 		let prefix = navigator#charname#mapname(prefix)
 		let keys = s:key_translate([prefix] + path)
 		let keys = navigator#charname#mapname(keys)
-		exec printf((vis != '')? ('normal! ' . vis) : '')
+		exec visual
 		call feedkeys(keys)
 	endif
 endfunc
