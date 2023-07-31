@@ -515,6 +515,7 @@ endif
 if has_key(s:enabled, 'cursorword')
 	Plug 'itchyny/vim-cursorword'
 	let g:cursorword_delay = 100
+	let g:cursorword = 0
 endif
 
 if has_key(s:enabled, 'anyjump')

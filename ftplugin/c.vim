@@ -29,6 +29,7 @@ endif
 
 let b:commentary_format = "// %s"
 let s:windows = has('win32') || has('win64') || has('win95') || has('win16')
+let b:cursorword = 1
 
 
 "----------------------------------------------------------------------

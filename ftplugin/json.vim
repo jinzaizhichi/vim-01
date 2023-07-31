@@ -6,4 +6,5 @@ let b:ftplugin_init_json = 1
 
 setlocal formatprg=python\ -m\ json.tool
 
+let b:cursorword = 1
 

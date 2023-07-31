@@ -11,6 +11,8 @@ if exists('b:did_ftplugin')
 	let b:did_ftplugin = 2
 endif
 
+let b:cursorword = 1
+
 
 "----------------------------------------------------------------------
 " once initializer

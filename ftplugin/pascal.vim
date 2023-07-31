@@ -18,4 +18,6 @@ setlocal expandtab
 
 compiler fpc
 
+let b:cursorword = 1
+
 

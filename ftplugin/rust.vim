@@ -5,3 +5,6 @@ let b:ftplugin_rust_loaded = 1
 
 " setlocal errorformat=%.\ %#-->\ %f:%l:%c
 
+let b:cursorword = 1
+
+
