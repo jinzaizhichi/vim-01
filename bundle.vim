@@ -189,7 +189,10 @@ if has_key(s:enabled, 'inter')
 	
 	IncScript site/bundle/outliner.vim
 
-	if has_key(s:enabled, 'ultisnips') == 0 || (has('python3') == 0 && has('python') == 0)
+	if has_key(s:enabled, 'minisnip')
+		Plug 'Jorengarenar/miniSnip'
+		IncScript site/bundle/minisnip.vim
+	elseif has_key(s:enabled, 'ultisnips') == 0 || (has('python3') == 0 && has('python') == 0)
 		Plug 'MarcWeber/vim-addon-mw-utils'
 		Plug 'tomtom/tlib_vim'
 		Plug 'garbas/vim-snipmate'
