@@ -235,7 +235,7 @@ endfunc
 function! asclib#path#runtime(path)
 	let pathname = fnamemodify(s:scripthome, ':h')
 	let pathname = asclib#path#join(pathname, a:path)
-	let pathname = fnamemodify(pathname, ':p')
+	let pathname = asclib#path#abspath(pathname)
 	return tr(pathname, '\', '/')
 endfunc
 
