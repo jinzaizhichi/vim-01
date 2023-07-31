@@ -27,12 +27,12 @@ call module#snipmate#active()
 "----------------------------------------------------------------------
 " edit snip
 "----------------------------------------------------------------------
-function! s:SnipMateEdit()
-	let ft = &ft
+function! s:SnipMateEdit(args)
+	let ft = (a:args == '')? &ft : (a:args)
 	let test = asclib#path#runtime('site/snippets')
 	let test = asclib#path#normalize(test)
 	if isdirectory(test)
-		let fn = printf('%s/%s.snippets', test, &ft)
+		let fn = printf('%s/%s.snippets', test, ft)
 		let cmd = 'FileSwitch -switch=useopen,usetab,auto ' . fnameescape(fn)
 		exec cmd
 	else
@@ -40,7 +40,7 @@ function! s:SnipMateEdit()
 	endif
 endfunc
 
-command! -nargs=0 SnipMateEdit call s:SnipMateEdit()
+command! -nargs=? SnipMateEdit call s:SnipMateEdit(<q-args>)
 
 
 if 0

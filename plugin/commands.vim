@@ -201,13 +201,14 @@ endfunc
 "----------------------------------------------------------------------
 " edit current snippet file
 "----------------------------------------------------------------------
-command! -nargs=0 CodeSnipEdit call s:CodeSnipEdit()
-function! s:CodeSnipEdit()
-	if &ft == ''
+command! -nargs=? CodeSnipEdit call s:CodeSnipEdit(<q-args>)
+function! s:CodeSnipEdit(args)
+	let ft = ((a:args) == '')? &ft : (a:args)
+	if ft == ''
 		call asclib#core#errmsg('non-empty file type required')
 		return 0
 	elseif exists(':SnipMateLoadScope') == 2 && exists(':SnipMateEdit') == 2
-		SnipMateEdit
+		exec 'SnipMateEdit ' . ft
 	elseif exits(':UltiSnipsEdit') == 2
 		UltiSnipEdit
 	endif
