@@ -499,6 +499,7 @@ endif
 if has_key(s:enabled, 'games')
 	Plug 'iqxd/vim-mine-sweeping'
 	Plug 'vim-scripts/Mines'
+	Plug 'katono/rogue.vim'
 endif
 
 if has_key(s:enabled, 'whichkey')
