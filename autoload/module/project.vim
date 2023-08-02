@@ -36,3 +36,16 @@ function! module#project#open(name) abort
 endfunc
 
 
+"----------------------------------------------------------------------
+" open if exists
+"----------------------------------------------------------------------
+function! module#project#try_open(name) abort
+	let p = module#project#path(a:name)
+	if asclib#path#exists(p)
+		call asclib#utils#file_switch(['-switch=useopen,auto', p])
+	else
+		call asclib#common#errmsg('ERROR: cannot open ' . p)
+	endif
+endfunc
+
+
