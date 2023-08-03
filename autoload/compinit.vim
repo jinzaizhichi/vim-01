@@ -16,3 +16,11 @@ function! compinit#get_context() abort
 endfunc
 
 
+"----------------------------------------------------------------------
+" check tailing space
+"----------------------------------------------------------------------
+function! compinit#tail_space(context) abort
+	return (a:context =~ '\s\+$')? 1 : 0
+endfunc
+
+
