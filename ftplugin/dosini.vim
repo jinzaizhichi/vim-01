@@ -18,6 +18,7 @@ let s:windows = has('win32') || has('win16') || has('win64') || has('win95')
 " integrity check
 "----------------------------------------------------------------------
 if exists(':AsyncTask') != 2 || exists(':AsyncRun') != 2
+	" force lazy loader to load 
 	silent! exec "AsyncRun -mode=load"
 	silent! exec "AsyncTask -load"
 	if exists(':AsyncTask') != 2 || exists(':AsyncRun') != 2
