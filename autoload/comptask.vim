@@ -19,8 +19,10 @@ let s:comp_items = []
 
 
 "----------------------------------------------------------------------
-" keys
+" texts
 "----------------------------------------------------------------------
+
+" key names
 let s:text_keys = {
 			\ 'command': 'shell command, or EX-command (starting with :)',
 			\ 'cwd': "working directory, use `:pwd` when absent",
@@ -37,6 +39,12 @@ let s:text_keys = {
 			\ 'scroll': 'is auto-scroll allowed in the quickfix',
 			\ 'encoding': 'task stdin/stdout encoding',
 			\ 'once': 'buffer output and flush when job is finished',
+			\ }
+
+let s:text_system = {
+			\ 'win32': 'Windows',
+			\ 'linux': 'Linux',
+			\ 'darwin': 'macOS',
 			\ }
 
 " echo compinit#prefix_search('', s:text_keys, 'k', 1)
@@ -63,6 +71,10 @@ function! comptask#complete(context) abort
 		return -1
 	endif
 	if s:comp_strip =~ '^['
+		return 0
+	elseif s:comp_strip =~ '^#'
+		return 0
+	elseif s:comp_strip =~ '^;'
 		return 0
 	elseif stridx(s:comp_strip, '=') < 0
 		let s:comp_head = matchstr(context, '\w\+$')
