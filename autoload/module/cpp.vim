@@ -52,7 +52,8 @@ endfunc
 "----------------------------------------------------------------------
 function! module#cpp#class_insert(line1, line2)
 	let msg = 'Enter a class name to insert: '
-	let clsname = asclib#ui#input(msg, '', 'clsname')
+	let tag = expand('%:t:r')
+	let clsname = asclib#ui#input(msg, tag, 'clsname')
 	if clsname != ''
 		let clsname = escape(clsname, '/\[*~^')
 		let text = 's/\~\=\w\+\s*(/' . clsname . '::&/'
