@@ -227,6 +227,7 @@ let g:navigator_visual.t = {
 			\ 'm' : ['TP html2markdown', 'html-to-markdown'],
 			\ 't' : ['TP html_to_text', 'html-to-text'],
 			\ 'r' : ['TP remove_markdown_links', 'remove-markdown-links'],
+			\ 's' : ['TP comment_surround', 'comment-surround-block'],
 			\ }
 
 let g:navigator_visual.p = {
@@ -236,6 +237,7 @@ let g:navigator_visual.p = {
 			\ 'm' : ['TP! html2markdown', 'preview-html-to-markdown'],
 			\ 't' : ['TP! html_to_text', 'preview-html-to-text'],
 			\ 'r' : ['TP! remove_markdown_links', 'remove-markdown-links'],
+			\ 's' : ['TP! comment_surround', 'comment-surround-block'],
 			\ }
 
 let g:navigator_visual.c = {
