@@ -22,7 +22,7 @@ let s:scripts = {}
 " string strip
 "----------------------------------------------------------------------
 function! s:string_strip(text)
-	return substitute(a:text, '^\s*\(.\{-}\)[\s\r\n]*$', '\1', '')
+	return substitute(a:text, '^\s*\(.\{-}\)[\t\r\n ]*$', '\1', '')
 endfunc
 
 
@@ -274,6 +274,7 @@ function! s:script_run(name, args, lnum, count, debug) abort
 	endif
 	let scripts = s:script_list()
 	if has_key(scripts, a:name) == 0
+		redraw
 		echohl ErrorMsg
 		echo 'ERROR: runner not find: ' . a:name
 		echohl None
