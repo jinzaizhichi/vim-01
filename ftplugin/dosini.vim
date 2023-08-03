@@ -19,6 +19,7 @@ let s:windows = has('win32') || has('win16') || has('win64') || has('win95')
 "----------------------------------------------------------------------
 if exists(':AsyncTask') != 2 || exists(':AsyncRun') != 2
 	silent! exec "AsyncRun -mode=load"
+	silent! exec "AsyncTask -load"
 	if exists(':AsyncTask') != 2 || exists(':AsyncRun') != 2
 		runtime! plugin/asyncrun.vim
 		runtime! plugin/asynctasks.vim
