@@ -136,6 +136,8 @@ elseif isdirectory('/mnt/c/Users/Linwei/OneDrive/Documents/notes/Vim')
 	noremap <silent><space>hp :FileSwitch $VIM_ONEDRIVE/personal.gpg<cr>
 endif
 
+noremap <silent><space>hf :FileSwitch ~/.vim/test.comp<cr>
+
 
 "----------------------------------------------------------------------
 "- bufferhint
