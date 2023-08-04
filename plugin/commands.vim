@@ -342,3 +342,89 @@ function! s:DisplayHighlightGroup() abort
 endfunc
 
 
+"----------------------------------------------------------------------
+" Shougo: AddNumber
+"----------------------------------------------------------------------
+command! -range -nargs=1 AddNumbers
+			\ call s:AddNumbers((<line2>-<line1>+1) * eval(<args>))
+function! s:AddNumbers(num)
+	let prev_line = getline('.')[: col('.')-1]
+	let next_line = getline('.')[col('.') :]
+	let prev_num = matchstr(prev_line, '\d\+$')
+	if prev_num != ''
+		let next_num = matchstr(next_line, '^\d\+')
+		let new_line = prev_line[: -len(prev_num)-1] .
+					\ printf('%0'.len(prev_num).'d',
+					\    max([0, prev_num . next_num + a:num])) . 
+					\    next_line[len(next_num):]
+	else
+		let new_line = prev_line . substitute(next_line, '\d\+',
+					\ "\\=printf('%0'.len(submatch(0)).'d',
+					\         max([0, submatch(0) + a:num]))", '')
+	endif
+
+	if getline('.') !=# new_line
+		call setline('.', new_line)
+	endif
+endfunc
+
+
+
+"----------------------------------------------------------------------
+" DiffFile 
+"----------------------------------------------------------------------
+command! -nargs=1 -complete=file DiffFile vertical diffsplit <args>
+command! -nargs=0 Undiff setlocal nodiff noscrollbind wrap
+
+
+"----------------------------------------------------------------------
+" JunkFile: Open junk file.
+"----------------------------------------------------------------------
+command! -nargs=0 JunkFile call s:JunkFile()
+function! s:JunkFile()
+	let junk_dir = asclib#setting#get('junk', '~/.vim/junk')
+	let junk_dir = junk_dir . strftime('/%Y/%m')
+	let real_dir = expand(junk_dir)
+	if !isdirectory(real_dir)
+		call mkdir(real_dir, 'p')
+	endif
+	let filename = junk_dir.strftime('/%Y-%m-%d-%H%M%S.')
+	let filename = tr(filename, '\', '/')
+	let filename = input('Junk Code: ', filename)
+	if filename != ''
+		execute 'edit ' . fnameescape(filename)
+	endif
+endfunc
+
+
+"----------------------------------------------------------------------
+" JunkList: open junk list
+"----------------------------------------------------------------------
+command! -nargs=0 JunkList call s:JunkList()
+function! s:JunkList()
+	let junk_dir = asclib#setting#get('junk', '~/.vim/junk')
+	" let junk_dir = expand(junk_dir) . strftime('/%Y/%m')
+	let junk_dir = tr(junk_dir, '\', '/')
+	echo junk_dir
+	exec "Leaderf file " . fnameescape(expand(junk_dir))
+endfunction
+
+
+"----------------------------------------------------------------------
+" Log: log to file
+"----------------------------------------------------------------------
+command! -nargs=+ Log call s:Log(<q-args>)
+function! s:Log(text)
+	let text = substitute(a:text, '^\s*\(.\{-}\)\s*$', '\1', '')
+	if exists('*writefile') && text != ''
+		let filename = get(g:, 'quicknote_file', '~/.vim/quicknote.md')
+		let notehead = get(g:, 'quicknote_head', '- ')
+		let notetime = strftime("[%Y-%m-%d %H:%M:%S] ")
+		let realname = expand(filename)
+		call writefile([notehead . notetime . text], realname, 'a')
+		checktime
+		echo notetime . text
+	endif
+endfunc
+
+
