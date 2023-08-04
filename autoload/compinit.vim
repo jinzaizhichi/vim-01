@@ -11,7 +11,7 @@
 "----------------------------------------------------------------------
 " context before cursor
 "----------------------------------------------------------------------
-function! compinit#get_context() abort
+function! compinit#context() abort
 	return strpart(getline('.'), 0, col('.') - 1)
 endfunc
 
@@ -27,7 +27,7 @@ endfunc
 "----------------------------------------------------------------------
 " search candidate
 "----------------------------------------------------------------------
-function! compinit#prefix_search(prefix, candidate, kind, sort) abort
+function! compinit#match_complete(prefix, candidate, kind, sort) abort
 	let prefix = a:prefix
 	if type(a:candidate) == type({})
 		let keys = keys(a:candidate)
@@ -44,7 +44,7 @@ function! compinit#prefix_search(prefix, candidate, kind, sort) abort
 		for key in matched
 			let text = a:candidate[key]
 			let item = {'word':key, 'kind': a:kind, 'menu':text}
-			call extend(output, [item])
+			call add(output, item)
 		endfor
 		return output
 	elseif type(a:candidate) == type([])
@@ -54,13 +54,20 @@ function! compinit#prefix_search(prefix, candidate, kind, sort) abort
 				let name = item
 				let text = ''
 			elseif type(item) == 3
-				let name = item[0]
-				let text = item[1]
+				if len(item) >= 2
+					let name = item[0]
+					let text = item[1]
+				elseif len(item) == 1
+					let name = item[0]
+					let text = ''
+				else
+					continue
+				endif
 			else
 				continue
 			endif
 			if stridx(name, prefix) == 0
-				call extend(matched, [[name, text]])
+				call add(matched, [name, text])
 			endif
 		endfor
 		if a:sort
@@ -69,7 +76,7 @@ function! compinit#prefix_search(prefix, candidate, kind, sort) abort
 		let output = []
 		for [name, text] in matched
 			let item = {'word':key, 'kind': a:kind, 'menu':text}
-			call extend(output, item)
+			call add(output, item)
 		endfor
 		return output
 	endif

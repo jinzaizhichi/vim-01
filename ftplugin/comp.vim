@@ -27,9 +27,9 @@ let s:text_keys = {
 			\ }
 
 let s:text_system = {
-			\ 'win32': 'Windows',
-			\ 'linux': 'Linux',
-			\ 'darwin': 'macOS',
+			\ 'win32': 'for Windows',
+			\ 'linux': 'for Linux',
+			\ 'darwin': 'for macOS',
 			\ }
 
 "----------------------------------------------------------------------
@@ -124,7 +124,13 @@ function! MyOmniFunc3(findstart, base) abort
 			if stridx(ctx, ':') < 0
 				return asclib#mcm#match_complete(a:base, s:text_keys, 'k', 1)
 			elseif stridx(ctx, '/') < 0
+				if !exists('s:ft_cache')
+					let s:ft_cache = asyncrun#compat#list_fts()
+					call sort(s:ft_cache)
+				endif
+				return asclib#mcm#match_complete(a:base, s:ft_cache, 'f', 0)
 			else
+				return asclib#mcm#match_complete(a:base, s:text_system, 's', 1)
 			endif
 		else
 		endif

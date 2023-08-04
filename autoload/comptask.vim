@@ -93,27 +93,48 @@ function! comptask#complete(context) abort
 	return 0
 endfunc
 
-echo comptask#complete(' hello')
 
 "----------------------------------------------------------------------
 " compfunc 
 "----------------------------------------------------------------------
 function! comptask#compfunc(findstart, base) abort
-	let context = compinit#get_context()
 	if a:findstart
-		let hr = comptask#complete(context)
-		if hr < 0
-			return -2
-		elseif s:comp_head == ''
-			return -2
+		let ctx = asclib#mcm#context()
+		let matched = strchars(matchstr(ctx, '\w\+$'))
+		let pos = col('.')
+		if ctx =~ '^\s*#'
+			let start = pos - 1
+		elseif ctx =~ '^\s*['
+			let start = pos - 1
+		elseif stridx(ctx, '=') < 0
+			let start = pos - matched - 1
+		else
+			if ctx =~ '\$$'
+				let start = pos - 1 - 1
+			elseif ctx =~ '\$($'
+				let start = pos - 2 - 1
+			elseif ctx =~ '\$(\w\+$'
+				let start = pos - 2 - matched - 1
+			else
+				let start = pos - matched - 1
+			endif
 		endif
-		return col('.') - strchars(s:comp_head)
+		return start
 	else
-		let hr = comptask#complete(context)
-		if hr <= 0
+		let ctx = compinit#context()
+		if ctx =~ '^\s*#'
 			return v:none
+		elseif ctx =~ '^\s*['
+			return v:none
+		elseif stridx(ctx, '=') < 0
+			if stridx(ctx, ':') < 0
+				return asclib#mcm#match_complete(a:base, s:text_keys, 'k', 1)
+			elseif stridx(ctx, '/') < 0
+			else
+			endif
+		else
 		endif
-		return {'words': s:comp_items, 'refresh': 'always'}
+		return v:none
 	endif
 endfunc
 

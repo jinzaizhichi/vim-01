@@ -90,7 +90,7 @@ function! asclib#mcm#match_complete(prefix, candidate, kind, sort) abort
 		endif
 		let output = []
 		for [name, text] in matched
-			let item = {'word':key, 'kind': a:kind, 'menu':text}
+			let item = {'word':name, 'kind': a:kind, 'menu':text}
 			call add(output, item)
 		endfor
 		return output

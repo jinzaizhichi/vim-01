@@ -43,10 +43,27 @@ function! asyncrun#compat#list(path, ...)
 	for n in split(part, "\n")
 		let f = fnamemodify(n, ':t')
 		if !empty(f)
-			let candidate += [f]
+			call add(candidate, f)
 		endif
 	endfor
 	return candidate
 endfunc
+
+
+"----------------------------------------------------------------------
+" list fts
+"----------------------------------------------------------------------
+function! asyncrun#compat#list_fts()
+	let output = []
+	for name in asyncrun#compat#list($VIMRUNTIME . '/syntax', 1)
+		let extname = fnamemodify(name, ':e')
+		" echo name
+		if extname == 'vim'
+			call add(output, fnamemodify(name, ':t:r'))
+		endif
+	endfor
+	return output
+endfunc
+
 
 
