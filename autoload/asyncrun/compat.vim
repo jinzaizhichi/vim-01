@@ -161,22 +161,29 @@ function! asyncrun#compat#list_executable()
 	let output = {}
 	let check = {'exe': 1, 'cmd':1, 'bat':1}
 	if asyncrun#compat#check_python()
-		return asyncrun#compat#list_exe_py()
+		" return asyncrun#compat#list_exe_py()
 	endif
 	for dirname in asyncrun#compat#list_path()
 		if !isdirectory(dirname)
 			continue
 		endif
-		for exename in asyncrun#compat#list(dirname, 1)
-			if s:windows
-				let extname = fnamemodify(exename, ':e')
-				if has_key(check, extname)
-					let output[fnamemodify(exename, ':t:r')] = 1
+		if s:windows != 0
+			for ext in ['exe', 'cmd', 'bat']
+				let part = asyncrun#compat#glob(dirname . '/*.' . ext, 1)
+				for exename in split(part, "\n")
+					let fn = fnamemodify(exename, ':t:r')
+					let output[fn] = 1
+				endfor
+			endfor
+		else
+			let part = asyncrun#compat#glob(dirname . '/*', 1)
+			for exename in split(part, "\n")
+				if executable(exename)
+					let fn = fnamemodify(exename, ':t')
+					let output[fn] = 1
 				endif
-			else
-				let output[exename] = 1
-			endif
-		endfor
+			endfor
+		endif
 	endfor
 	return keys(output)
 endfunc
@@ -184,6 +191,6 @@ endfunc
 
 
 " echo len(asyncrun#compat#list_exe_py())
-" echo len(asyncrun#compat#list_executable())
+echo len(asyncrun#compat#list_executable())
 
 

@@ -29,6 +29,7 @@ let s:text_keys = {
 			\ 'scroll': 'is auto-scroll allowed in the quickfix',
 			\ 'encoding': 'task stdin/stdout encoding',
 			\ 'once': 'buffer output and flush when job is finished',
+			\ 'listed': 'should terminal buffer be listed',
 			\ }
 
 let s:text_system = {
@@ -249,7 +250,7 @@ function! comptask#omnifunc(findstart, base) abort
 						let s:list_executable = asyncrun#compat#list_executable()
 						let s:init_executable = 1
 					endif
-					return s:match_complete(a:base, s:text_macros, 'x', 1)
+					return s:match_complete(a:base, s:list_executable, 'x', 1)
 				endif
 			endif
 		endif

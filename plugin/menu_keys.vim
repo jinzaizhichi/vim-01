@@ -194,10 +194,12 @@ let g:navigator["."] = ['<plug>(choosewin)', 'switch-tab-window']
 "----------------------------------------------------------------------
 let g:navigator.x = {
 			\ 'name': '+extension',
-			\ 's': ['syntax sync fromstart', 'sync-syntax-fromstart'],
+			\ 's': [':syntax sync fromstart', 'sync-syntax-fromstart'],
 			\ 'i': ['<key>:tabonly<cr>:h index<cr><c-w>o<c-w>v<space>hk', 'init-layout'],
 			\ 'h': [':DisplayHighlightGroup', 'display-highlight-group'],
 			\ 't': ['<plug>TranslateW', 'translate-current-word'],
+			\ 'm': [':messages', 'messages-list'],
+			\ 'M': [':messages clear', 'messages-clear'],
 			\ }
 
 
