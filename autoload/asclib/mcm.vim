@@ -24,3 +24,18 @@ function! asclib#mcm#check_space(context) abort
 endfunc
 
 
+"----------------------------------------------------------------------
+" filter list
+"----------------------------------------------------------------------
+function! asclib#mcm#match_list(list, prefix) abort
+	let output = []
+	let prefix = a:prefix
+	for n in a:list
+		if stridx(n, prefix) == 0
+			call add(output, n)
+		endif
+	endfor
+	return output
+endfunc
+
+

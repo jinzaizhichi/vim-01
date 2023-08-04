@@ -133,7 +133,7 @@ augroup AscUnixGroup
 	au BufNewFile,BufRead *.vl setlocal filetype=verilog
 	au BufNewFile,BufRead *.bxrc setlocal filetype=bxrc
 	au BufNewFile,BufRead *.odin setlocal filetype=odin
-	ua BufNewFile,BufRead *.comp setlocal filetype=comp
+	au BufNewFile,BufRead *.comp setlocal filetype=comp
 	" au BufNewFile,BufRead *.md setlocal filetype=markdown
 	au BufNewFile,BufRead *.lua.rename setlocal filetype=lua
 augroup END

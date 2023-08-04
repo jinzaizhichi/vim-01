@@ -407,7 +407,7 @@ function! s:JunkList()
 	let junk_dir = tr(junk_dir, '\', '/')
 	echo junk_dir
 	exec "Leaderf file " . fnameescape(expand(junk_dir))
-endfunction
+endfunc
 
 
 "----------------------------------------------------------------------
