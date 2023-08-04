@@ -34,7 +34,7 @@ function! compinit#prefix_search(prefix, candidate, kind, sort) abort
 		let matched = []
 		for key in keys(a:candidate)
 			if stridx(key, prefix) == 0
-				call extend(matched, [key])
+				call add(matched, key)
 			endif
 		endfor
 		if a:sort
