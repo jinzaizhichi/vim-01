@@ -27,9 +27,9 @@ let s:text_keys = {
 			\ }
 
 let s:text_system = {
-			\ 'win32': 'for Windows',
-			\ 'linux': 'for Linux',
-			\ 'darwin': 'for macOS',
+			\ 'win32': '<for windows only>',
+			\ 'linux': '<for linux only>',
+			\ 'darwin': '<for macOS only>',
 			\ }
 
 "----------------------------------------------------------------------
