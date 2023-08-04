@@ -78,10 +78,17 @@ let s:macros = {
 			\ 'WSL_CFILE': '(WSL) Current filename under cursor',
 			\ }
 
+
 let s:text_macros = {}
+let s:windows = has('win32') || has('win64') || has('win95') || has('win16')
 
 for key in keys(s:macros)
 	let name = printf('$(%s)', key)
+	if s:windows == 0
+		if stridx(name, 'WSL_') == 0
+			continue
+		endif
+	endif
 	let s:text_macros[name] = s:macros[key]
 endfor
 
@@ -236,8 +243,14 @@ function! comptask#omnifunc(findstart, base) abort
 			elseif keyname == 'output'
 				let candidate = ['quickfix', 'terminal']
 				return s:match_complete(a:base, s:text_macros, 'o', 1)
-			else
-
+			elseif keyname == 'command'
+				if strlen(a:base) >= 1
+					if get(s:, 'init_executable', 0) == 0
+						let s:list_executable = asyncrun#compat#list_executable()
+						let s:init_executable = 1
+					endif
+					return s:match_complete(a:base, s:text_macros, 'x', 1)
+				endif
 			endif
 		endif
 		return v:none
