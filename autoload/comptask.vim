@@ -259,6 +259,11 @@ function! comptask#omnifunc(findstart, base) abort
 				endif
 				return s:match_complete(a:base, s:list_runner, 'r', 1)
 			elseif keyname == 'program'
+				if get(s:, 'init_program', 0) == 0
+					let s:list_program = asyncrun#info#list_program()
+					let s:init_program = 1
+				endif
+				return s:match_complete(a:base, s:list_program, 'r', 1)
 			endif
 		endif
 		return v:none

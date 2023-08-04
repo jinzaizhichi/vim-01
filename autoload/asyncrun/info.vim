@@ -123,7 +123,7 @@ endfunc
 "----------------------------------------------------------------------
 " 
 "----------------------------------------------------------------------
-let g:asyncrun_builtin_pos = {
+let g:asyncrun_info_pos = {
 			\ 'tab': 'open the terminal in a new tab',
 			\ 'TAB': 'open the terminal in a new tab on the left side',
 			\ 'curwin': 'open the terminal in the current window',
@@ -151,7 +151,7 @@ function! asyncrun#info#list_runner()
 				let extname = fnamemodify(fn, ':e')
 				let name = fnamemodify(fn, ':t:r')
 				if extname == 'vim'
-					let runners[name] = 'runner'
+					let runners[name] = 'runner script'
 				endif
 			endfor
 		endif
@@ -160,20 +160,70 @@ function! asyncrun#info#list_runner()
 		let extname = fnamemodify(fn, ':e')
 		let name = fnamemodify(fn, ':t:r')
 		if extname == 'vim'
-			let runners[name] = 'runner'
+			let runners[name] = 'runner script'
 		endif
 	endfor
-	for name in keys(g:asyncrun_builtin_pos)
-		let runners[name] = g:asyncrun_builtin_pos[name]
+	for name in keys(g:asyncrun_info_pos)
+		let runners[name] = g:asyncrun_info_pos[name]
 	endfor
 	return runners
 endfunc
 
+
+"----------------------------------------------------------------------
+" 
+"----------------------------------------------------------------------
+let g:asyncrun_info_program = {
+			\ 'make': 'default makeprg',
+			\ 'grep': 'default grepprg',
+			\ }
+
+if s:windows
+	let g:asyncrun_info_program['wsl'] = 'program wsl'
+	for t in ['msys', 'mingw32', 'mingw64', 'clang32', 'clang64', 'cygwin']
+		let g:asyncrun_info_program[t] = 'builtin program'
+	endfor
+endif
+
+
+"----------------------------------------------------------------------
+" 
+"----------------------------------------------------------------------
+function! asyncrun#info#list_program()
+	let program = {}
+	for name in keys(get(g:, 'asyncrun_program', {}))
+		let program[name] = 'program'
+	endfor
+	for rtp in split(&rtp, ',')
+		let t = rtp . '/autoload/asyncrun/program'
+		if isdirectory(t)
+			for fn in asyncrun#compat#list(t, 1)
+				let extname = fnamemodify(fn, ':e')
+				let name = fnamemodify(fn, ':t:r')
+				if extname == 'vim'
+					let program[name] = 'program script'
+				endif
+			endfor
+		endif
+	endfor
+	for fn in asyncrun#compat#list(s:scripthome . '/program', 1)
+		let extname = fnamemodify(fn, ':e')
+		let name = fnamemodify(fn, ':t:r')
+		if extname == 'vim'
+			let program[name] = 'program script'
+		endif
+	endfor
+	for name in keys(g:asyncrun_info_program)
+		let program[name] = g:asyncrun_info_program[name]
+	endfor
+	return program
+endfunc
 
 
 " echo len(asyncrun#info#list_exe_py())
 " echo len(asyncrun#info#list_executable())
 
 " echo asyncrun#info#list_runner()
+" echo asyncrun#info#list_program()
 
 
