@@ -66,4 +66,22 @@ function! asyncrun#compat#list_fts()
 endfunc
 
 
+"----------------------------------------------------------------------
+" list environment names
+"----------------------------------------------------------------------
+function! asyncrun#compat#list_envname()
+	if has('python3') == 0
+		if has('python2') == 0
+			return []
+		endif
+	endif
+	let result = []
+	try
+		silent! pyx import os as __os
+		silent! let result = pyxeval('[name for name in __os.environ]')
+	catch
+	endtry
+	return result
+endfunc
+
 

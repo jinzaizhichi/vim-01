@@ -9,17 +9,7 @@
 
 
 "----------------------------------------------------------------------
-" internal
-"----------------------------------------------------------------------
-let s:comp_context = ''
-let s:comp_strip = ''
-let s:comp_head = ''
-let s:comp_done = 0
-let s:comp_items = []
-
-
-"----------------------------------------------------------------------
-" texts
+" Completion Data
 "----------------------------------------------------------------------
 
 " key names
@@ -47,59 +37,151 @@ let s:text_system = {
 			\ 'darwin': 'macOS',
 			\ }
 
-" echo compinit#prefix_search('', s:text_keys, 'k', 1)
+let s:macros = { 
+			\ 'VIM_FILEPATH': 'File name of current buffer with full path',
+			\ 'VIM_FILENAME': 'File name of current buffer without path',
+			\ 'VIM_FILEDIR': 'Full path of current buffer without the file name',
+			\ 'VIM_FILEEXT': 'File extension of current buffer',
+			\ 'VIM_FILETYPE': 'File type (value of &ft in vim)',
+			\ 'VIM_FILENOEXT': 
+			\ 'File name of current buffer without path and extension',
+			\ 'VIM_PATHNOEXT':
+			\ 'Current file name with full path but without extension',
+			\ 'VIM_CWD': 'Current directory',
+			\ 'VIM_RELDIR': 'File path relativize to current directory',
+			\ 'VIM_RELNAME': 'File name relativize to current directory',
+			\ 'VIM_ROOT': 'Project root directory',
+			\ 'VIM_PRONAME': 'Name of current project root directory',
+			\ 'VIM_DIRNAME': "Name of current directory",
+			\ 'VIM_CWORD': 'Current word under cursor',
+			\ 'VIM_CFILE': 'Current filename under cursor',
+			\ 'VIM_CLINE': 'Cursor line number in current buffer',
+			\ 'VIM_GUI': 'Is running under gui ?',
+			\ 'VIM_VERSION': 'Value of v:version',
+			\ 'VIM_COLUMNS': "How many columns in vim's screen",
+			\ 'VIM_LINES': "How many lines in vim's screen", 
+			\ 'VIM_SVRNAME': 'Value of v:servername for +clientserver usage',
+			\ 'VIM_PROFILE': 'Current building profile (debug/release/...)',
+			\ 'WSL_FILEPATH': '(WSL) File name of current buffer with full path',
+			\ 'WSL_FILENAME': '(WSL) File name of current buffer without path',
+			\ 'WSL_FILEDIR': 
+			\ '(WSL) Full path of current buffer without the file name',
+			\ 'WSL_FILEEXT': '(WSL) File extension of current buffer',
+			\ 'WSL_FILENOEXT': 
+			\ '(WSL) File name of current buffer without path and extension',
+			\ 'WSL_PATHNOEXT':
+			\ '(WSL) Current file name with full path but without extension',
+			\ 'WSL_CWD': '(WSL) Current directory',
+			\ 'WSL_RELDIR': '(WSL) File path relativize to current directory',
+			\ 'WSL_RELNAME': '(WSL) File name relativize to current directory',
+			\ 'WSL_ROOT': '(WSL) Project root directory',
+			\ 'WSL_CFILE': '(WSL) Current filename under cursor',
+			\ }
+
+let s:text_macros = {}
+
+for key in keys(s:macros)
+	let name = printf('$(%s)', key)
+	let s:text_macros[name] = s:macros[key]
+endfor
+
 
 "----------------------------------------------------------------------
-" complete key name
+" list envname
 "----------------------------------------------------------------------
-function! s:complete_keys(head)
-	return compinit#prefix_search(a:head, s:text_keys, 'k', 1)
+function! s:list_envname()
+	let output = {}
+	for name in asyncrun#compat#list_envname()
+		if !has_key(s:macros, name)
+			let key = '$' . name
+			let output[key] = '<Environment Variable>'
+		endif
+	endfor
+	return output
 endfunc
 
 
 "----------------------------------------------------------------------
-" complete context
+" get context
 "----------------------------------------------------------------------
-function! comptask#complete(context) abort
-	let s:comp_context = a:context
-	let s:comp_strip = substitute(a:context, '^\s*', '', '')
-	let s:comp_done = 0
-	let s:comp_head = ''
-	let s:comp_items = []
-	let context = a:context
-	if compinit#check_space(context)
-		return -1
-	endif
-	if s:comp_strip =~ '^['
-		return 0
-	elseif s:comp_strip =~ '^#'
-		return 0
-	elseif s:comp_strip =~ '^;'
-		return 0
-	elseif stridx(s:comp_strip, '=') < 0
-		let s:comp_head = matchstr(context, '\w\+$')
-		if s:comp_head == ''
-			return 0
+function! s:get_context() abort
+	return strpart(getline('.'), 0, col('.') - 1)
+endfunc
+
+
+"----------------------------------------------------------------------
+" check tailing space
+"----------------------------------------------------------------------
+function! s:check_space(context) abort
+	return (a:context == '' || a:context =~ '\s\+$')? 1 : 0
+endfunc
+
+
+"----------------------------------------------------------------------
+" search candidate
+"----------------------------------------------------------------------
+function! s:match_complete(prefix, candidate, kind, sort) abort
+	let prefix = a:prefix
+	if type(a:candidate) == type({})
+		let keys = keys(a:candidate)
+		let matched = []
+		for key in keys(a:candidate)
+			if stridx(key, prefix) == 0
+				call add(matched, key)
+			endif
+		endfor
+		if a:sort
+			call sort(matched)
 		endif
-		if stridx(s:comp_strip, ':') < 0
-			let s:comp_items = s:complete_keys(s:comp_head)
-		elseif stridx(s:comp_strip, '/') < 0
-			let s:comp_items = s:complete_filetype(s:comp_head)
-		else
-			let s:comp_items = s:complete_uname(s:comp_head)
+		let output = []
+		for key in matched
+			let text = a:candidate[key]
+			let item = {'word':key, 'kind': a:kind, 'menu':text}
+			call add(output, item)
+		endfor
+		return output
+	elseif type(a:candidate) == type([])
+		let matched = []
+		for item in a:candidate
+			if type(item) == 1
+				let name = item
+				let text = ''
+			elseif type(item) == 3
+				if len(item) >= 2
+					let name = item[0]
+					let text = item[1]
+				elseif len(item) == 1
+					let name = item[0]
+					let text = ''
+				else
+					continue
+				endif
+			else
+				continue
+			endif
+			if stridx(name, prefix) == 0
+				call add(matched, [name, text])
+			endif
+		endfor
+		if a:sort
+			call sort(matched)
 		endif
-		return len(s:comp_items)
+		let output = []
+		for [name, text] in matched
+			let item = {'word':name, 'kind': a:kind, 'menu':text}
+			call add(output, item)
+		endfor
+		return output
 	endif
-	return 0
 endfunc
 
 
 "----------------------------------------------------------------------
 " compfunc 
 "----------------------------------------------------------------------
-function! comptask#compfunc(findstart, base) abort
+function! comptask#omnifunc(findstart, base) abort
 	if a:findstart
-		let ctx = asclib#mcm#context()
+		let ctx = s:get_context()
 		let matched = strchars(matchstr(ctx, '\w\+$'))
 		let pos = col('.')
 		if ctx =~ '^\s*#'
@@ -115,24 +197,48 @@ function! comptask#compfunc(findstart, base) abort
 				let start = pos - 2 - 1
 			elseif ctx =~ '\$(\w\+$'
 				let start = pos - 2 - matched - 1
+			elseif ctx =~ '\$\w\+$'
+				let start = pos - 1 - matched - 1
 			else
 				let start = pos - matched - 1
 			endif
 		endif
 		return start
 	else
-		let ctx = compinit#context()
+		let ctx = s:get_context()
 		if ctx =~ '^\s*#'
 			return v:none
 		elseif ctx =~ '^\s*['
 			return v:none
 		elseif stridx(ctx, '=') < 0
 			if stridx(ctx, ':') < 0
-				return asclib#mcm#match_complete(a:base, s:text_keys, 'k', 1)
+				return s:match_complete(a:base, s:text_keys, 'k', 1)
 			elseif stridx(ctx, '/') < 0
+				if !exists('s:ft_cache')
+					let s:ft_cache = asyncrun#compat#list_fts()
+					call sort(s:ft_cache)
+				endif
+				return s:match_complete(a:base, s:ft_cache, 'f', 0)
 			else
+				return s:match_complete(a:base, s:text_system, 's', 1)
 			endif
 		else
+			let keyname = matchstr(ctx, '^\s*\zs\w\+')
+			if a:base =~ '^\$'
+				let c1 = s:match_complete(a:base, s:text_macros, 'm', 1)
+				let c2 = s:match_complete(a:base, s:list_envname(), 'e', 1)
+				call extend(c1, c2)
+				return c1
+			elseif a:base =~ '^\$\w\+'
+				return s:match_complete(a:base, s:list_envname(), 'e', 1)
+			elseif a:base =~ '^\$('
+				return s:match_complete(a:base, s:text_macros, 'm', 1)
+			elseif keyname == 'output'
+				let candidate = ['quickfix', 'terminal']
+				return s:match_complete(a:base, s:text_macros, 'o', 1)
+			else
+
+			endif
 		endif
 		return v:none
 	endif
