@@ -6,8 +6,8 @@
 #
 # Maintainer: skywind3000 (at) gmail.com, 2020
 #
-# Last Modified: 2022/11/10 10:45
-# Verision: 1.2.2
+# Last Modified: 2023/08/05 04:40
+# Verision: 1.2.3
 #
 # for more information, please visit:
 # https://github.com/skywind3000/asynctasks.vim
@@ -33,6 +33,14 @@ if sys.version_info[0] >= 3:
 
 
 UNIX = (sys.platform[:3] != 'win') and True or False
+HAS_READLINE = False
+
+if UNIX:
+    try:
+        import readline
+        HAS_READLINE = True
+    except ImportError:
+        pass
 
 
 #----------------------------------------------------------------------
@@ -928,9 +936,18 @@ class TaskManager (object):
                 return shadow[name]
         if ',' not in tail:
             prompt = 'Input argument (%s): '%name
-            text = self.raw_input(prompt)
-            if not text:
-                text = tail.strip()
+            # for linux like system, using readline for editable default value
+            if UNIX and HAS_READLINE: 
+                text = ''
+                try:
+                    readline.set_startup_hook(lambda: readline.insert_text(tail))
+                    text = self.raw_input(prompt)
+                finally:
+                    readline.set_startup_hook()
+            else:
+                text = self.raw_input(prompt)
+                if not text:
+                    text = tail.strip()
         else:
             select = []
             for part in tail.split(','):
