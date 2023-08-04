@@ -20,3 +20,6 @@ snippet windows
 	let s:windows = has('win32') || has('win64') || has('win95') || has('win16')
 	${0}
 
+snippet scripthome
+	let s:scripthome = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+

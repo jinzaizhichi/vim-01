@@ -99,7 +99,7 @@ endfor
 "----------------------------------------------------------------------
 function! s:list_envname()
 	let output = {}
-	for name in asyncrun#compat#list_envname()
+	for name in asyncrun#info#list_envname()
 		if !has_key(s:macros, name)
 			let key = '$' . name
 			let output[key] = '<Environment Variable>'
@@ -223,7 +223,7 @@ function! comptask#omnifunc(findstart, base) abort
 				return s:match_complete(a:base, s:text_keys, 'k', 1)
 			elseif stridx(ctx, '/') < 0
 				if !exists('s:ft_cache')
-					let s:ft_cache = asyncrun#compat#list_fts()
+					let s:ft_cache = asyncrun#info#list_fts()
 					call sort(s:ft_cache)
 				endif
 				return s:match_complete(a:base, s:ft_cache, 'f', 0)
@@ -247,11 +247,18 @@ function! comptask#omnifunc(findstart, base) abort
 			elseif keyname == 'command'
 				if strlen(a:base) >= 1
 					if get(s:, 'init_executable', 0) == 0
-						let s:list_executable = asyncrun#compat#list_executable()
+						let s:list_executable = asyncrun#info#list_executable()
 						let s:init_executable = 1
 					endif
 					return s:match_complete(a:base, s:list_executable, 'x', 1)
 				endif
+			elseif keyname == 'pos'
+				if get(s:, 'init_runner', 0) == 0
+					let s:list_runner = asyncrun#info#list_runner()
+					let s:init_runner = 1
+				endif
+				return s:match_complete(a:base, s:list_runner, 'r', 1)
+			elseif keyname == 'program'
 			endif
 		endif
 		return v:none
