@@ -48,6 +48,42 @@ function! s:check_back_space() abort
 	  return col('.') < 2 || getline('.')[col('.') - 2]  =~# '\s'
 endfunc
 
+function! s:check_omni_avail() abort
+	if &omnifunc == ''
+		return 0
+	endif
+	let ctx = s:get_context()
+	if ctx =~ '^\s*$'
+		return 0
+	elseif ctx =~ '\s$'
+		return 0
+	endif
+	let start = call(&omnifunc, [1, ''])
+	if start < 0 || start >= col('.') - 1
+		return 0
+	endif
+	let base = strpart(ctx, start)
+	let pos = getpos('.')
+	let new = [pos[0], pos[1], pos[2] - strchars(base), pos[3]]
+	call setpos('.', new)
+	let hr = call(&omnifunc, [0, base])
+	call setpos('.', pos)
+	if type(hr) == type(v:none)
+		return 0
+	elseif type(hr) == type([])
+		if len(hr) == 0
+			return 0
+		endif
+	elseif type(hr) == type({})
+		if has_key(hr, 'words')
+			if len(hr['words']) == 0
+				return 0
+			endif
+		endif
+	endif
+	return 1
+endfunc
+
 function! s:on_backspace()
 	if pumvisible() == 0
 		return "\<BS>"
@@ -84,8 +120,19 @@ function! s:feed_popup()
 		let lasty = y
 		return -3
 	endif
+	if s:check_omni_avail()
+		silent! call feedkeys("\<c-x>\<c-o>", 'n')
+		let b:apc_lastx = x
+		let b:apc_lasty = y
+		let b:apc_tick = b:changedtick
+		return 0
+	endif
 	let context = s:get_context()
 	if s:meets_keyword(context)
+		let info = complete_info(['mode'])
+		if info.mode != ''
+			silent! call feedkeys("\<c-e>", 'n')
+		endif
 		silent! call feedkeys(get(b:, 'apc_trigger', g:apc_trigger), 'n')
 		let b:apc_lastx = x
 		let b:apc_lasty = y

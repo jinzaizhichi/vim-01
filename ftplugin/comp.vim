@@ -67,4 +67,6 @@ setlocal omnifunc=comptask#omnifunc
 inoremap <expr><c-\>a printf("%s", complete_info(['mode', 'pum_visible']))
 setlocal directory=C:\Users\Linwei\.vim\bundles\vim-dict\dict\word.dict
 
-	
+runtime site/opt/apc3.vim
+ApcEnable
+
