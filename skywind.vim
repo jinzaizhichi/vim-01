@@ -12,9 +12,10 @@ exec 'set rtp+='. fnameescape(expand('<sfile>:p:h') . '/site/package')
 IncScript site/opt/angry.vim
 IncScript site/opt/indent-object.vim
 IncScript site/opt/after_object.vim
-IncScript site/opt/apc3.vim
+IncScript site/opt/apc.vim
 
 let g:apc_task_enable = 1
+let g:apm_task_enable = 1
 
 if has('gui_running')
 	IncScript site/opt/hexhigh.vim
@@ -235,6 +236,7 @@ let g:navigator_hide_cursor = 0
 let g:apc_enable_ft = get(g:, 'apc_enable_ft', {})
 let g:apc_enable_ft.text = 1
 let g:apc_enable_ft.markdown = 1
+let g:apm_enable_ft = g:apc_enable_ft
 
 
 let g:ycm_filetype_blacklist = get(g:, 'ycm_filetype_blacklist', {})

@@ -9,7 +9,7 @@
 "
 " - auto popup complete window without select the first one
 " - tab/s-tab to cycle suggestions, <c-e> to cancel
-" - use ApcEnable/ApcDisable to toggle for certiain file.
+" - use ApmEnable/ApmDisable to toggle for certiain file.
 "
 " Usage:
 "
@@ -154,7 +154,7 @@ endfunc
 " enable apc
 function! s:apm_enable()
 	call s:apm_disable()
-	augroup ApcEventGroup
+	augroup ApmEventGroup
 		au!
 		au CursorMovedI <buffer> nested call s:feed_popup()
 		au CompleteDone <buffer> call s:complete_done()
@@ -187,7 +187,7 @@ endfunc
 " disable apc
 function! s:apm_disable()
 	if get(b:, 'apm_init_autocmd', 0)
-		augroup ApcEventGroup
+		augroup ApmEventGroup
 			au! 
 		augroup END
 	endif
@@ -218,11 +218,11 @@ function! s:apm_check_init()
 		return
 	endif
 	if get(g:apm_enable_ft, &ft, 0) != 0
-		ApcEnable
+		ApmEnable
 	elseif get(g:apm_enable_ft, '*', 0) != 0
-		ApcEnable
+		ApmEnable
 	elseif get(b:, 'apm_enable', 0)
-		ApcEnable
+		ApmEnable
 	endif
 endfunc
 
@@ -230,7 +230,7 @@ endfunc
 command! -nargs=0 ApmEnable call s:apm_enable()
 command! -nargs=0 ApmDisable call s:apm_disable()
 
-augroup ApcInitGroup
+augroup ApmInitGroup
 	au!
 	au FileType * call s:apm_check_init()
 	au BufEnter * call s:apm_check_init()
