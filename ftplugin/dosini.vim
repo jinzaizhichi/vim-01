@@ -61,5 +61,11 @@ endif
 "----------------------------------------------------------------------
 setlocal omnifunc=comptask#omnifunc
 
+if get(g:, 'apc_task_enable', 0)
+	let b:apc_omni = 1
+	if exists(':ApcEnable')
+		ApcEnable
+	endif
+endif
 
 

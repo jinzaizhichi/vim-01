@@ -12,7 +12,9 @@ exec 'set rtp+='. fnameescape(expand('<sfile>:p:h') . '/site/package')
 IncScript site/opt/angry.vim
 IncScript site/opt/indent-object.vim
 IncScript site/opt/after_object.vim
-IncScript site/opt/apc.vim
+IncScript site/opt/apc3.vim
+
+let g:apc_task_enable = 1
 
 if has('gui_running')
 	IncScript site/opt/hexhigh.vim
