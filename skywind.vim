@@ -14,8 +14,7 @@ IncScript site/opt/indent-object.vim
 IncScript site/opt/after_object.vim
 IncScript site/opt/apc.vim
 
-let g:apc_task_enable = 1
-let g:apm_task_enable = 1
+let g:asynctasks_complete = 1
 
 if has('gui_running')
 	IncScript site/opt/hexhigh.vim

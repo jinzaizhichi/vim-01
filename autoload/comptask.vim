@@ -275,6 +275,8 @@ endfunc
 " feed popup
 "----------------------------------------------------------------------
 let g:apm_min_length = get(g:, 'apm_min_length', 2)
+let g:apm_key_ignore = get(g:, 'apm_key_ignore', [])
+let g:apm_trigger = get(g:, 'apm_trigger', "\<c-n>")
 
 function! s:meets_keyword(context)
 	if g:apm_min_length <= 0
