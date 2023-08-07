@@ -1,6 +1,6 @@
 #! /bin/sh
 
-if [ ! -x "$(which rogue2)" ]; then
+if [ ! -x "$(which rogue)" ]; then
 	echo "missing rogue executable, install with: "
 	echo ""
 	echo "    sudo apt-get install bsdgames-nonfree"
@@ -15,4 +15,6 @@ cd ~
 cd ~/.local/var/rogue
 
 [ -f rogue.save ] && rogue rogue.save || rogue
+
+reset
 
