@@ -282,6 +282,8 @@ let g:navigator_insert.i = {
 			\ 'name': '+insert-text',
 			\ 'd': ['<key><c-r>=strftime("%Y-%m-%d")<cr>', 'insert-year-month-day'],
 			\ 't': ['<key><c-r>=strftime("%H:%M:%S")<cr>', 'insert-year-month-day'],
+			\ 'h': ['<key>head<m-e>', 'insert-head'],
+			\ 'b': ['<key>block<m-e>', 'insert-block'],
 			\ }
 
 

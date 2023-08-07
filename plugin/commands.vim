@@ -209,7 +209,7 @@ function! s:CodeSnipEdit(args)
 		return 0
 	elseif exists(':SnipMateLoadScope') == 2 && exists(':SnipMateEdit') == 2
 		exec 'SnipMateEdit ' . ft
-	elseif exits(':UltiSnipsEdit') == 2
+	elseif exists(':UltiSnipsEdit') == 2
 		UltiSnipEdit
 	endif
 	return 0
