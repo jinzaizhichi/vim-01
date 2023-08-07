@@ -63,6 +63,8 @@ setlocal omnifunc=comptask#omnifunc
 
 if get(g:, 'asynctasks_complete', 0)
 	let b:apm_omni = 1
+	setlocal cpt=.,b
+	set shortmess+=c
 	call comptask#complete_enable()
 endif
 
