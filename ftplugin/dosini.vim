@@ -63,8 +63,12 @@ setlocal omnifunc=comptask#omnifunc
 
 if get(g:, 'asynctasks_complete', 0)
 	let b:apm_omni = 1
+	let b:apc_enable = 0
 	setlocal cpt=.,b
 	set shortmess+=c
+	if exists(':ApcEnable')
+		ApcDisable
+	endif
 	call comptask#complete_enable()
 endif
 
