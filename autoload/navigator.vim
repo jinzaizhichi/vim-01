@@ -3,7 +3,7 @@
 " navigator.vim - 
 "
 " Created by skywind on 2023/06/27
-" Last Modified: 2023/06/27 21:51:25
+" Last Modified: 2023/08/07 14:52
 "
 "======================================================================
 
@@ -31,6 +31,7 @@ let s:config_name = {
 			\ 'popup_height': '40%',
 			\ 'popup_border': 1,
 			\ 'hide_cursor': 0,
+			\ 'fallback': 0,
 			\ }
 
 
@@ -140,8 +141,11 @@ function! navigator#start(visual, bang, args, line1, line2, count) abort
 		let range = printf("%d", a:count)
 	endif
 	if type(hr) == v:t_list
-		let cmd = (len(hr) > 0)? hr[0] : ''
 		try
+			if type(hr[0]) == v:t_func
+				return call(hr[0], [])
+			endif
+			let cmd = (len(hr) > 0)? hr[0] : ''
 			if cmd =~ '^[a-zA-Z0-9_#]\+(.*)$'
 				exec printf('%scall %s', range, cmd)
 			elseif cmd =~# '^<key>'
@@ -172,7 +176,12 @@ function! navigator#start(visual, bang, args, line1, line2, count) abort
 		let keys = s:key_translate([prefix] + path)
 		let keys = navigator#charname#mapname(keys)
 		exec visual
-		call feedkeys(keys)
+		let l:map = mapcheck(keys, a:visual ? 'v' : 'n')
+		if l:map ==# '' || l:map =~ 'Navigator'
+			call feedkeys(keys, 'n')
+		else
+			exec printf('%s%s', range, l:map)
+		endif
 	endif
 endfunc
 
@@ -182,7 +191,7 @@ endfunc
 "----------------------------------------------------------------------
 function! s:key_translate(array) abort
 	let output = []
-	for cc in array
+	for cc in a:array
 		let ch = navigator#charname#get_key_code(cc)
 		if ch == ''
 			let ch = cc
