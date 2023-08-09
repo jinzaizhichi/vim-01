@@ -35,9 +35,9 @@ __EOF__
 let g:auxlib_tweak_alpha = 255
 
 function! auxlib#tweak_set_alpha(alpha)
-	python import vim
-	python tweak = auxlib.VimTweakGetInstance()
-	python tweak.SetAlpha(vim.eval('a:alpha'))
+    pyx import vim
+    pyx tweak = auxlib.VimTweakGetInstance()
+    pyx tweak.SetAlpha(vim.eval('a:alpha'))
 	let g:auxlib_tweak_alpha = 0 + a:alpha
 endfunc
 
@@ -46,9 +46,9 @@ function! auxlib#tweak_enable_capture(enable)
 	if a:enable == '!' || a:enable == 0
 		let l:enable = 0
 	endif
-	python import vim
-	python tweak = auxlib.VimTweakGetInstance()
-	python tweak.EnableCaption(vim.eval('l:enable'))
+    pyx import vim
+    pyx tweak = auxlib.VimTweakGetInstance()
+    pyx tweak.EnableCaption(vim.eval('l:enable'))
 endfunc
 
 function! auxlib#tweak_enable_maximize(enable)
@@ -56,9 +56,9 @@ function! auxlib#tweak_enable_maximize(enable)
 	if a:enable == '' || a:enable != 0
 		let l:enable = 1
 	endif
-	python import vim
-	python tweak = auxlib.VimTweakGetInstance()
-	python tweak.EnableMaximize(vim.eval('l:enable'))
+    pyx import vim
+    pyx tweak = auxlib.VimTweakGetInstance()
+    pyx tweak.EnableMaximize(vim.eval('l:enable'))
 endfunc
 
 function! auxlib#tweak_enable_topmost(enable)
@@ -66,26 +66,26 @@ function! auxlib#tweak_enable_topmost(enable)
 	if a:enable == '' || a:enable != 0
 		let l:enable = 1
 	endif
-	python import vim
-	python tweak = auxlib.VimTweakGetInstance()
-	python tweak.EnableTopMost(vim.eval('l:enable'))
+    pyx import vim
+    pyx tweak = auxlib.VimTweakGetInstance()
+    pyx tweak.EnableTopMost(vim.eval('l:enable'))
 endfunc
 
 function! auxlib#tweak_convert(image, color, alpha, width, height)
-	python import vim
-	python tweak = auxlib.VimTweakGetInstance()
-	python nargs = []
-	python nargs.append("~/.vim/wallpaper.bmp")
-	python nargs.append(vim.eval('a:image'))
+    pyx import vim
+    pyx tweak = auxlib.VimTweakGetInstance()
+    pyx nargs = []
+    pyx nargs.append("~/.vim/wallpaper.bmp")
+    pyx nargs.append(vim.eval('a:image'))
 	if a:width > 0 && a:height > 0
 		python nargs.append((int(vim.eval('a:width')), int(vim.eval('a:height'))))
 	else
 		python nargs.append(None)
 	endif
-	python nargs.append(int(vim.eval('a:color')))
-	python nargs.append(int(vim.eval('a:alpha')))
-	python tweak.ConvertImage(*nargs)
-	python del nargs
+    pyx nargs.append(int(vim.eval('a:color')))
+    pyx nargs.append(int(vim.eval('a:alpha')))
+    pyx tweak.ConvertImage(*nargs)
+    pyx del nargs
 endfunc
 
 function! auxlib#tweak_wallpaper(image)
