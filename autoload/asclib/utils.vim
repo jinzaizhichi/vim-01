@@ -330,15 +330,15 @@ function! asclib#utils#git_browse(name, ...)
 	if root == ''
 		return ''
 	endif
-	let remote = asclib#vcs#git_remote(root, 'origin')
+	let remote = asclib#git#info_remote(root, 'origin')
 	if remote == ''
 		return ''
 	endif
-	let branch = asclib#vcs#git_branch(root)
+	let branch = asclib#git#info_branch(root)
 	if branch == ''
 		return ''
 	endif
-	let uri = asclib#vcs#git_fullname(name)
+	let uri = asclib#info#info_fullname(name)
 	if uri == ''
 		return ''
 	endif

@@ -103,7 +103,6 @@ endfunc
 
 function! auxlib#clear_leader_mru()
 	let name = '~/.vim/cache/.LfCache/python3/mru'
-
 endfunc
 
 

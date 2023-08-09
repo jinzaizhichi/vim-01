@@ -30,10 +30,6 @@ endif
 
 noremap <tab>/ :emenu <C-Z>
 
-" syntax highlighting for delphi/freepascal keywords
-let g:pascal_delphi = 1
-let g:pascal_fpc = 1
-
 
 "----------------------------------------------------------------------
 " Include Scripts
@@ -79,6 +75,11 @@ if exists('+cursorlineopt')
 	set cursorlineopt=number cursorline
 endif
 
+" setup shell 
+if &shell =~# 'fish'
+	set shell=sh
+endif
+
 
 "----------------------------------------------------------------------
 " fixed cursor shaping compatible issues for some terminals
@@ -99,12 +100,6 @@ autocmd BufReadPost *
 	\ if line("'\"") > 1 && line("'\"") <= line("$") |
 	\	 exe "normal! g`\"" |
 	\ endif
-
-" DiffOrig command
-if !exists(":DiffOrig")
-  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-          \ | wincmd p | diffthis
-endif
 
 
 "----------------------------------------------------------------------
@@ -189,11 +184,6 @@ if has('terminal') && exists(':terminal') == 2
 			" au TerminalOpen * setlocal nonumber signcolumn=no
 		augroup END
 	endif
-endif
-
-" setup shell 
-if &shell =~# 'fish'
-	set shell=sh
 endif
 
 

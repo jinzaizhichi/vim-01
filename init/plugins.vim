@@ -274,4 +274,9 @@ let g:gutentags_plus_switch = 0
 let g:jellybeans_use_term_italics = 0
 let g:jellybeans_use_gui_italics = 0
 
+" syntax highlighting for delphi/freepascal keywords
+let g:pascal_delphi = 1
+let g:pascal_fpc = 1
+
+
 

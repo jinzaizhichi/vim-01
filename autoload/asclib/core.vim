@@ -241,7 +241,7 @@ function! asclib#core#system(cmd, ...)
 		if encoding != '' && encoding != &encoding
 			try
 				let hr = iconv(hr, a:2, &encoding)
-			catch /.*/
+			catch
 			endtry
 		endif
 	endif

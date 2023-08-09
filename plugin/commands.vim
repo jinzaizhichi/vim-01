@@ -371,10 +371,19 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" DiffFile 
+" DiffFile
 "----------------------------------------------------------------------
 command! -nargs=1 -complete=file DiffFile vertical diffsplit <args>
 command! -nargs=0 Undiff setlocal nodiff noscrollbind wrap
+
+
+"----------------------------------------------------------------------
+" DiffOrig command
+"----------------------------------------------------------------------
+if !exists(":DiffOrig")
+	command DiffOrig vert new | set bt=nofile | r ++edit # |
+				\ 0d_ | diffthis | wincmd p | diffthis
+endif
 
 
 "----------------------------------------------------------------------

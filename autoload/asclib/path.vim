@@ -384,6 +384,15 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" return a relative version of a path
+"----------------------------------------------------------------------
+function! asclib#path#relpath(path, base) abort
+	let path = asclib#path#abspath(a:path)
+	let base = asclib#path#abspath(a:base)
+endfunc
+
+
+"----------------------------------------------------------------------
 " split ext
 "----------------------------------------------------------------------
 function! asclib#path#splitext(path)
