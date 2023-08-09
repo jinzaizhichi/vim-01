@@ -8,6 +8,7 @@
 # Last change: 2016/11/07 19:56:44
 #
 #======================================================================
+from __future__ import print_function, unicode_literals
 import sys
 import time
 import os
@@ -40,7 +41,7 @@ class Win32API (object):
         self.WNDENUMPROC = ctypes.WINFUNCTYPE(
                 wintypes.BOOL,
                 wintypes.HWND,    # _In_ hWnd
-                wintypes.LPARAM,) # _In_ lParam
+                wintypes.LPARAM)  # _In_ lParam
         self.user32.EnumThreadWindows.argtypes = (
                 wintypes.DWORD,
                 self.WNDENUMPROC,
@@ -230,7 +231,7 @@ class VimTweak (object):
         dst.save(dstname, 'BMP')
         return True
 
-    def ClearLeaderfMru(fn):
+    def ClearLeaderfMru (self, fn):
         if sys.platform[:3] == 'win':
             content = []
             keys = {}
@@ -281,10 +282,10 @@ if __name__ == "__main__":
         api = Win32API()
         while True:
             keys = []
-            for i in xrange(1024):
+            for i in range(1024):
                 if api.GetAsyncKeyState(i):
                     keys.append(i)  
-            print 'keycode: ', keys
+            print('keycode: ', keys)
             time.sleep(0.1)
         return 0
 

@@ -7,17 +7,6 @@
 "
 "======================================================================
 
-" global settings
-let s:winopen = 0
-set splitright
-set smartcase
-set switchbuf=useopen,usetab,newtab
-set viewdir=~/.vim/view
-set wildmenu
-set wcm=<C-Z>
-"set splitbelow
-
-
 " Open Explore in new tab with current directory
 function! Open_Explore(where)
 	let l:path = expand("%:p:h")

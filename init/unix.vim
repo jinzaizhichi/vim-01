@@ -8,16 +8,21 @@ filetype plugin indent on
 set hlsearch
 set incsearch
 set wildmenu
+set wcm=<C-Z>
 set ignorecase
-set cpo-=<
+set smartcase
+set switchbuf=useopen,usetab,newtab
 set lazyredraw
-set errorformat=%.\ %#-->\ %f:%l:%c,%f(%l):%m,%f:%l:%c:%m,%f:%l:%m
 set vop=folds,cursor
+set cpo-=<
 set fdm=indent
 set foldlevel=99
-set tags=./.tags;,.tags
 set history=2000
+set tags=./.tags;,.tags
 set viminfo+=!
+set splitright
+set viewdir=~/.vim/view
+set errorformat=%.\ %#-->\ %f:%l:%c,%f(%l):%m,%f:%l:%c:%m,%f:%l:%m
 
 if has('patch-8.1.1300')
 	set shortmess-=S

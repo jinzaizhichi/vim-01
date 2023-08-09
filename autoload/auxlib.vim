@@ -6,14 +6,14 @@
 " Last change: 2016/11/07 11:57:54
 "
 "======================================================================
-if !has('python')
+if !has('python3')
 	finish
 endif
 
 let s:filename = expand('<sfile>:p')
 let s:filehome = expand('<sfile>:p:h')
 
-python << __EOF__
+python3 << __EOF__
 def __auxlib_initialize():
 	import os, sys, vim
 	filename = os.path.abspath(vim.eval('expand("<sfile>:p")'))
@@ -24,7 +24,6 @@ def __auxlib_initialize():
 
 __auxlib_initialize()
 import auxlib
-
 __EOF__
 
 

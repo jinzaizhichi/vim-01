@@ -247,7 +247,7 @@ if exists('g:gutentags_cache_dir') == 0
 endif
 
 if !isdirectory(g:gutentags_cache_dir)
-	call mkdir(g:gutentags_cache_dir, 'p')
+	silent call mkdir(g:gutentags_cache_dir, 'p')
 endif
 
 let g:gutentags_ctags_extra_args = []
