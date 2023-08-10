@@ -112,9 +112,12 @@ let g:navigator.o = {
 			\ 'name': '+open-files',
 			\ 'r' : [':Leaderf mru', 'leaderf-recent-files'],
 			\ 'p' : [':Leaderf mru', 'leaderf-project-files'],
+			\ 'f' : [':EditFileTypeScript', 'open-file-type-script'],
+			\ 'w' : [':VimwikiTabIndex', 'open-wiki'],
 			\ }
 
 
+	
 "----------------------------------------------------------------------
 " project
 "----------------------------------------------------------------------
@@ -281,13 +284,12 @@ let g:navigator_insert.s = {
 let g:navigator_insert.i = {
 			\ 'name': '+insert-text',
 			\ 'd': ['<key><c-r>=strftime("%Y-%m-%d")<cr>', 'insert-year-month-day'],
-			\ 't': ['<key><c-r>=strftime("%H:%M:%S")<cr>', 'insert-year-month-day'],
+			\ 't': ['<key><c-r>=strftime("%H:%M:%S")<cr>', 'insert-hour-minute-sec'],
 			\ 'h': ['<key>head<m-e>', 'insert-head'],
 			\ 'b': ['<key>block<m-e>', 'insert-block'],
 			\ }
 
-
-
+	
 "----------------------------------------------------------------------
 " trigger
 "----------------------------------------------------------------------

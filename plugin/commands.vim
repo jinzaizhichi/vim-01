@@ -437,3 +437,15 @@ function! s:Log(text)
 endfunc
 
 
+"----------------------------------------------------------------------
+" EditFileTypeScript
+"----------------------------------------------------------------------
+command! -nargs=? EditFileTypeScript call s:EditFileTypeScript(<q-args>)
+function! s:EditFileTypeScript(ft)
+	let ft = (a:ft == '')? (&ft) : (a:ft)
+	let name = asclib#path#runtime(printf('ftplugin/%s.vim', ft))
+	exec 'FileSwitch -switch=useropen,usetab,auto ' . fnameescape(name)
+endfunc
+
+
+
