@@ -90,6 +90,12 @@ endfunc
 " relative path
 "----------------------------------------------------------------------
 function! asclib#vcs#relpath(where)
+	let place = (a:where == '')? expand('%:p') : (a:where)
+	let root = asclib#vcs#root(place)
+	if root == ''
+		return ''
+	endif
+	return asclib#path#relpath(place, root)
 endfunc
 
 
@@ -105,4 +111,5 @@ function! asclib#vcs#git_fullname(name)
 	let hr = asclib#vcs#git('ls-files --full-name ' . shellescape(name), root)
 	return (g:asclib#core#shell_error == 0)? asclib#string#strip(hr) : ''
 endfunc
+
 
