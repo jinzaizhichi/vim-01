@@ -66,6 +66,11 @@ if !exists('g:cppman_wsl_dist')
 	let g:cppman_wsl_dist = ''
 endif
 
+" the cppman command can be a absolute path to unix cppman
+if !exists('g:cppman_command')
+	let g:cppman_command = 'cppman'
+endif
+
 " open mode: tab/vert/botright vert/topleft/...
 if !exists('g:cppman_open_mode')
 	let g:cppman_open_mode = ''
@@ -220,7 +225,8 @@ endfunc
 " get page
 "----------------------------------------------------------------------
 function! s:cppman_get_page(section, page, width)
-	let cmd = 'cppman --force-columns=' .. a:width .. ' "' .. a:page .. '"'
+	let cmd = g:cppman_command
+	let cmd = cmd . ' --force-columns=' .. a:width .. ' "' .. a:page .. '"'
 	if a:section != 'cppman'
 		let cmd = 'MANPAGER=cat MANWIDTH=' .. a:width .. ' man '
 		let cmd = cmd .. a:section .. ' "' .. a:page .. '" '

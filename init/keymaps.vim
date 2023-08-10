@@ -387,8 +387,8 @@ set ssop-=options    " do not store global and local values in a session
 " set ssop-=folds      " do not store folds
 
 for s:index in range(5)
-	exec 'inoremap <silent><space>f'.s:index.'s :mksession! ~/.vim/session.'.s:index.'<cr>'
-	exec 'inoremap <silent><space>f'.s:index.'l :so ~/.vim/session.'.s:index.'<cr>'
+	exec 'nnoremap <silent><space>f'.s:index.'s :mksession! ~/.vim/session.'.s:index.'<cr>'
+	exec 'nnoremap <silent><space>f'.s:index.'l :so ~/.vim/session.'.s:index.'<cr>'
 endfor
 
 
