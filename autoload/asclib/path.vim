@@ -389,6 +389,26 @@ endfunc
 function! asclib#path#relpath(path, base) abort
 	let path = asclib#path#abspath(a:path)
 	let base = asclib#path#abspath(a:base)
+	let path = asclib#path#normalize(path)
+	let base = asclib#path#normalize(base)
+	let head = ''
+	while 1
+		if asclib#path#contains(base, path)
+			if base =~ '[\/\\]$'
+				let size = strlen(base)
+			else
+				let size = strlen(base) + 1
+			endif
+			return head . strpart(path, size)
+		endif
+		let prev = base
+		let head = '../' . head
+		let base = fnamemodify(base, ':h')
+		if base == prev
+			break
+		endif
+	endwhile
+	return ''
 endfunc
 
 
