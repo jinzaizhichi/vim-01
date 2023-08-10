@@ -9,5 +9,4 @@ let b:navigator_insert.i = {
 			\ 'w': ['<key>while<m-e>', 'insert-while-endwhile'],
 			\ }
 
-
 	

@@ -192,6 +192,10 @@ if has_key(s:enabled, 'inter')
 	if has_key(s:enabled, 'minisnip')
 		Plug 'Jorengarenar/miniSnip'
 		IncScript site/bundle/minisnip.vim
+	elseif has_key(s:enabled, 'neosnippet')
+		Plug 'Shougo/neosnippet.vim'
+		let s:enabled.neovim = 1
+		IncScript site/bundle/neosnippet.vim
 	elseif has_key(s:enabled, 'ultisnips') == 0 || (has('python3') == 0 && has('python') == 0)
 		Plug 'MarcWeber/vim-addon-mw-utils'
 		Plug 'tomtom/tlib_vim'
@@ -362,6 +366,13 @@ if has_key(s:enabled, 'airline')
 	Plug 'vim-airline/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
 	IncScript site/bundle/airline.vim
+endif
+
+if has_key(s:enabled, 'neovim')
+	if !has('nvim')
+		Plug 'roxma/nvim-yarp'
+		Plug 'roxma/vim-hug-neovim-rpc'
+	endif
 endif
 
 if has_key(s:enabled, 'floaterm')
