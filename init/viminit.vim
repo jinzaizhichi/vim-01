@@ -3,7 +3,7 @@
 " viminit.vim - Vim initialize script
 "
 " Maintainer: skywind3000 (at) gmail.com
-" Last Modified: 2021/11/07 16:38
+" Last Modified: 2023/08/11 00:30
 "
 " Tiny script which makes vim become neat and handy, supports vim.tiny
 "
@@ -62,62 +62,62 @@ inoremap <C-l> <right>
 "----------------------------------------------------------------------
 " buffer keymap
 "----------------------------------------------------------------------
-noremap <silent>\bn :bn<cr>
-noremap <silent>\bp :bp<cr>
-noremap <silent>\bm :bm<cr>
-noremap <silent>\bv :vs<cr>
-noremap <silent>\bs :sp<cr>
-noremap <silent>\bd :bdelete<cr>
-noremap <silent>\bl :ls<cr>
-noremap <silent>\bb :ls<cr>:b
+nnoremap <silent>\bn :bn<cr>
+nnoremap <silent>\bp :bp<cr>
+nnoremap <silent>\bm :bm<cr>
+nnoremap <silent>\bv :vs<cr>
+nnoremap <silent>\bs :sp<cr>
+nnoremap <silent>\bd :bdelete<cr>
+nnoremap <silent>\bl :ls<cr>
+nnoremap <silent>\bb :ls<cr>:b
 
 
 "----------------------------------------------------------------------
 " window keymaps
 "----------------------------------------------------------------------
-noremap <silent>\ww <c-w>w
-noremap <silent>\wv <c-w>v
-noremap <silent>\ws <c-w>s
-noremap <silent>\wh <c-w>h
-noremap <silent>\wj <c-w>j
-noremap <silent>\wk <c-w>k
-noremap <silent>\wl <c-w>l
-noremap <silent>\wc <c-w>c
-noremap <silent>\wo <c-w>o
-noremap <silent>\wp <c-w>p
-noremap <silent>\w1 :1wincmd w<cr>
-noremap <silent>\w2 :2wincmd w<cr>
-noremap <silent>\w3 :3wincmd w<cr>
-noremap <silent>\w4 :4wincmd w<cr>
-noremap <silent>\w5 :5wincmd w<cr>
-noremap <silent>\w6 :6wincmd w<cr>
-noremap <silent>\w7 :7wincmd w<cr>
-noremap <silent>\w8 :8wincmd w<cr>
-noremap <silent>\w9 :9wincmd w<cr>
+nnoremap <silent>\ww <c-w>w
+nnoremap <silent>\wv <c-w>v
+nnoremap <silent>\ws <c-w>s
+nnoremap <silent>\wh <c-w>h
+nnoremap <silent>\wj <c-w>j
+nnoremap <silent>\wk <c-w>k
+nnoremap <silent>\wl <c-w>l
+nnoremap <silent>\wc <c-w>c
+nnoremap <silent>\wo <c-w>o
+nnoremap <silent>\wp <c-w>p
+nnoremap <silent>\w1 :1wincmd w<cr>
+nnoremap <silent>\w2 :2wincmd w<cr>
+nnoremap <silent>\w3 :3wincmd w<cr>
+nnoremap <silent>\w4 :4wincmd w<cr>
+nnoremap <silent>\w5 :5wincmd w<cr>
+nnoremap <silent>\w6 :6wincmd w<cr>
+nnoremap <silent>\w7 :7wincmd w<cr>
+nnoremap <silent>\w8 :8wincmd w<cr>
+nnoremap <silent>\w9 :9wincmd w<cr>
 
 
 "----------------------------------------------------------------------
 " tab keymap
 "----------------------------------------------------------------------
-noremap <silent>\tc :tabnew<cr>
-noremap <silent>\tq :tabclose<cr>
-noremap <silent>\tn :tabnext<cr>
-noremap <silent>\tp :tabprev<cr>
-noremap <silent>\to :tabonly<cr>
-noremap <silent>\th :-tabmove<cr>
-noremap <silent>\tl :+tabmove<cr>
-noremap <silent>\ta g<tab>
-noremap <silent>\1 :tabn 1<cr>
-noremap <silent>\2 :tabn 2<cr>
-noremap <silent>\3 :tabn 3<cr>
-noremap <silent>\4 :tabn 4<cr>
-noremap <silent>\5 :tabn 5<cr>
-noremap <silent>\6 :tabn 6<cr>
-noremap <silent>\7 :tabn 7<cr>
-noremap <silent>\8 :tabn 8<cr>
-noremap <silent>\9 :tabn 9<cr>
-noremap <silent>\0 :tabn 10<cr>
-noremap <silent><s-tab> :tabnext<CR>
+nnoremap <silent>\tc :tabnew<cr>
+nnoremap <silent>\tq :tabclose<cr>
+nnoremap <silent>\tn :tabnext<cr>
+nnoremap <silent>\tp :tabprev<cr>
+nnoremap <silent>\to :tabonly<cr>
+nnoremap <silent>\th :-tabmove<cr>
+nnoremap <silent>\tl :+tabmove<cr>
+nnoremap <silent>\ta g<tab>
+nnoremap <silent>\1 :tabn 1<cr>
+nnoremap <silent>\2 :tabn 2<cr>
+nnoremap <silent>\3 :tabn 3<cr>
+nnoremap <silent>\4 :tabn 4<cr>
+nnoremap <silent>\5 :tabn 5<cr>
+nnoremap <silent>\6 :tabn 6<cr>
+nnoremap <silent>\7 :tabn 7<cr>
+nnoremap <silent>\8 :tabn 8<cr>
+nnoremap <silent>\9 :tabn 9<cr>
+nnoremap <silent>\0 :tabn 10<cr>
+nnoremap <silent><s-tab> :tabnext<CR>
 inoremap <silent><s-tab> <ESC>:tabnext<CR>
 
 
@@ -210,26 +210,26 @@ set matchtime=3
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<
 
 " window management
-noremap <tab>h <c-w>h
-noremap <tab>j <c-w>j
-noremap <tab>k <c-w>k
-noremap <tab>l <c-w>l
-noremap <tab>w <c-w>w
-noremap <tab>c <c-w>c
-noremap <tab>+ <c-w>+
-noremap <tab>- <c-w>-
-noremap <tab>, <c-w>< 
-noremap <tab>. <c-w>>
-noremap <tab>= <c-w>=
-noremap <tab>s <c-w>s
-noremap <tab>v <c-w>v
-noremap <tab>o <c-w>o
-noremap <tab>p <c-w>p
+nnoremap <tab>h <c-w>h
+nnoremap <tab>j <c-w>j
+nnoremap <tab>k <c-w>k
+nnoremap <tab>l <c-w>l
+nnoremap <tab>w <c-w>w
+nnoremap <tab>c <c-w>c
+nnoremap <tab>+ <c-w>+
+nnoremap <tab>- <c-w>-
+nnoremap <tab>, <c-w>< 
+nnoremap <tab>. <c-w>>
+nnoremap <tab>= <c-w>=
+nnoremap <tab>s <c-w>s
+nnoremap <tab>v <c-w>v
+nnoremap <tab>o <c-w>o
+nnoremap <tab>p <c-w>p
 
 " tab enhancement
-noremap <silent><tab> <nop>
-noremap <silent><tab>f <c-i>
-noremap <silent><tab>b <c-o>
+nnoremap <silent><tab> <nop>
+nnoremap <silent><tab>f <c-i>
+nnoremap <silent><tab>b <c-o>
 
 " insert mode as emacs
 inoremap <c-a> <home>
@@ -257,7 +257,7 @@ cnoremap <c-x><c-e> <c-e>
 cnoremap <c-x><c-d> <c-d>
 
 " quit all
-noremap <silent>Q :<c-u>confirm qall<cr>
+nnoremap <silent>Q :<c-u>confirm qall<cr>
 
 
 "----------------------------------------------------------------------

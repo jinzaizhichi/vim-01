@@ -34,3 +34,8 @@ snippet while
 	while ${0}
 	endwhile
 
+snippet errmsg
+	echohl ErrorMsg
+	echo ${0:"ERROR"}
+	echohl None
+

@@ -48,41 +48,42 @@ endfor
 "----------------------------------------------------------------------
 " window 
 "----------------------------------------------------------------------
-noremap <silent><space>= :resize +3<cr>
-noremap <silent><space>- :resize -3<cr>
-noremap <silent><space>, :vertical resize -3<cr>
-noremap <silent><space>. :vertical resize +3<cr>
+nnoremap <silent><space>= :resize +3<cr>
+nnoremap <silent><space>- :resize -3<cr>
+nnoremap <silent><space>, :vertical resize -3<cr>
+nnoremap <silent><space>. :vertical resize +3<cr>
 
-noremap <silent><space>hh :nohl<cr>
-noremap <silent><bs> :nohl<cr>:redraw!<cr>
-noremap <silent><tab>, :call Tab_MoveLeft()<cr>
-noremap <silent><tab>. :call Tab_MoveRight()<cr>
-noremap <silent><tab>6 :VinegarOpen leftabove vs<cr>
-noremap <silent><tab>7 :VinegarOpen vs<cr>
-noremap <silent><tab>8 :VinegarOpen belowright sp<cr>
-noremap <silent><tab>9 :VinegarOpen tabedit<cr>
-noremap <silent><tab>0 :exe "NERDTree ".fnameescape(expand("%:p:h"))<cr>
-noremap <silent><tab>y :exe "NERDTree ".fnameescape(asclib#path#get_root("%"))<cr>
-noremap <silent><tab>g <c-w>p
+nnoremap <silent><space>hh :nohl<cr>
+nnoremap <silent><bs> :nohl<cr>:redraw!<cr>
+nnoremap <silent><tab>, :call Tab_MoveLeft()<cr>
+nnoremap <silent><tab>. :call Tab_MoveRight()<cr>
+nnoremap <silent><tab>6 :VinegarOpen leftabove vs<cr>
+nnoremap <silent><tab>7 :VinegarOpen vs<cr>
+nnoremap <silent><tab>8 :VinegarOpen belowright sp<cr>
+nnoremap <silent><tab>9 :VinegarOpen tabedit<cr>
+nnoremap <silent><tab>0 :exe "NERDTree ".fnameescape(expand("%:p:h"))<cr>
+nnoremap <silent><tab>y :exe "NERDTree ".fnameescape(asclib#path#get_root("%"))<cr>
+nnoremap <silent><tab>g <c-w>p
 
-noremap <silent><space>ha :GuiSignRemove
+nnoremap <silent><space>ha :GuiSignRemove
 			\ errormarker_error errormarker_warning<cr>
 
 " replace
-noremap <space>p viw"0p
-noremap <space>y yiw
+nnoremap <space>p viw"0p
+nnoremap <space>y yiw
 
 " fast save
-noremap <C-S> :w<cr>
+nnoremap <C-S> :w<cr>
 inoremap <C-S> <ESC>:w<cr>
 
-noremap <silent><m-t> :tabnew<cr>
+nnoremap <silent><m-t> :tabnew<cr>
+vnoremap <silent><m-t> <ESC>:tabnew<cr>
 inoremap <silent><m-t> <ESC>:tabnew<cr>
-noremap <silent><m-w> :tabclose<cr>
+nnoremap <silent><m-w> :tabclose<cr>
 inoremap <silent><m-w> <ESC>:tabclose<cr>
-noremap <silent><m-v> :close<cr>
+nnoremap <silent><m-v> :close<cr>
 inoremap <silent><m-v> <esc>:close<cr>
-noremap <m-s> :w<cr>
+nnoremap <m-s> :w<cr>
 inoremap <m-s> <esc>:w<cr>
 
 
@@ -201,12 +202,12 @@ endif
 "----------------------------------------------------------------------
 " space + s : svn
 "----------------------------------------------------------------------
-noremap <space>sc :AsyncRun svn co -m "update from vim"<cr>
-noremap <space>su :AsyncRun svn up<cr>
-noremap <space>st :AsyncRun svn st<cr>
+nnoremap <space>sc :AsyncRun svn co -m "update from vim"<cr>
+nnoremap <space>su :AsyncRun svn up<cr>
+nnoremap <space>st :AsyncRun svn st<cr>
 
 " editing commands
-noremap <space>aa ggVG
+nnoremap <space>aa ggVG
 
 "----------------------------------------------------------------------
 " text-objects
@@ -220,22 +221,22 @@ vnoremap il $o^oh
 "----------------------------------------------------------------------
 " space + j : make
 "----------------------------------------------------------------------
-noremap <silent><space>jj  :AsyncRun -cwd=<root> make<cr>
-noremap <silent><space>jc  :AsyncRun -cwd=<root> make clean<cr>
-noremap <silent><space>jk  :AsyncRun -mode=4 -cwd=<root> make run<cr>
-noremap <silent><space>jl  :AsyncRun -mode=4 -cwd=<root> make test<cr>
-noremap <silent><space>j1  :AsyncRun -mode=4 -cwd=<root> make t1<cr>
-noremap <silent><space>j2  :AsyncRun -mode=4 -cwd=<root> make t2<cr>
-noremap <silent><space>j3  :AsyncRun -mode=4 -cwd=<root> make t3<cr>
-noremap <silent><space>j4  :AsyncRun -mode=4 -cwd=<root> make t4<cr>
-noremap <silent><space>j5  :AsyncRun -mode=4 -cwd=<root> make t5<cr>
-noremap <silent><space>k1  :AsyncRun -cwd=<root> make t1<cr>
-noremap <silent><space>k2  :AsyncRun -cwd=<root> make t2<cr>
-noremap <silent><space>k3  :AsyncRun -cwd=<root> make t3<cr>
-noremap <silent><space>k4  :AsyncRun -cwd=<root> make t4<cr>
-noremap <silent><space>k5  :AsyncRun -cwd=<root> make t5<cr>
+nnoremap <silent><space>jj  :AsyncRun -cwd=<root> make<cr>
+nnoremap <silent><space>jc  :AsyncRun -cwd=<root> make clean<cr>
+nnoremap <silent><space>jk  :AsyncRun -mode=4 -cwd=<root> make run<cr>
+nnoremap <silent><space>jl  :AsyncRun -mode=4 -cwd=<root> make test<cr>
+nnoremap <silent><space>j1  :AsyncRun -mode=4 -cwd=<root> make t1<cr>
+nnoremap <silent><space>j2  :AsyncRun -mode=4 -cwd=<root> make t2<cr>
+nnoremap <silent><space>j3  :AsyncRun -mode=4 -cwd=<root> make t3<cr>
+nnoremap <silent><space>j4  :AsyncRun -mode=4 -cwd=<root> make t4<cr>
+nnoremap <silent><space>j5  :AsyncRun -mode=4 -cwd=<root> make t5<cr>
+nnoremap <silent><space>k1  :AsyncRun -cwd=<root> make t1<cr>
+nnoremap <silent><space>k2  :AsyncRun -cwd=<root> make t2<cr>
+nnoremap <silent><space>k3  :AsyncRun -cwd=<root> make t3<cr>
+nnoremap <silent><space>k4  :AsyncRun -cwd=<root> make t4<cr>
+nnoremap <silent><space>k5  :AsyncRun -cwd=<root> make t5<cr>
 
-noremap <silent><space>jm :call Tools_SwitchMakeFile()<cr>
+nnoremap <silent><space>jm :call Tools_SwitchMakeFile()<cr>
 
 
 "----------------------------------------------------------------------
@@ -311,12 +312,12 @@ if has("cscope")
 	endif
 endif
 
-noremap <leader>cb1 :call vimmake#update_tags('', 'ctags', '.tags')<cr>
-noremap <leader>cb2 :call vimmake#update_tags('', 'cs', '.cscope')<cr>
-noremap <leader>cb3 :call vimmake#update_tags('!', 'ctags', '.tags')<cr>
-noremap <leader>cb4 :call vimmake#update_tags('!', 'cs', '.cscope')<cr>
-noremap <leader>cb5 :call vimmake#update_tags('', 'py', '.cscopy')<cr>
-noremap <leader>cb6 :call vimmake#update_tags('!', 'py', '.cscopy')<cr>
+nnoremap <leader>cb1 :call vimmake#update_tags('', 'ctags', '.tags')<cr>
+nnoremap <leader>cb2 :call vimmake#update_tags('', 'cs', '.cscope')<cr>
+nnoremap <leader>cb3 :call vimmake#update_tags('!', 'ctags', '.tags')<cr>
+nnoremap <leader>cb4 :call vimmake#update_tags('!', 'cs', '.cscope')<cr>
+nnoremap <leader>cb5 :call vimmake#update_tags('', 'py', '.cscopy')<cr>
+nnoremap <leader>cb6 :call vimmake#update_tags('!', 'py', '.cscopy')<cr>
 
 
 "----------------------------------------------------------------------
@@ -328,8 +329,8 @@ noremap <silent><S-F10> :call quickmenu#toggle(0)<cr>
 inoremap <silent><S-F10> <ESC>:call quickmenu#toggle(0)<cr>
 noremap <silent><M-;> :call quickui#tools#preview_tag('')<cr>
 noremap <silent><M-:> :PreviewClose<cr>
-noremap <silent><tab>; :PreviewGoto edit<cr>
-noremap <silent><tab>: :PreviewGoto tabe<cr>
+nnoremap <silent><tab>; :PreviewGoto edit<cr>
+nnoremap <silent><tab>: :PreviewGoto tabe<cr>
 
 if has('autocmd')
 	function! s:quickfix_keymap()
@@ -395,32 +396,32 @@ endfor
 "----------------------------------------------------------------------
 " leader + b/c : buffer
 "----------------------------------------------------------------------
-noremap <silent><leader>bc :BufferClose<cr>
-noremap <silent><leader>cw :CdToFileDir<cr>
-noremap <silent><leader>cr :CdToProjectRoot<cr>
+nnoremap <silent><leader>bc :BufferClose<cr>
+nnoremap <silent><leader>cw :CdToFileDir<cr>
+nnoremap <silent><leader>cr :CdToProjectRoot<cr>
 
 
 "----------------------------------------------------------------------
 " space + h : fast open files
 "----------------------------------------------------------------------
-noremap <silent><space>hp :FileSwitch ~/.vim/project.txt<cr>
-noremap <silent><space>hf <c-w>gf
-noremap <silent><space>he :call Show_Explore()<cr>
-noremap <silent><space>hb :FileSwitch ~/.vim/bundle.vim<cr>
-noremap <silent><space>hq :FileSwitch ~/.vim/quicknote.txt<cr>
-noremap <silent><space>hm :FileSwitch +setl\ ft=markdown ~/.vim/quicknote.md<cr>
-noremap <silent><space>hg :FileSwitch ~/.vim/scratch.txt<cr>
-noremap <silent><space>hd :FileSwitch ~/.vim/notes.md<cr>
-noremap <silent><space>ho :FileSwitch ~/.vim/cloud/Documents/cloudnote.txt<cr>
-noremap <silent><space>hi :FileSwitch ~/.vim/tasks.ini<cr>
-noremap <silent><space>h; :call asclib#nextcloud_sync()<cr>
+nnoremap <silent><space>hp :FileSwitch ~/.vim/project.txt<cr>
+nnoremap <silent><space>hf <c-w>gf
+nnoremap <silent><space>he :call Show_Explore()<cr>
+nnoremap <silent><space>hb :FileSwitch ~/.vim/bundle.vim<cr>
+nnoremap <silent><space>hq :FileSwitch ~/.vim/quicknote.txt<cr>
+nnoremap <silent><space>hm :FileSwitch +setl\ ft=markdown ~/.vim/quicknote.md<cr>
+nnoremap <silent><space>hg :FileSwitch ~/.vim/scratch.txt<cr>
+nnoremap <silent><space>hd :FileSwitch ~/.vim/notes.md<cr>
+nnoremap <silent><space>ho :FileSwitch ~/.vim/cloud/Documents/cloudnote.txt<cr>
+nnoremap <silent><space>hi :FileSwitch ~/.vim/tasks.ini<cr>
+nnoremap <silent><space>h; :call asclib#nextcloud_sync()<cr>
 
 if (!has('nvim')) && (has('win32') || has('win64'))
-	noremap <silent><space>hr :FileSwitch ~/_vimrc<cr>
+	nnoremap <silent><space>hr :FileSwitch ~/_vimrc<cr>
 elseif !has('nvim')
-	noremap <silent><space>hr :FileSwitch ~/.vimrc<cr>
+	nnoremap <silent><space>hr :FileSwitch ~/.vimrc<cr>
 else
-	noremap <silent><space>hr :FileSwitch ~/.config/nvim/init.vim<cr>
+	nnoremap <silent><space>hr :FileSwitch ~/.config/nvim/init.vim<cr>
 endif
 
 if has('nvim') == 0
@@ -457,15 +458,15 @@ vmap <space>gr y:%s/<C-R>=escape(@", '\\/.*$^~[]')<CR>//gc<Left><Left><Left>
 "----------------------------------------------------------------------
 " linting
 "----------------------------------------------------------------------
-noremap <silent><space>lp :call asclib#lint_pylint('')<cr>
-noremap <silent><space>lf :call asclib#lint_flake8('')<cr>
-noremap <silent><space>ls :call asclib#lint_splint('')<cr>
-noremap <silent><space>lc :call asclib#lint_cppcheck('')<cr>
-noremap <silent><space>lg :call asclib#open_gprof('', '')<cr>
-noremap <silent><space>lt :call asclib#html_prettify()<cr>
+nnoremap <silent><space>lp :call asclib#lint_pylint('')<cr>
+nnoremap <silent><space>lf :call asclib#lint_flake8('')<cr>
+nnoremap <silent><space>ls :call asclib#lint_splint('')<cr>
+nnoremap <silent><space>lc :call asclib#lint_cppcheck('')<cr>
+nnoremap <silent><space>lg :call asclib#open_gprof('', '')<cr>
+nnoremap <silent><space>lt :call asclib#html_prettify()<cr>
 
 " last command
-noremap <space>ll :<c-p><cr>
+nnoremap <space>ll :<c-p><cr>
 
 
 "----------------------------------------------------------------------
@@ -478,10 +479,10 @@ inoremap <silent><c-f11> <ESC>:call quickmenu#toggle(2)<cr>
 nnoremap <silent>g5 :PreviewTag<cr>
 nnoremap <silent><space>ww :call asclib#touch_file('wsgi')<cr>
 
-noremap <space>m0 :call quickmenu#toggle(0)<cr>
-noremap <space>m1 :call quickmenu#toggle(1)<cr>
-noremap <space>m2 :call quickmenu#toggle(2)<cr>
-noremap <space>m3 :call quickmenu#toggle(3)<cr>
+nnoremap <space>m0 :call quickmenu#toggle(0)<cr>
+nnoremap <space>m1 :call quickmenu#toggle(1)<cr>
+nnoremap <space>m2 :call quickmenu#toggle(2)<cr>
+nnoremap <space>m3 :call quickmenu#toggle(3)<cr>
 
 
 "----------------------------------------------------------------------
