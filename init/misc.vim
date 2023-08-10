@@ -202,14 +202,14 @@ endfunc
 "-----------------------------------------------------------------------
 " hot keys
 "-----------------------------------------------------------------------
-noremap <space>e- :call <SID>snip_comment_block('-')<cr>
-noremap <space>e= :call <SID>snip_comment_block('=')<cr>
-noremap <space>e# :call <SID>snip_comment_block('#')<cr>
-noremap <space>ec :call <SID>snip_copyright('skywind')<cr>
-noremap <space>eb :call <SID>snip_bundle()<cr>
-noremap <space>em :call <SID>snip_main()<cr>
-noremap <space>el :call <SID>snip_modeline()<cr>
-noremap <space>et "=strftime("%Y/%m/%d %H:%M:%S")<CR>gp
+nnoremap <space>e- :call <SID>snip_comment_block('-')<cr>
+nnoremap <space>e= :call <SID>snip_comment_block('=')<cr>
+nnoremap <space>e# :call <SID>snip_comment_block('#')<cr>
+nnoremap <space>ec :call <SID>snip_copyright('skywind')<cr>
+nnoremap <space>eb :call <SID>snip_bundle()<cr>
+nnoremap <space>em :call <SID>snip_main()<cr>
+nnoremap <space>el :call <SID>snip_modeline()<cr>
+nnoremap <space>et "=strftime("%Y/%m/%d %H:%M:%S")<CR>gp
 
 
 "----------------------------------------------------------------------

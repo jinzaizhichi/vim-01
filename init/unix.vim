@@ -28,7 +28,7 @@ if has('patch-8.1.1300')
 	set shortmess-=S
 endif
 
-noremap <tab>/ :emenu <C-Z>
+nnoremap <tab>/ :emenu <C-Z>
 
 
 "----------------------------------------------------------------------

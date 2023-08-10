@@ -36,7 +36,6 @@ inoremap <m-s> <esc>:w<cr>
 "----------------------------------------------------------------------
 for s:index in range(10)
 	let s:button = (s:index > 0)? 'F'.s:index : 'F10'
-	exec 'noremap <space>'.s:index.' :VimTool ' . s:index . '<cr>'
 	if has('gui_running')
 		exec "noremap <C-".s:button."> :AsyncTask task-c-f".s:index . '<cr>'
 		exec "inoremap <C-".s:button."> <ESC>:AsyncTask task-c-f".s:index . '<cr>'
@@ -286,10 +285,10 @@ inoremap <silent><f4> <ESC>:AsyncTask task-f4<cr>
 "----------------------------------------------------------------------
 " set keymap to GrepCode
 "----------------------------------------------------------------------
-noremap <silent><leader>cq :VimStop<cr>
-noremap <silent><leader>cQ :VimStop!<cr>
-noremap <silent><leader>cv :GrepCode <C-R>=expand("<cword>")<cr><cr>
-noremap <silent><leader>cx :GrepCode! <C-R>=expand("<cword>")<cr><cr>
+nnoremap <silent><leader>cq :VimStop<cr>
+nnoremap <silent><leader>cQ :VimStop!<cr>
+nnoremap <silent><leader>cv :GrepCode <C-R>=expand("<cword>")<cr><cr>
+nnoremap <silent><leader>cx :GrepCode! <C-R>=expand("<cword>")<cr><cr>
 
 
 "----------------------------------------------------------------------
@@ -388,8 +387,8 @@ set ssop-=options    " do not store global and local values in a session
 " set ssop-=folds      " do not store folds
 
 for s:index in range(5)
-	exec 'noremap <silent><space>f'.s:index.'s :mksession! ~/.vim/session.'.s:index.'<cr>'
-	exec 'noremap <silent><space>f'.s:index.'l :so ~/.vim/session.'.s:index.'<cr>'
+	exec 'inoremap <silent><space>f'.s:index.'s :mksession! ~/.vim/session.'.s:index.'<cr>'
+	exec 'inoremap <silent><space>f'.s:index.'l :so ~/.vim/session.'.s:index.'<cr>'
 endfor
 
 

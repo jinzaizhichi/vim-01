@@ -71,8 +71,8 @@ if has_key(s:enabled, 'simple')
 	vnoremap gb<bar> :Tabularize /\|<cr>
 	nnoremap gbr :Tabularize /\|/r0<cr>
 	vnoremap gbr :Tabularize /\|/r0<cr>
-	map gz <Plug>Sneak_s
-	map gZ <Plug>Sneak_S
+	nmap gz <Plug>Sneak_s
+	nmap gZ <Plug>Sneak_S
 
 	IncScript site/bundle/dirvish.vim
 	IncScript site/bundle/cycle.vim
@@ -393,15 +393,15 @@ endif
 
 if has_key(s:enabled, 'grammer')
 	Plug 'rhysd/vim-grammarous'
-	noremap <space>rg :GrammarousCheck --lang=en-US --no-move-to-first-error --no-preview<cr>
-	map <space>rr <Plug>(grammarous-open-info-window)
-	map <space>rv <Plug>(grammarous-move-to-info-window)
-	map <space>rs <Plug>(grammarous-reset)
-	map <space>rx <Plug>(grammarous-close-info-window)
-	map <space>rm <Plug>(grammarous-remove-error)
-	map <space>rd <Plug>(grammarous-disable-rule)
-	map <space>rn <Plug>(grammarous-move-to-next-error)
-	map <space>rp <Plug>(grammarous-move-to-previous-error)
+	nnoremap <space>rg :GrammarousCheck --lang=en-US --no-move-to-first-error --no-preview<cr>
+	nmap <space>rr <Plug>(grammarous-open-info-window)
+	nmap <space>rv <Plug>(grammarous-move-to-info-window)
+	nmap <space>rs <Plug>(grammarous-reset)
+	nmap <space>rx <Plug>(grammarous-close-info-window)
+	nmap <space>rm <Plug>(grammarous-remove-error)
+	nmap <space>rd <Plug>(grammarous-disable-rule)
+	nmap <space>rn <Plug>(grammarous-move-to-next-error)
+	nmap <space>rp <Plug>(grammarous-move-to-previous-error)
 endif
 
 if has_key(s:enabled, 'neomake')
