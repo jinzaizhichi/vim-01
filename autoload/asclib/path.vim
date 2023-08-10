@@ -3,7 +3,7 @@
 " path.vim - 
 "
 " Created by skywind on 2018/04/25
-" Last Modified: 2021/02/14 19:14
+" Last Modified: 2023/08/10 18:03
 "
 "======================================================================
 
@@ -12,6 +12,8 @@ let s:scripthome = fnamemodify(s:scriptname, ':h:h')
 let s:windows = has('win32') || has('win64') || has('win16') || has('win95')
 
 let asclib#path#windows = s:windows
+
+let s:has_native_isabs = exists('*isabsolutepath')
 
 
 "----------------------------------------------------------------------
@@ -230,6 +232,77 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" return a relative version of a path
+"----------------------------------------------------------------------
+function! asclib#path#relpath(path, base) abort
+	let path = asclib#path#abspath(a:path)
+	let base = asclib#path#abspath(a:base)
+	let path = asclib#path#normalize(path)
+	let base = asclib#path#normalize(base)
+	let head = ''
+	while 1
+		if asclib#path#contains(base, path)
+			if base =~ '[\/\\]$'
+				let size = strlen(base)
+			else
+				let size = strlen(base) + 1
+			endif
+			return head . strpart(path, size)
+		endif
+		let prev = base
+		let head = '../' . head
+		let base = fnamemodify(base, ':h')
+		if base == prev
+			break
+		endif
+	endwhile
+	return ''
+endfunc
+
+
+"----------------------------------------------------------------------
+" python: os.path.split
+"----------------------------------------------------------------------
+function! asclib#path#split(path)
+	let p1 = fnamemodify(a:path, ':h')
+	let p2 = fnamemodify(a:path, ':t')
+	return [p1, p2]
+endfunc
+
+
+"----------------------------------------------------------------------
+" split ext
+"----------------------------------------------------------------------
+function! asclib#path#splitext(path)
+	let path = a:path
+	let size = strlen(path)
+	let pos = strridx(path, '.')
+	if pos < 0
+		return [path, '']
+	endif
+	let p1 = strridx(path, '/')
+	if s:windows
+		let p2 = strridx(path, '\')
+		let p1 = (p1 > p2)? p1 : p2
+	endif
+	if p1 > pos
+		return [path, '']
+	endif
+	let main = strpart(path, 0, pos)
+	let ext = strpart(path, pos)
+	return [main, ext]
+endfunc
+
+
+"----------------------------------------------------------------------
+" strip ending slash
+"----------------------------------------------------------------------
+function! asclib#path#stripslash(path)
+	return fnamemodify(a:path, ':s?[/\\]$??')
+endfunc
+
+
+"----------------------------------------------------------------------
 " path asc home
 "----------------------------------------------------------------------
 function! asclib#path#runtime(path)
@@ -380,67 +453,6 @@ function! asclib#path#exists(path)
 		endif
 	endif
 	return 0
-endfunc
-
-
-"----------------------------------------------------------------------
-" return a relative version of a path
-"----------------------------------------------------------------------
-function! asclib#path#relpath(path, base) abort
-	let path = asclib#path#abspath(a:path)
-	let base = asclib#path#abspath(a:base)
-	let path = asclib#path#normalize(path)
-	let base = asclib#path#normalize(base)
-	let head = ''
-	while 1
-		if asclib#path#contains(base, path)
-			if base =~ '[\/\\]$'
-				let size = strlen(base)
-			else
-				let size = strlen(base) + 1
-			endif
-			return head . strpart(path, size)
-		endif
-		let prev = base
-		let head = '../' . head
-		let base = fnamemodify(base, ':h')
-		if base == prev
-			break
-		endif
-	endwhile
-	return ''
-endfunc
-
-
-"----------------------------------------------------------------------
-" split ext
-"----------------------------------------------------------------------
-function! asclib#path#splitext(path)
-	let path = a:path
-	let size = strlen(path)
-	let pos = strridx(path, '.')
-	if pos < 0
-		return [path, '']
-	endif
-	let p1 = strridx(path, '/')
-	if s:windows
-		let p2 = strridx(path, '\')
-		let p1 = (p1 > p2)? p1 : p2
-	endif
-	if p1 > pos
-		return [path, '']
-	endif
-	let main = strpart(path, 0, pos)
-	let ext = strpart(path, pos)
-	return [main, ext]
-endfunc
-
-
-"----------------------------------------------------------------------
-" strip ending slash
-"----------------------------------------------------------------------
-function! asclib#path#stripslash(path)
-	return fnamemodify(a:path, ':s?[/\\]$??')
 endfunc
 
 
