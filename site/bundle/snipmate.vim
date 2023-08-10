@@ -50,12 +50,17 @@ if 0
 	imap <expr> <m-p> pumvisible() ? '<c-g>u<Plug>snipMateBack' : '<Plug>snipMateBack'
 	smap <m-p> <Plug>snipMateBack
 	imap <expr> <m-m> pumvisible() ? '<c-g>u<Plug>snipMateShow' : '<Plug>snipMateShow'
-elseif 1
+elseif 0
 	imap <expr> <m-e> pumvisible() ? '<c-g>u<Plug>snipMateNextOrTrigger' : '<Plug>snipMateNextOrTrigger'
 	smap <m-e> <Plug>snipMateNextOrTrigger
 	imap <expr> <m-E> pumvisible() ? '<c-g>u<Plug>snipMateBack' : '<Plug>snipMateBack'
 	smap <m-E> <Plug>snipMateBack
 	imap <expr> <m-m> pumvisible() ? '<c-g>u<Plug>snipMateShow' : '<Plug>snipMateShow'
+else
+	imap <m-e> <plug>snipMateNextOrTrigger
+	smap <m-e> <plug>snipMateNextOrTrigger
+	imap <m-E> <plug>snipMateBack
+	smap <m-E> <plug>snipMateBack
 endif
 
 
