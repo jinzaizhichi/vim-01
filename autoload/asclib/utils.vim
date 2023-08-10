@@ -338,7 +338,7 @@ function! asclib#utils#git_browse(name, ...)
 	if branch == ''
 		return ''
 	endif
-	let uri = asclib#info#info_fullname(name)
+	let uri = asclib#vcs#relpath(name)
 	if uri == ''
 		return ''
 	endif

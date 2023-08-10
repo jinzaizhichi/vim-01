@@ -99,17 +99,3 @@ function! asclib#vcs#relpath(where)
 endfunc
 
 
-"----------------------------------------------------------------------
-" git sub function
-"----------------------------------------------------------------------
-function! asclib#vcs#git_fullname(name)
-	let name = (a:name == '')? expand('%:p') : (a:name)
-	let root = asclib#vcs#root(name)
-	if root == ''
-		return ''
-	endif
-	let hr = asclib#vcs#git('ls-files --full-name ' . shellescape(name), root)
-	return (g:asclib#core#shell_error == 0)? asclib#string#strip(hr) : ''
-endfunc
-
-
