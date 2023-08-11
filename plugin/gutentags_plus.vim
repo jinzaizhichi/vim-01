@@ -264,8 +264,10 @@ function! s:GtagsCscope(exename, root, database, pattern, word, override)
 		return 0
 	endif
 	let text = join(output, "\n")
-	let efm = &l:errorformat
-	let &l:errorformat = '%f(%l):%m'
+	let efm1 = &l:errorformat
+	let efm2 = &g:errorformat
+	let &l:efm = '%f(%l):%m'
+	let &g:efm = '%f(%l):%m'
 	try
 		if !a:override
 			caddexpr text
@@ -274,7 +276,8 @@ function! s:GtagsCscope(exename, root, database, pattern, word, override)
 		endif
 	catch
 	endtry
-	let &l:errorformat = efm
+	let &l:errorformat = efm1
+	let &g:errorformat = efm2
 	return len(output)
 endfunc
 

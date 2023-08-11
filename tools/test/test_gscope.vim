@@ -108,7 +108,7 @@ function! GscopeRun(exename, root, database, pattern, word, override)
 	catch
 	endtry
 	let &l:errorformat = efm
-	return v:shell_error
+	return len(output)
 endfunc
 
 
@@ -116,6 +116,7 @@ let exename = 'gtags-cscope'
 let root = 'E:\Code\ping\bbnet'
 let database = 'E:\Local\Cache\tags\E--Code-ping-bbnet'
 
-call GscopeRun(exename, root, database, 0, 'ProtocolFlush2', 0)
+cexpr "[HELLO]"
+call GscopeRun(exename, root, database, 0, 'ProtocolFlush', 0)
 
 
