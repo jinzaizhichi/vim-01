@@ -14,6 +14,13 @@ function! GscopeRun(exename, root, database, pattern, word, override)
 	let $GTAGSROOT = a:root
 	let $GTAGSDBPATH = a:database
 	let dbname = a:database . '\GTAGS'
+	if !isdirectory(a:root)
+		redrawstatus
+		echohl ErrorMsg
+		echo "gtags-cscope error: bad project root: " . a:root
+		echohl None
+		return -1
+	endif
 	if has('win32') || has('win64') || has('win95') || has('win16')
 		let cmd = 'cd /d ' . shellescape(a:root) . ' && ' . a:exename
 		let win = 1
@@ -45,6 +52,14 @@ function! GscopeRun(exename, root, database, pattern, word, override)
 	let cmd = cmd . ' -F ' . shellescape(dbname)
 	let cmd = cmd . ' -L -' . num . ' ' . shellescape(a:word)
 	let content = system(cmd)
+	if v:shell_error != 0
+		redraw
+		let hr = substitute(content, '[\n\r]', ' ', 'g')
+		echohl ErrorMsg
+		echo "gtags-cscope error: " . hr
+		echohl None
+		return -2
+	endif
 	let output = []
 	for text in split(content, "\n")
 		let text = substitute(text, '^\s*\(.\{-}\)\s*$', '\1', '')
@@ -74,6 +89,13 @@ function! GscopeRun(exename, root, database, pattern, word, override)
 		let tt = printf('%s(%d): <<%s>> %s', nn, fl, fw, ft)
 		call add(output, tt)
 	endfor
+	if len(output) == 0
+		redraw
+		echohl ErrorMsg
+		echo "E259: not find '". a:word ."'"
+		echohl None
+		return 0
+	endif
 	let text = join(output, "\n")
 	let efm = &l:errorformat
 	let &l:errorformat = '%f(%l):%m'
@@ -86,7 +108,7 @@ function! GscopeRun(exename, root, database, pattern, word, override)
 	catch
 	endtry
 	let &l:errorformat = efm
-	return len(output)
+	return v:shell_error
 endfunc
 
 
@@ -94,6 +116,6 @@ let exename = 'gtags-cscope'
 let root = 'E:\Code\ping\bbnet'
 let database = 'E:\Local\Cache\tags\E--Code-ping-bbnet'
 
-echo GscopeRun(exename, root, database, 0, 'ProtocolFlush', 1)
+call GscopeRun(exename, root, database, 0, 'ProtocolFlush2', 0)
 
 
