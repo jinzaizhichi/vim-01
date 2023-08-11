@@ -135,7 +135,9 @@ if has('gui_running')
 	if has('win32') || has('win64') || has('win16') || has('win95')
 		language messages en
 		set langmenu=en_US
-		set guifont=inconsolata:h11
+		if !has('nvim')
+			set guifont=inconsolata:h11
+		endif
 		"set guifont=fixedsys
 		"au QuickfixCmdPost make call QuickfixChineseConvert()
 		let g:config_vim_tab_style = 3

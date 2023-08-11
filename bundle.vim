@@ -421,8 +421,10 @@ if has_key(s:enabled, 'neoterm')
 endif
 
 if has_key(s:enabled, 'clap')
-	Plug 'liuchengxu/vim-clap'
-	IncScript site/bundle/clap.vim
+	if !has('nvim')
+		Plug 'liuchengxu/vim-clap'
+		IncScript site/bundle/clap.vim
+	endif
 endif
 
 if has_key(s:enabled, 'splitjoin')
