@@ -7,7 +7,7 @@
 "
 "======================================================================
 
-function! GscopeRun(exename, root, database, pattern, word)
+function! GscopeRun(exename, root, database, pattern, word, override)
 	if !executable(a:exename)
 		return ''
 	endif
@@ -21,9 +21,29 @@ function! GscopeRun(exename, root, database, pattern, word)
 		let cmd = 'cd ' . shellescape(a:root) . ' && ' . a:exename
 		let win = 0
 	endif
+	let num = 0
+	if a:pattern == '0' || a:pattern == 's'
+		let num = 0
+	elseif a:pattern == '1' || a:pattern == 'g'
+		let num = 1
+	elseif a:pattern == '2' || a:pattern == 'd'
+		let num = 2
+	elseif a:pattern == '3' || a:pattern == 'c'
+		let num = 3
+	elseif a:pattern == '4' || a:pattern == 't'
+		let num = 4
+	elseif a:pattern == '6' || a:pattern == 'e'
+		let num = 6
+	elseif a:pattern == '7' || a:pattern == 'f'
+		let num = 7
+	elseif a:pattern == '8' || a:pattern == 'i'
+		let num = 8
+	elseif a:pattern == '9' || a:pattern == 'a'
+		let num = 9
+	endif
 	let cmd = cmd . ' -d '
 	let cmd = cmd . ' -F ' . shellescape(dbname)
-	let cmd = cmd . ' -L -' . (a:pattern) . ' ' . shellescape(a:word)
+	let cmd = cmd . ' -L -' . num . ' ' . shellescape(a:word)
 	let content = system(cmd)
 	let output = []
 	for text in split(content, "\n")
@@ -54,7 +74,19 @@ function! GscopeRun(exename, root, database, pattern, word)
 		let tt = printf('%s(%d): <<%s>> %s', nn, fl, fw, ft)
 		call add(output, tt)
 	endfor
-	return output
+	let text = join(output, "\n")
+	let efm = &l:errorformat
+	let &l:errorformat = '%f(%l):%m'
+	try
+		if !a:override
+			caddexpr text
+		else
+			cexpr text
+		endif
+	catch
+	endtry
+	let &l:errorformat = efm
+	return len(output)
 endfunc
 
 
@@ -62,5 +94,6 @@ let exename = 'gtags-cscope'
 let root = 'E:\Code\ping\bbnet'
 let database = 'E:\Local\Cache\tags\E--Code-ping-bbnet'
 
-echo GscopeRun(exename, root, database, 0, 'ProtocolFlush')
+echo GscopeRun(exename, root, database, 0, 'ProtocolFlush', 1)
+
 
