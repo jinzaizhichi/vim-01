@@ -11,17 +11,20 @@
 "----------------------------------------------------------------------
 " get branch info
 "----------------------------------------------------------------------
-function! asclib#git#info_branch(where)
+function! asclib#git#get_branch(where)
 	let root = asclib#vcs#croot(a:where, 'git')
 	if root == ''
 		return ''
 	endif
 	let hr = asclib#vcs#git('branch', root)
-	if g:asclib#core#shell_error == 0
-		let hr = asclib#string#strip(hr)
-		let name = matchstr(hr, '^\*\s*\zs\S\+\ze\s*$')
-		return asclib#string#strip(name)
-	endif
+	for text in split(hr, '\n')
+		let text = asclib#string#strip(text)
+		let name = matchstr(text, '^\*\s*\zs\S\+\ze\s*$')
+		let name = asclib#string#strip(name)
+		if name != ''
+			return name
+		endif
+	endfor
 	return ''
 endfunc
 
@@ -29,7 +32,7 @@ endfunc
 "----------------------------------------------------------------------
 " get remote url
 "----------------------------------------------------------------------
-function! asclib#git#info_remote(where, name)
+function! asclib#git#get_remote(where, name)
 	let root = asclib#vcs#croot(a:where, 'git')
 	if root == ''
 		return ''

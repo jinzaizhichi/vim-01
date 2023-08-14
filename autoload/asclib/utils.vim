@@ -330,11 +330,11 @@ function! asclib#utils#git_browse(name, ...)
 	if root == ''
 		return ''
 	endif
-	let remote = asclib#git#info_remote(root, 'origin')
+	let remote = asclib#git#get_remote(root, 'origin')
 	if remote == ''
 		return ''
 	endif
-	let branch = asclib#git#info_branch(root)
+	let branch = asclib#git#get_branch(root)
 	if branch == ''
 		return ''
 	endif
@@ -387,6 +387,10 @@ function! asclib#utils#git_browse(name, ...)
 		else
 			return url . '/-/raw/' . branch . '/' . uri
 		endif
+	elseif remote =~ '^https\?:\/\/gitlab.alibaba-inc.com\/'
+		let t = matchstr(remote, '^https\?:\/\/gitlab.alibaba-inc.com\/\zs.*$')
+		let url = 'https://code.alibaba-inc.com/' . t . '/blob/'
+		return url . branch . '/' . uri
 	endif
 	return ''
 endfunc
