@@ -185,23 +185,14 @@ command! -nargs=0 GuiPureNVim call s:GuiPureNVim()
 "----------------------------------------------------------------------
 "- Menu Setting
 "----------------------------------------------------------------------
-amenu 80.10 B&uild.&Run<TAB>F5 :VimExecute run<cr>
-amenu 80.20 B&uild.E&xecute<TAB>F6 :VimExecute filename<cr>
+amenu 80.10 B&uild.&Run<TAB>F5 :AsyncTask file-run<cr>
+amenu 80.20 B&uild.&Build<TAB>F9 :AsyncTask file-build<cr>
+amenu 80.40 B&uild.&Make :AsyncTask file-make<cr>
+amenu 80.35 B&uild.&Emake<Tab>F7 :AsyncTask emake<cr>
 amenu 80.25 B&uild.-s1- :
-amenu 80.30 B&uild.&Gcc<TAB>F9 :AsyncRun gcc<cr>
-amenu 80.35 B&uild.&Emake<Tab>F7 :AsyncRun emake<cr>
-amenu 80.40 B&uild.GNU\ &Make :AsyncRun make<cr>
-amenu 80.42 B&uild.-s2- :
-amenu 80.45 B&uild.User\ Tool\ 1 :VimTool 1<cr>
-amenu 80.50 B&uild.User\ Tool\ 2 :VimTool 2<cr>
-amenu 80.55 B&uild.User\ Tool\ 3 :VimTool 3<cr>
-amenu 80.60 B&uild.User\ Tool\ 4 :VimTool 4<cr>
-amenu 80.65 B&uild.User\ Tool\ 5 :VimTool 5<cr>
-amenu 80.70 B&uild.User\ Tool\ 6 :VimTool 6<cr>
-amenu 80.75 B&uild.User\ Tool\ 7 :VimTool 7<cr>
-amenu 80.80 B&uild.User\ Tool\ 8 :VimTool 8<cr>
-amenu 80.85 B&uild.User\ Tool\ 9 :VimTool 9<cr>
-amenu 80.90 B&uild.User\ Tool\ 0 :VimTool 0<cr>
+amenu 80.30 B&uild.&Project\ Run<TAB>S-F5 :AsyncTask project-run<cr>
+amenu 80.30 B&uild.Project\ B&uild<TAB>S-F9 :AsyncTask project-build<cr>
+amenu 80.30 B&uild.Project\ &Init<TAB>S-F7 :AsyncTask project-init<cr>
 
 amenu PopUp.-s9- :
 amenu PopUp.Open\ &Header :call Open_HeaderFile(2)<cr>
