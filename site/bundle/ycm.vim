@@ -36,6 +36,42 @@ let g:ycm_goto_buffer_command = 'new-or-existing-tab'
 
 
 "----------------------------------------------------------------------
+" LSP
+"----------------------------------------------------------------------
+let g:ycm_language_server = get(g:, 'ycm_language_server', [])
+let g:ycm_lsp_dir = 'C:/Share/Plugin/LSP/lsp-examples'
+
+function! s:lspath(path)
+	if g:ycm_lsp_dir != '' && isdirectory(g:ycm_lsp_dir)
+		return expand(g:ycm_lsp_dir . '/' . a:path)
+	endif
+	return ''
+endfunc
+
+if executable('cmake-language-server')
+	let g:ycm_language_server += [ {
+				\ 'name': 'cmake-language-server',
+				\ 'cmdline': [exepath('cmake-language-server')],
+				\ 'filetypes': ['cmake'],
+				\ 'project_root_files': ['.git', '.svn', '.root', '.project'],
+				\ 'capabilities': {
+				\    'buildDirectory': 'build'
+				\    },
+				\ } ]
+endif
+
+let t = 'viml/node_modules/.bin/vim-language-server'
+if executable(s:lspath(t)) && 0
+	let g:ycm_language_server += [ {
+				\ 'name': 'viml',
+				\ 'cmdline': [s:lspath(t), '--stdio'],
+				\ 'filetypes': ['vim'],
+				\ } ]
+endif
+
+
+
+"----------------------------------------------------------------------
 " keymaps
 "----------------------------------------------------------------------
 
