@@ -389,6 +389,9 @@ function! asclib#utils#git_browse(name, ...)
 		endif
 	elseif remote =~ '^https\?:\/\/gitlab.alibaba-inc.com\/'
 		let t = matchstr(remote, '^https\?:\/\/gitlab.alibaba-inc.com\/\zs.*$')
+		if t =~ '\.git$'
+			let t = matchstr(t, '.*\ze\.git$')
+		endif
 		let url = 'https://code.alibaba-inc.com/' . t . '/blob/'
 		return url . branch . '/' . uri
 	endif

@@ -154,7 +154,7 @@ function! s:BrowseGit(name, bang, ...)
 	let raw = (a:0 > 0)? (a:1) : 0
 	let url = asclib#utils#git_browse(name, raw)
 	if url != ''
-		call s:open_url(url, a:bang)
+		call s:OpenURL(url, a:bang)
 	endif
 endfunc
 
