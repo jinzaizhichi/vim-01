@@ -73,6 +73,10 @@ if has_key(s:enabled, 'simple')
 	vnoremap gbr :Tabularize /\|/r0<cr>
 	nmap gz <Plug>Sneak_s
 	nmap gZ <Plug>Sneak_S
+	vmap gz <Plug>Sneak_s
+	vmap gZ <Plug>Sneak_S
+	xmap gz <Plug>Sneak_s
+	xmap gZ <Plug>Sneak_S
 
 	IncScript site/bundle/dirvish.vim
 	IncScript site/bundle/cycle.vim
