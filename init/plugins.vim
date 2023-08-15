@@ -264,7 +264,7 @@ if has('win32') || has('win16') || has('win64') || has('win95')
 	let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 endif
 
-let g:gutentags_plus_switch = 0
+let g:gutenags_plus_switch = 0
 
 
 
