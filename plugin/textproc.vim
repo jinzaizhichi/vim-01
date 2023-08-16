@@ -3,7 +3,7 @@
 " textproc.vim - 
 "
 " Created by skywind on 2022/01/21
-" Last Modified: 2022/08/30 02:58
+" Last Modified: 2023/08/16 16:31
 "
 "======================================================================
 
@@ -57,6 +57,19 @@ function! s:script_roots() abort
 			endif
 		endif
 	endfor
+	if get(g:, 'textproc_filetype', 1)
+		let ft_list = [&ft]
+		for dir in deepcopy(candidate)
+			let dir = fnamemodify(dir, ':p')
+			let dir = substitute(dir, '\\', '\/', 'g')
+			for ft in ft_list
+				let t = dir . '/' . ft
+				if isdirectory(t)
+					let candidate += [t]
+				endif
+			endfor
+		endfor
+	endif
 	return candidate
 endfunc
 
@@ -438,7 +451,6 @@ function! s:display_buffer(bid)
 	return 0
 endfunc
 
-" hello world
 
 "----------------------------------------------------------------------
 " function
