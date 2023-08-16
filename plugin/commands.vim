@@ -438,13 +438,29 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" EditRuntimeFile
+"----------------------------------------------------------------------
+command! -nargs=1 EditRuntimeFile call s:EditRuntimeFile(<q-args>)
+function! s:EditRuntimeFile(fn) abort
+	let fn = asclib#path#runtime(a:fn)
+	let dir = asclib#path#dirname(fn)
+	if !isdirectory(dir)
+		echohl ErrorMsg
+		echo "ERROR: directory does not exist: " . dir
+		echohl None
+	else
+		exec 'FileSwitch -switch=useopen,usetab,auto ' . fnameescape(fn)
+	endif
+endfunc
+
+
+"----------------------------------------------------------------------
 " EditFileTypeScript
 "----------------------------------------------------------------------
 command! -nargs=? EditFileTypeScript call s:EditFileTypeScript(<q-args>)
 function! s:EditFileTypeScript(ft)
 	let ft = (a:ft == '')? (&ft) : (a:ft)
-	let name = asclib#path#runtime(printf('ftplugin/%s.vim', ft))
-	exec 'FileSwitch -switch=useropen,usetab,auto ' . fnameescape(name)
+	call s:EditRuntimeFile('ftplugin/' . ft . '.vim')
 endfunc
 
 
