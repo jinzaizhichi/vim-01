@@ -303,6 +303,8 @@ function! s:script_run(name, args, lnum, count, debug) abort
 		let $VIM_SCRIPTNAME = a:name
 		let $VIM_SCRIPTDIR = fnamemodify(script, ':p:h')
 		let $VIM_FILETYPE = &ft
+		let $VIM_LINE1 = printf('%d', line1)
+		let $VIM_LINE2 = printf('%d', line2)
 		execute cmd
 	elseif type(scripts[a:name]) == v:t_func
 		let bid = bufnr('%')
