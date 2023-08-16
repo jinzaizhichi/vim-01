@@ -381,7 +381,10 @@ function! s:run_in_split(name, args, lnum, count, debug) abort
 			call setbufvar(bid, '&buftype', 'nofile')
 			call setbufvar(bid, 'noswapfile', 1)
 		else
-			let bid = nvim_create_buffer(v:false, v:true)
+			let bid = nvim_create_buf(v:false, v:true)
+			call setbufvar(bid, '&buftype', 'nofile')
+			call setbufvar(bid, '&bufhidden', 'hide')
+			call setbufvar(bid, 'noswapfile', 1)
 		endif
 		let t:_textproc_buffer = bid
 	endif
