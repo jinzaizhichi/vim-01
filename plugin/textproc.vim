@@ -3,7 +3,7 @@
 " textproc.vim - 
 "
 " Created by skywind on 2022/01/21
-" Last Modified: 2023/08/16 16:31
+" Last Modified: 2023/08/16 16:48
 "
 "======================================================================
 
@@ -34,15 +34,19 @@ function! s:script_roots() abort
 	let fn = s:script_home . '/site/text'
 	let fn = substitute(fn, '\\', '\/', 'g')
 	let candidate += [fn]
-	let location = get(g:, 'textproc_root', '')
-	if location != ''
-		if isdirectory(location)
-			let candidate += [location]
-			let t = location . '/' . &ft
-			if isdirectory(t)
-				let candidate += [t]
-			endif
+	if exists('g:textproc_root')
+		if type(g:textproc_root) == type('')
+			let loc_list = [g:textproc_root]
+		elseif type(g:textproc_root) == type([])
+			let loc_list = g:textproc_root
+		elseif type(g:textproc_root) == type({})
+			let loc_list = keys(g:textproc_root)
 		endif
+		for location in loc_list
+			if location != '' && isdirectory(location)
+				let candidate += [location]
+			endif
+		endfor
 	endif
 	let rtp_name = get(g:, 'textproc_home', 'text')
 	for rtp in split(&rtp, ',')
@@ -50,26 +54,9 @@ function! s:script_roots() abort
 			let path = rtp . '/' . rtp_name
 			if isdirectory(path)
 				let candidate += [path]
-				let t = path . '/' . &ft
-				if isdirectory(t)
-					let candidate += [t]
-				endif
 			endif
 		endif
 	endfor
-	if get(g:, 'textproc_filetype', 1)
-		let ft_list = [&ft]
-		for dir in deepcopy(candidate)
-			let dir = fnamemodify(dir, ':p')
-			let dir = substitute(dir, '\\', '\/', 'g')
-			for ft in ft_list
-				let t = dir . '/' . ft
-				if isdirectory(t)
-					let candidate += [t]
-				endif
-			endfor
-		endfor
-	endif
 	return candidate
 endfunc
 
