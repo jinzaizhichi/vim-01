@@ -1,6 +1,6 @@
 "======================================================================
 "
-" textproc.vim - 
+" textproc.vim -
 "
 " Created by skywind on 2022/01/21
 " Last Modified: 2023/08/16 20:09
@@ -247,7 +247,7 @@ function! s:script_runner(script) abort
 				\ 'sh' : 'sh',
 				\ 'fish' : 'fish',
 				\ }
-	if has_key(ext_runners, ext) 
+	if has_key(ext_runners, ext)
 		let runner = ext_runners[ext]
 		if type(runner) == type('')
 			if executable(runner)
@@ -389,7 +389,7 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" display buffer in a split 
+" display buffer in a split
 "----------------------------------------------------------------------
 function! s:display_buffer(bid)
 	function! s:WindowCheck(mode)
@@ -509,7 +509,7 @@ endfunc
 " command defintion
 "----------------------------------------------------------------------
 command! -bang -nargs=+ -range=0 -complete=customlist,s:complete TP
-		\ call s:TextProcess('<bang>', <q-args>, <line1>, <line2>, <count>)
+			\ call s:TextProcess('<bang>', <q-args>, <line1>, <line2>, <count>)
 
 " test
 
