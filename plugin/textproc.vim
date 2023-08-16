@@ -3,7 +3,7 @@
 " textproc.vim - 
 "
 " Created by skywind on 2022/01/21
-" Last Modified: 2023/08/16 17:33
+" Last Modified: 2023/08/16 20:09
 "
 "======================================================================
 
@@ -67,6 +67,7 @@ endfunc
 function! s:script_list() abort
 	let select = {}
 	let check = {}
+	let runners = get(g:, 'textproc_runner', {})
 	let marks = ['py', 'lua', 'pl', 'php', 'js', 'ts', 'rb']
 	let marks += ['gawk', 'awk']
 	if s:windows == 0
@@ -99,6 +100,10 @@ function! s:script_list() abort
 					let fn = substitute(fn, '\/', '\\', 'g')
 				endif
 				if has_key(check, ext)
+					let select[main] = fn
+				elseif has_key(runners, ext)
+					let select[main] = fn
+				elseif executable(fn)
 					let select[main] = fn
 				endif
 			endfor
@@ -164,24 +169,21 @@ endfunc
 " detect script runner
 "----------------------------------------------------------------------
 function! s:script_runner(script) abort
+	let runners = get(g:, 'textproc_runner', {})
 	let script = a:script
 	let ext = fnamemodify(script, ':e')
 	let ext = (s:windows == 0)? ext : tolower(ext)
-	let runner = ''
+	let runner = get(runners, ext, '')
 	if type(script) != v:t_string
 		return ''
 	elseif script == ''
 		return ''
 	elseif script =~ '^:'
 		return ''
+	elseif runner != ''
+		return runner
 	elseif executable(script)
 		return ''
-	elseif exists('g:textproc_runner')
-		let runners = g:textproc_runner
-		let runner = get(runners, ext, '')
-		if runner != ''
-			return runner
-		endif
 	endif
 	if s:windows
 		if index(['cmd', 'bat', 'exe'], ext) >= 0
