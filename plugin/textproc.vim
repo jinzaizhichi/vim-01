@@ -3,7 +3,7 @@
 " textproc.vim - 
 "
 " Created by skywind on 2022/01/21
-" Last Modified: 2023/08/16 16:48
+" Last Modified: 2023/08/16 17:33
 "
 "======================================================================
 
@@ -174,7 +174,7 @@ function! s:script_runner(script) abort
 		return ''
 	elseif script =~ '^:'
 		return ''
-	elseif executable(script) 
+	elseif executable(script)
 		return ''
 	elseif exists('g:textproc_runner')
 		let runners = g:textproc_runner
@@ -353,6 +353,8 @@ function! s:run_in_split(name, args, lnum, count, debug) abort
 		let $VIM_SCRIPTNAME = a:name
 		let $VIM_SCRIPTDIR = fnamemodify(script, ':p:h')
 		let $VIM_FILETYPE = &ft
+		let $VIM_LINE1 = printf('%d', line1)
+		let $VIM_LINE2 = printf('%d', line2)
 		let text = system(cmd, input)
 		let output = split(text, '\n', 1)
 	elseif type(scripts[a:name]) == v:t_func
