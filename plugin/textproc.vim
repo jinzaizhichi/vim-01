@@ -464,21 +464,17 @@ function! s:TextProcess(bang, args, line1, line2, count) abort
 		return 0
 	endif
 	if a:count == 0
-		if a:bang == ''
-			redraw
-			echohl WarningMsg
-			echo 'Warning: no range specified !'
-			echohl None
-		endif
+		redraw
+		echohl WarningMsg
+		echo 'ERROR: no range specified !'
+		echohl None
 		return 0
 	endif
 	if name == ''
-		if a:bang == ''
-			redraw
-			echohl ErrorMsg
-			echo 'ERROR: script name required'
-			echohl None
-		endif
+		redraw
+		echohl ErrorMsg
+		echo 'ERROR: script name required'
+		echohl None
 		return 0
 	endif
 	let cc = a:line2 - a:line1 + 1
