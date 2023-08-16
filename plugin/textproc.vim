@@ -3,7 +3,7 @@
 " textproc.vim -
 "
 " Created by skywind on 2022/01/21
-" Last Modified: 2023/08/16 20:09
+" Last Modified: 2023/08/16 22:22
 "
 "======================================================================
 
@@ -465,14 +465,16 @@ function! s:TextProcess(bang, args, line1, line2, count) abort
 	endif
 	if a:count == 0
 		if a:bang == ''
+			redraw
 			echohl WarningMsg
-			" echo 'Warning: no range specified !'
+			echo 'Warning: no range specified !'
 			echohl None
 		endif
 		return 0
 	endif
 	if name == ''
 		if a:bang == ''
+			redraw
 			echohl ErrorMsg
 			echo 'ERROR: script name required'
 			echohl None
