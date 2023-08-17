@@ -97,6 +97,7 @@ if has_key(s:enabled, 'basic')
 	Plug 'skywind3000/vim-dict'
 	Plug 'tommcdo/vim-exchange'
 	Plug 'tommcdo/vim-lion'
+	Plug 'embear/vim-localvimrc'
 
 	Plug 'pprovost/vim-ps1', { 'for': 'ps1' }
 	Plug 'tbastos/vim-lua', { 'for': 'lua' }
@@ -121,6 +122,7 @@ if has_key(s:enabled, 'basic')
 	Plug 'sgur/vim-textobj-parameter'
 	Plug 'bps/vim-textobj-python', {'for': 'python'}
 	Plug 'jceb/vim-textobj-uri'
+
 
 
 	if !has_key(s:enabled, 'syntax-extra')
@@ -507,10 +509,6 @@ if has_key(s:enabled, 'colors')
 	Plug 'jaredgorski/SpaceCamp'
 	Plug 'mswift42/vim-themes'
 	IncScript site/bundle/colors.vim
-endif
-
-if has_key(s:enabled, 'localvimrc')
-	Plug 'embear/vim-localvimrc'
 endif
 
 if has_key(s:enabled, 'games')

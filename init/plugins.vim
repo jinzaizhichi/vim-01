@@ -267,6 +267,13 @@ endif
 let g:gutenags_plus_switch = 0
 
 
+"----------------------------------------------------------------------
+" localvimrc
+"----------------------------------------------------------------------
+let g:localvimrc_ask = 0
+let g:localvimrc_python2_enable = 0
+let g:localvimrc_python3_enable = 0
+
 
 "----------------------------------------------------------------------
 " styles

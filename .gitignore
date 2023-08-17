@@ -33,6 +33,7 @@ tags
 /tools/samples
 /tools/test/test_*
 /doc/tags
+/doc/helptags
 /etc/test_*
 /lib/test_*
 

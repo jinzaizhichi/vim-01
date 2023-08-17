@@ -464,4 +464,14 @@ function! s:EditFileTypeScript(ft)
 endfunc
 
 
+"----------------------------------------------------------------------
+" update local helptags
+"----------------------------------------------------------------------
+command! -nargs=0 RtUpdateHelpTags call s:RtUpdateHelpTags()
+function! s:RtUpdateHelpTags() abort
+	let doc = asclib#path#runtime('doc')
+	exec 'helptags ++t ' . fnameescape(doc)
+endfunc
+
+
 
