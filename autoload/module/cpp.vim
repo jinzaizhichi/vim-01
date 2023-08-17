@@ -71,4 +71,3 @@ function! module#cpp#brace_expand(line1, line2)
 endfunc
 
 
-
