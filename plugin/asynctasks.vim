@@ -4,7 +4,7 @@
 "
 " Maintainer: skywind3000 (at) gmail.com, 2020-2021
 "
-" Last Modified: 2023/08/18 02:03
+" Last Modified: 2023/08/18 02:04
 " Verision: 1.9.12
 "
 " For more information, please visit:
@@ -2331,7 +2331,6 @@ function! asynctasks#variable(path, name)
 	if has_key(s:private.tasks.environ, a:name)
 		return s:private.tasks.environ[a:name]
 	endif
-	echo s:private.tasks.environ
 	return ''
 endfunc
 
