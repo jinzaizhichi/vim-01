@@ -265,6 +265,26 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" open and edit named scratch buffer in current window
+"----------------------------------------------------------------------
+function! asclib#buffer#open_named(name) abort
+	if !exists('s:buffer_names')
+		let s:buffer_names = {}
+	endif
+	if has_key(s:buffer_names, a:name)
+		let bid = s:buffer_names[a:name]
+		exec 'b ' . bid
+	else
+		exec 'enew'
+		let bid = bufnr('%')
+		let s:buffer_names[a:name] = bid
+		setlocal bt=nofile nobuflisted bufhidden=hide
+	endif
+	return bid
+endfunc
+
+
+"----------------------------------------------------------------------
 " get line count
 "----------------------------------------------------------------------
 function! asclib#buffer#linecount(bid) abort

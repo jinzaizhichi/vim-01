@@ -147,6 +147,7 @@ call quickui#menu#install('&Tools', [
 			\ ['Display &Messages', 'call quickui#tools#display_messages()', ],
 			\ ['--',''],
 			\ ["&DelimitMate %{get(b:, 'delimitMate_enabled', 0)? 'Disable':'Enable'}", 'DelimitMateSwitch'],
+			\ ['&Open URL', 'OpenURL', 'open current URL in browser'],
 			\ ['Read &URL', 'call menu#ReadUrl()', 'load content from url into current buffer'],
 			\ ['&Spell %{&spell? "Disable":"Enable"}', 'set spell!', 'Toggle spell check %{&spell? "off" : "on"}'],
 			\ ['&Profile Start', 'call MonitorInit()', ''],

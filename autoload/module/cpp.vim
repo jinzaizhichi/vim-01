@@ -71,3 +71,42 @@ function! module#cpp#brace_expand(line1, line2)
 endfunc
 
 
+"----------------------------------------------------------------------
+" WhatFunctionAreWeIn()
+"----------------------------------------------------------------------
+function! module#cpp#function_name()
+	let strList = ["while", "foreach", "ifelse", "if else", "for", "if"]
+	let strList += ["else", "try", "catch", "case", "switch"]
+	let foundcontrol = 1
+	let position = ""
+	let pos = getpos(".")          " This saves the cursor position
+	let view = winsaveview()       " This saves the window view
+	while (foundcontrol)
+		let foundcontrol = 0
+		normal [{
+		call search('\S','bW')
+		let tempchar = getline(".")[col(".") - 1]
+		if (match(tempchar, ")") >=0 )
+			normal %
+			call search('\S','bW')
+		endif
+		let tempstring = getline(".")
+		for item in strList
+			if ( match(tempstring,item) >= 0 )
+			let position = item . " - " . position
+			let foundcontrol = 1
+			break
+	  endif
+		endfor
+		if foundcontrol == 0
+		call cursor(pos)
+		call winrestview(view)
+		return tempstring.position
+	endif
+	endwhile
+	call cursor(pos)
+	call winrestview(view)
+	return tempstring.position
+endfunc
+
+
