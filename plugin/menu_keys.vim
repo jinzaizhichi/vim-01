@@ -126,9 +126,10 @@ let g:navigator.p = {
 			\ 'c' : ['CdToProjectRoot', 'cd-to-project-root'],
 			\ 'e' : ['module#project#open("CMakeLists.txt")', 'edit-cmake-lists'],
 			\ 't' : [':AsyncTaskEdit', 'edit-task-list'],
-			\ 'r' : ['module#project#open("README.md")', 'edit-readme-md'],
+			\ 'd' : ['module#project#open("README.md")', 'edit-readme-md'],
 			\ 'i' : ['module#project#open(".gitignore")', 'edit-git-ignore'],
 			\ 'l' : ['module#project#try_open(".git/config")', 'edit-git-config'],
+			\ 'r' : ['module#project#open(".lvimrc")', 'edit-local-vimrc'],
 			\ }
 
 

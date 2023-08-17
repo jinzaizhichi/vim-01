@@ -29,6 +29,7 @@ tags
 *.tar.xz
 *.log
 
+/.lvimrc
 /tools/scratch
 /tools/samples
 /tools/test/test_*
@@ -53,3 +54,4 @@ tags
 
 /abc.py
 /etc/crontab.*
+

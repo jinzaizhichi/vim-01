@@ -1,4 +1,7 @@
-set ff=unix
+if &modifiable
+	set ff=unix
+endif
+
 let b:cursorword = 1
 
 let b:navigator_insert = {}
