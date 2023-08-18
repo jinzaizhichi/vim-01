@@ -27,6 +27,12 @@ let g:localrc_python = get(g:, 'localrc_python', 0)
 " set to 0 to stop fire autocmd
 let g:localrc_autocmd = get(g:, 'localrc_autocmd', 1)
 
+" event to listen
+let g:localrc_event = get(g:, 'localrc_event', ["BufWinEnter"])
+
+" event pattern
+let g:localrc_pattern = get(g:, 'localrc_pattern', '*')
+
 " debug
 let g:localrc_debug = get(g:, 'localrc_debug', 0)
 
@@ -220,8 +226,10 @@ function! s:load_all_script() abort
 	let bname = fnamemodify(bufname(bid), ':p')
 	let rcs = s:find_script(bname)
 	if s:in_sourcing != 0
-		call s:debug(2, 'exiting nested loading')
+		call s:debug(2, 'nested loading, exiting')
 		return -1
+	elseif &bt != ''
+		call s:debug(2, 'not a normal buffer, exiting')
 	endif
 	for rcname in rcs
 		let rcname = fnamemodify(rcname, ':p')
@@ -260,7 +268,7 @@ function! s:LocalRcCheck() abort
 	endif
 	let uuid = get(b:, '__localrc_uuid', -1)
 	if uuid == s:source_uuid
-		call s:debug(2, 'no need to load script')
+		call s:debug(2, 'already loaded, exiting')
 		return 0
 	endif
 	call s:load_all_script()
@@ -301,7 +309,7 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" 
+" test here
 "----------------------------------------------------------------------
 function! LocalRcTest()
 	LocalRcLoad
@@ -314,6 +322,10 @@ endfunc
 "----------------------------------------------------------------------
 augroup LocalRcAutocmdGroup
 	au!
+	for event in g:localrc_event
+		let cmd = printf('autocmd %s %s ', event, g:localrc_pattern)
+		exec cmd . 'call s:LocalRcCheck()'
+	endfor
 augroup END
 
 
