@@ -3,6 +3,9 @@ command! -nargs=1 IncScript exec 'so '. fnameescape(s:home."/<args>")
 exec 'set rtp+='. fnameescape(s:home)
 exec 'set rtp+=~/.vim'
 
+if exists(':packadd')
+	exec 'set packpath+=' . fnameescape(s:home)
+endif
 
 IncScript init/viminit.vim
 IncScript init/config.vim
