@@ -247,7 +247,7 @@ let g:navigator_visual.p = {
 			\ }
 
 let g:navigator_visual.c = {
-			\ 'name': '+c/cpp',
+			\ 'name': '+coding',
 			\ 'b' : ['CppBraceExpand', 'cpp-brace-expand'],
 			\ 'c' : ['CppClassInsert', 'cpp-class-insert'],
 			\ }

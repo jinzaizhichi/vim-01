@@ -110,3 +110,9 @@ nnoremap <buffer> <space>fw :SwitchHeader edit<cr>
 nnoremap <buffer> <space>fh :SwitchHeader vsplit<cr>
 
 
+"----------------------------------------------------------------------
+" 
+"----------------------------------------------------------------------
+let b:navigator = get(b:, 'navigator', {})
+let b:navigator.c = get(b:navigator, 'c', {'name': '+coding'})
+
