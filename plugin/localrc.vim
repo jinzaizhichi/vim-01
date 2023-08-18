@@ -180,7 +180,7 @@ function! s:load_script(script, sandbox) abort
 		endif
 		redraw
 		echohl ErrorMsg
-		echom v:msg
+		echom 'Error detected in ' . msg
 		echom v:exception
 		echohl None
 	endtry
@@ -264,6 +264,7 @@ endfunc
 command! LocalRcCheck call s:LocalRcCheck()
 function! s:LocalRcCheck() abort
 	if get(g:, 'localrc_enable', 1) == 0
+		call s:debug(1, 'local vimrc disabled, exiting')
 		return 0
 	endif
 	let uuid = get(b:, '__localrc_uuid', -1)
@@ -283,6 +284,7 @@ endfunc
 command! -bang LocalRcLoad call s:LocalRcLoad(<bang>0)
 function! s:LocalRcLoad(bang)
 	if get(g:, 'localrc_enable', 1) == 0
+		call s:debug(1, 'local vimrc disabled, exiting')
 		return 0
 	endif
 	call s:load_all_script()
