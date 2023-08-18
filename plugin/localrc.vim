@@ -41,7 +41,7 @@ let g:localrc_debug = get(g:, 'localrc_debug', 0)
 " internal
 "----------------------------------------------------------------------
 let s:windows = has('win32') || has('win64') || has('win95') || has('win16')
-let s:in_sourcing = 0
+let s:is_running = 0
 let s:source_uuid = 1
 let s:messages = []
 
@@ -56,6 +56,10 @@ function! s:debug(level, msg, ...) abort
 			let msg .= ' ' . join(a:000, ' ')
 		endif
 		call add(s:messages, msg)
+		let maxsize = get(g:, 'localrc_maxlog', 200)
+		if len(s:messages) > maxsize
+			call remove(s:messages, 0)
+		endif
 	endif
 endfunc
 
@@ -130,7 +134,7 @@ endfunc
 " load script
 "----------------------------------------------------------------------
 function! s:load_script(script, sandbox) abort
-	if s:in_sourcing != 0
+	if s:is_running != 0
 		call s:debug(2, 'exit nested loading: ', a:script)
 		return -1
 	endif
@@ -163,7 +167,7 @@ function! s:load_script(script, sandbox) abort
 
 	call s:autocmd('LocalRcPre')
 
-	let s:in_sourcing = 1
+	let s:is_running = 1
 	let done = 0
 
 	try
@@ -185,7 +189,7 @@ function! s:load_script(script, sandbox) abort
 		echohl None
 	endtry
 
-	let s:in_sourcing = 0
+	let s:is_running = 0
 
 	call s:autocmd('LocalRcPost')
 
@@ -224,12 +228,18 @@ endfunc
 function! s:load_all_script() abort
 	let bid = bufnr('%')
 	let bname = fnamemodify(bufname(bid), ':p')
-	let rcs = s:find_script(bname)
-	if s:in_sourcing != 0
-		call s:debug(2, 'nested loading, exiting')
+	call s:debug(1, 'start loading script for "' . bname . '"')
+	if s:is_running != 0
+		call s:debug(1, 'already running, exiting')
 		return -1
 	elseif &bt != ''
-		call s:debug(2, 'not a normal buffer, exiting')
+		call s:debug(1, 'not a normal buffer, exiting')
+		return -2
+	endif
+	let rcs = s:find_script(bname)
+	if len(rcs) == 0
+		call s:debug(1, 'not find any local vimrc script, exiting')
+		return -3
 	endif
 	for rcname in rcs
 		let rcname = fnamemodify(rcname, ':p')
@@ -237,13 +247,13 @@ function! s:load_all_script() abort
 		call s:debug(3, 'checking:', rcname)
 		if exists('g:localrc_blacklist')
 			if s:pattern_match(g:localrc_blacklist, rcname)
-				call s:debug(3, 'skip black listed script:', rcname)
+				call s:debug(2, 'skip black listed script:', rcname)
 				continue
 			endif
 		endif
 		if exists('g:localrc_whitelist')
 			if !s:pattern_match(g:localrc_whitelist, rcname)
-				call s:debug(3, 'skip not white listed script:', rcname)
+				call s:debug(2, 'skip not white listed script:', rcname)
 				continue
 			endif
 		endif
