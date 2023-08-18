@@ -110,3 +110,54 @@ function! module#cpp#function_name()
 endfunc
 
 
+"----------------------------------------------------------------------
+" copy function definition
+"----------------------------------------------------------------------
+function! module#cpp#copy_definition()
+	let pos = getcurpos()
+	" Get class
+	call search('^\s*\<class\>', 'b')
+	exe 'normal ^w"zyw'
+	let s:class = @z
+	let l:ns = search('^\s*\<namespace\>', 'b')
+	" Get namespace
+	if l:ns != 0
+		exe 'normal ^w"zyw'
+		let s:namespace = asclib#string#strip(@z)
+	else
+		let s:namespace = ''
+	endif
+	" Go back to definition
+	call setpos('.', pos)
+	exe 'normal "zY'
+	call setpos('.', pos)
+	let s:defline = substitute(@z, ';\n', '', '')
+endfunc
+
+
+"----------------------------------------------------------------------
+" paste imp
+"----------------------------------------------------------------------
+function! module#cpp#paste_implementation()
+	call append('.', s:defline)
+	exe 'normal j'
+	" Remove keywords
+	s/\<virtual\>\s*//e
+	s/\<static\>\s*//e
+	let s:namespace = ''
+	if s:namespace == ''
+		let l:classString = s:class . "::"
+	else
+		let l:classString = s:namespace . "::" . s:class . "::"
+	endif
+	" Remove default parameters
+	s/\s\{-}=\s\{-}[^,)]\{1,}//e
+	" Add class qualifier
+	exe 'normal ^f(bi' . l:classString
+	" Add brackets
+	exe "normal $o{\<CR>\<TAB>\<CR>}\<CR>\<ESC>kkkk"
+	" Fix indentation
+	exe 'normal =4j^'
+endfunc
+
+
