@@ -4,7 +4,7 @@ exec 'set rtp+='. fnameescape(s:home)
 exec 'set rtp+=~/.vim'
 
 if exists(':packadd')
-	exec 'set packpath+=' . fnameescape(s:home)
+	exec 'set packpath+=' . fnameescape(s:home . '/site')
 endif
 
 IncScript init/viminit.vim
