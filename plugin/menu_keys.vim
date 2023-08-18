@@ -204,6 +204,7 @@ let g:navigator.x = {
 			\ 't': ['<plug>TranslateW', 'translate-current-word'],
 			\ 'm': [':messages', 'messages-list'],
 			\ 'M': [':messages clear', 'messages-clear'],
+			\ 'd': [':LocalRcDisplay', 'display-localrc-messages'],
 			\ }
 
 
