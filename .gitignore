@@ -55,3 +55,6 @@ tags
 /abc.py
 /etc/crontab.*
 
+.lvimrc
+.localrc
+

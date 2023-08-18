@@ -97,7 +97,7 @@ if has_key(s:enabled, 'basic')
 	Plug 'skywind3000/vim-dict'
 	Plug 'tommcdo/vim-exchange'
 	Plug 'tommcdo/vim-lion'
-	Plug 'embear/vim-localvimrc'
+	" Plug 'embear/vim-localvimrc'
 
 	Plug 'pprovost/vim-ps1', { 'for': 'ps1' }
 	Plug 'tbastos/vim-lua', { 'for': 'lua' }
