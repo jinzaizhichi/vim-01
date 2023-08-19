@@ -108,7 +108,11 @@ function! s:find_script(filename) abort
 	let rcs = []
 	while 1
 		for name in g:localrc_name
-			let p = fnamemodify(path . '/' . name, ':p')
+			if path =~ '[\/\\]$'
+				let p = fnamemodify(path . name, ':p')
+			else
+				let p = fnamemodify(path . '/' . name, ':p')
+			endif
 			if s:windows
 				let p = tr(p, '\', '/')
 			endif
