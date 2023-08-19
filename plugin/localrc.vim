@@ -33,6 +33,9 @@ let g:localrc_event = get(g:, 'localrc_event', ["BufWinEnter"])
 " event pattern
 let g:localrc_pattern = get(g:, 'localrc_pattern', '*')
 
+" force reload
+let g:localrc_force = get(g:, 'localrc_force', 0)
+
 " debug
 let g:localrc_debug = get(g:, 'localrc_debug', 0)
 
@@ -278,7 +281,7 @@ function! s:LocalRcCheck() abort
 		return 0
 	endif
 	let uuid = get(b:, '__localrc_uuid', -1)
-	if uuid == s:source_uuid
+	if uuid == s:source_uuid && g:localrc_force == 0
 		call s:debug(2, 'already loaded, exiting')
 		return 0
 	endif
