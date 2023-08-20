@@ -4,7 +4,7 @@
 "
 " Maintainer: skywind3000 (at) gmail.com, 2020-2021
 "
-" Last Modified: 2023/08/21 02:13
+" Last Modified: 2023/08/21 02:42
 " Verision: 1.9.13
 "
 " For more information, please visit:
@@ -502,6 +502,9 @@ endfunc
 function! s:config_merge(target, source, ininame, mode)
 	let special = []
 	let setting = ['*', '+', '-', '%', '#']
+	if type(a:source) != type({})
+		return a:target
+	endif
 	for key in keys(a:source)
 		if stridx(key, ':') >= 0
 			let special += [key]
@@ -664,6 +667,24 @@ function! s:compose_script_config()
 		if exists(varname)
 			let cc = eval(varname)
 			call s:config_merge(config, cc, '<script>', 'script')
+		endif
+	endfor
+	for prefix in ['g:', 't:', 'w:', 'b:']
+		let varname = prefix . 'asynctasks_factory'
+		if exists(varname)
+			let factory = eval(varname)
+			if type(factory) == type('')
+				let cc = call(factory, [])
+				call s:config_merge(config, cc, '<script>', 'script')
+			elseif type(factory) == type([])
+				for l:N in factory
+					let cc = call(l:N, [])
+					call s:config_merge(config, cc, '<script>', 'script')
+				endfor
+			else
+				let cc = call(factory, [])
+				call s:config_merge(config, cc, '<script>', 'script')
+			endif
 		endif
 	endfor
 	return config
