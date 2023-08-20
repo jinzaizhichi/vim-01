@@ -80,11 +80,11 @@ function! asclib#buffer#update(bid, textlist)
 	let old = getbufvar(a:bid, '&modifiable', 0)
 	call setbufvar(a:bid, '&modifiable', 1)
 	if s:has_deletebufline && s:has_setbufline
-		call deletebufline(a:bid, 1, '$')
-		call setbufline(a:bid, 1, textlist)
+		silent call deletebufline(a:bid, 1, '$')
+		silent call setbufline(a:bid, 1, textlist)
 	elseif a:bid == bufnr('%')
-		exec 'noautocmd 1,$d'
-		call setline(1, textlist)
+		silent exec 'noautocmd 1,$d'
+		silent call setline(1, textlist)
 	endif
 	call setbufvar(a:bid, '&modified', old)
 endfunc
