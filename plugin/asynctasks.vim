@@ -4,7 +4,7 @@
 "
 " Maintainer: skywind3000 (at) gmail.com, 2020-2021
 "
-" Last Modified: 2023/08/21 02:42
+" Last Modified: 2023/08/21 03:00
 " Verision: 1.9.13
 "
 " For more information, please visit:
@@ -673,20 +673,29 @@ function! s:compose_script_config()
 		let varname = prefix . 'asynctasks_factory'
 		if exists(varname)
 			let factory = eval(varname)
-			if type(factory) == type('')
-				let cc = call(factory, [])
-				call s:config_merge(config, cc, '<script>', 'script')
-			elseif type(factory) == type([])
-				for l:N in factory
-					let cc = call(l:N, [])
+			if type(factory) == type([])
+				let size = len(factory)
+				let index = 0
+				while index < size
+					let cc = call(factory[index], [])
 					call s:config_merge(config, cc, '<script>', 'script')
-				endfor
+					let index += 1
+				endwhile
 			else
 				let cc = call(factory, [])
 				call s:config_merge(config, cc, '<script>', 'script')
 			endif
 		endif
 	endfor
+	if exists('g:asynctasks_loader')
+		let size = len(g:asynctasks_loader)
+		let index = 0
+		while index < size
+			let cc = call(g:asynctasks_loader[index], [])
+			call s:config_merge(config, cc, '<script>', 'script')
+			let index += 1
+		endwhile
+	endif
 	return config
 endfunc
 
