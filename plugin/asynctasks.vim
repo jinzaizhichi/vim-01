@@ -4,8 +4,8 @@
 "
 " Maintainer: skywind3000 (at) gmail.com, 2020-2021
 "
-" Last Modified: 2023/08/18 02:04
-" Verision: 1.9.12
+" Last Modified: 2023/08/21 02:13
+" Verision: 1.9.13
 "
 " For more information, please visit:
 " https://github.com/skywind3000/asynctasks.vim
@@ -2332,6 +2332,17 @@ function! asynctasks#variable(path, name)
 		return s:private.tasks.environ[a:name]
 	endif
 	return ''
+endfunc
+
+
+"----------------------------------------------------------------------
+" get current root
+"----------------------------------------------------------------------
+function! asynctasks#current_root() abort
+	if s:requirement('asyncrun') == 0
+		return ''
+	endif
+	return asyncrun#current_root()
 endfunc
 
 
