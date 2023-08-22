@@ -4,8 +4,8 @@
 "
 " Maintainer: skywind3000 (at) gmail.com, 2020-2021
 "
-" Last Modified: 2023/08/21 03:00
-" Verision: 1.9.13
+" Last Modified: 2023/08/22 10:33
+" Verision: 1.9.14
 "
 " For more information, please visit:
 " https://github.com/skywind3000/asynctasks.vim
@@ -658,17 +658,10 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" script level config
+" factory config
 "----------------------------------------------------------------------
-function! s:compose_script_config()
+function! s:compose_factory_config()
 	let config = {}
-	for prefix in ['g:', 't:', 'w:', 'b:']
-		let varname = prefix . 'asynctasks_tasks'
-		if exists(varname)
-			let cc = eval(varname)
-			call s:config_merge(config, cc, '<script>', 'script')
-		endif
-	endfor
 	for prefix in ['g:', 't:', 'w:', 'b:']
 		let varname = prefix . 'asynctasks_factory'
 		if exists(varname)
@@ -701,6 +694,22 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" script level config
+"----------------------------------------------------------------------
+function! s:compose_script_config()
+	let config = {}
+	for prefix in ['g:', 't:', 'w:', 'b:']
+		let varname = prefix . 'asynctasks_tasks'
+		if exists(varname)
+			let cc = eval(varname)
+			call s:config_merge(config, cc, '<script>', 'script')
+		endif
+	endfor
+	return config
+endfunc
+
+
+"----------------------------------------------------------------------
 " fetch all config
 "----------------------------------------------------------------------
 function! asynctasks#collect_config(path, force)
@@ -708,10 +717,11 @@ function! asynctasks#collect_config(path, force)
 	let s:index = 0
 	let s:error = ''
 	let c1 = s:compose_rtp_config(a:force)
-	let c2 = s:compose_local_config(path)
-	let c3 = s:compose_script_config()
+	let c2 = s:compose_factory_config()
+	let c3 = s:compose_local_config(path)
+	let c4 = s:compose_script_config()
 	let tasks = {'config':{}, 'names':{}, 'avail':[]}
-	for cc in [c1, c2, c3]
+	for cc in [c1, c2, c3, c4]
 		call s:config_merge(tasks.config, cc, '', '')
 	endfor
 	let avail = []
