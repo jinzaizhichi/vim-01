@@ -4,8 +4,8 @@
 "
 " Maintainer: skywind3000 (at) gmail.com, 2020-2021
 "
-" Last Modified: 2023/08/22 10:33
-" Verision: 1.9.14
+" Last Modified: 2023/08/23 15:17
+" Verision: 1.9.15
 "
 " For more information, please visit:
 " https://github.com/skywind3000/asynctasks.vim
@@ -2236,8 +2236,21 @@ function! asynctasks#source(maxwidth)
 	let maxsize = -1
 	let limit = a:maxwidth
 	let source = []
+	let sortme = get(g:, 'asynctasks_sort', 0)
 	if len(tasks) == 0
 		return []
+	endif
+	if sortme == 1
+		let n1 = []
+		let n2 = []
+		for task in tasks
+			if task.scope == 'local'
+				call add(n1, task)
+			else
+				call add(n2, task)
+			endif
+		endfor
+		let tasks = n1 + n2
 	endif
 	for task in tasks
 		let name = task.name
