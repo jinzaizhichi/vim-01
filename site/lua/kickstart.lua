@@ -49,7 +49,8 @@ local scripthome = vim.fn.fnamemodify(scriptpath, ':h:h:h')
 vim.cmd('set rtp+=' .. vim.fn.fnameescape(scripthome))
 
 vim.cmd [[
-let $PATH .= ';D:/Linux/mingw64/bin'
+let $PATH .= ';D:\Linux\mingw64\bin'
+let $PATH .= ';D:\Dev\Node\node-v18.15.0-win-x86'
 ]]
 
 
