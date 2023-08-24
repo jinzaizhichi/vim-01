@@ -302,7 +302,7 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" open keymap
+" start state
 "----------------------------------------------------------------------
 function! navigator#state#proceed(keymap, opts) abort
 	let opts = deepcopy(a:opts)
