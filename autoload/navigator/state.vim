@@ -4,7 +4,7 @@
 " state.vim - state manager
 "
 " Created by skywind on 2022/12/24
-" Last Modified: 2023/08/24 16:10
+" Last Modified: 2023/08/24 17:28
 "
 "======================================================================
 
@@ -300,9 +300,8 @@ function! navigator#state#select_silent(keymap, path) abort
 endfunc
 
 
-
 "----------------------------------------------------------------------
-" start state
+" entry point of state machine
 "----------------------------------------------------------------------
 function! navigator#state#start(keymap, opts) abort
 	let opts = deepcopy(a:opts)
