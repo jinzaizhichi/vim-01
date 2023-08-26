@@ -442,7 +442,9 @@ let s:nvimrc = expand("~/.config/nvim/init.vim")
 if has('win32') || has('win16') || has('win95') || has('win64')
 	let s:nvimrc = expand("~/AppData/Local/nvim/init.vim")
 endif
-exec 'nnoremap <space>hn :FileSwitch '.fnameescape(s:nvimrc).'<cr>'
+exec 'nnoremap <space>h. :FileSwitch '.fnameescape(s:nvimrc).'<cr>'
+
+nnoremap <space>hn :FileSwitch $RTP/neovim.lua<cr>
 
 
 
