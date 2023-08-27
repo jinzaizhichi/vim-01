@@ -17,7 +17,8 @@ package.path = package.path .. ';' .. scripthome .. '/lua/?.lua'
 -- ensure lazy
 -----------------------------------------------------------------------
 function lazy_ensure_install()
-	local lazypath = vim.fn.expand('~/.vim/lazy.nvim')
+	local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+	-- local lazypath = vim.fn.expand('~/.vim/lazy.nvim')
 	local refresh = false
 	if not vim.loop.fs_stat(lazypath) then
 		vim.fn.system {
