@@ -24,6 +24,10 @@ set splitright
 set viewdir=~/.vim/view
 set errorformat=%.\ %#-->\ %f:%l:%c,%f(%l):%m,%f:%l:%c:%m,%f:%l:%m
 
+if exists('+breakindent')
+	set breakindent
+endif
+
 if has('patch-8.1.1300')
 	set shortmess-=S
 endif
