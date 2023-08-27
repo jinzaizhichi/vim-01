@@ -56,6 +56,30 @@ require('lazy').setup("plugins", opts)
 
 
 -----------------------------------------------------------------------
+-- local config
+-----------------------------------------------------------------------
+local filelist = vim.fn.glob(scripthome .. '/lua/config/*.lua', 0)
+
+if vim.fn.filereadable(scripthome .. '/lua/config/init.lua') ~= 0 then
+	require 'config.init'
+end
+
+if filelist ~= nil then
+	local names = vim.fn.split(filelist, '\n')
+	table.sort(names)
+	for _, fn in ipairs(names) do
+		local name = vim.fn.fnamemodify(fn, ':t:r')
+		if name ~= 'init' then
+			local path = 'config.' .. name
+			package.loaded[path] = nil
+			require(path)
+			-- print('->', name)
+		end
+	end
+end
+
+
+-----------------------------------------------------------------------
 -- options
 -----------------------------------------------------------------------
 
