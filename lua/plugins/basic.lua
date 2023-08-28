@@ -64,7 +64,12 @@ return {
 				xmap gZ <Plug>Sneak_S
 			]]
 		end,
-	}
+	},
+
+	
+	-- "gc" to comment visual regions/lines
+	{ 'numToStr/Comment.nvim', opts = {} },
+
 }
 
 
