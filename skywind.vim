@@ -227,6 +227,7 @@ let g:quickui_tags_indent = {
 let g:quickui_color_scheme = 'papercol-light'
 
 let g:navigator_hide_cursor = 0
+let g:navigator_display_path = 1
 
 
 "----------------------------------------------------------------------
