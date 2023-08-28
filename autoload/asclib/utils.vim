@@ -452,3 +452,50 @@ function! asclib#utils#make_info_buf() abort
 endfunc
 
 
+"----------------------------------------------------------------------
+" current url
+"----------------------------------------------------------------------
+function! asclib#utils#current_url() abort
+	let github = 'https://github.com/'
+	let text = expand('<cfile>')
+	if text =~ '^\(http\|https\):\/\/'
+		return text
+	endif
+	let text = getline('.')
+	let t = matchstr(text, '^\s*Plug\s*''\zs\(.\{-}\)*\ze''')
+	if t != ''
+		return (t =~ '^\(http\|https\):\/\/')? t : (github . t)
+	endif
+	let t = matchstr(text, '^\s*Plugin\s*''\zs\(.\{-}\)*\ze''')
+	if t != ''
+		return (t =~ '^\(http\|https\):\/\/')? t : (github . t)
+	endif
+	let t = matchstr(text, '^\s*''\zs\(.\{-}\)*\ze''')
+	if t != ''
+		if stridx(t, '/') > 0
+			return (t =~ '^\(http\|https\):\/\/')? t : (github . t)
+		endif
+	endif
+	let t = matchstr(text, '^\s*{\s*''\zs\(.\{-}\)*\ze''')
+	if t != ''
+		if stridx(t, '/') > 0
+			return (t =~ '^\(http\|https\):\/\/')? t : (github . t)
+		endif
+	endif
+	let t = matchstr(text, '^\s*"\zs\(.\{-}\)*\ze"')
+	if t != ''
+		if stridx(t, '/') > 0
+			return (t =~ '^\(http\|https\):\/\/')? t : (github . t)
+		endif
+	endif
+	let t = matchstr(text, '^\s*{\s*"\zs\(.\{-}\)*\ze"')
+	if t != ''
+		if stridx(t, '/') > 0
+			return (t =~ '^\(http\|https\):\/\/')? t : (github . t)
+		endif
+	endif
+	return ''
+endfunc
+
+
+

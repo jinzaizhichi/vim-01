@@ -131,41 +131,12 @@ command! -nargs=* -bang OpenURL call s:OpenURL(<q-args>, '<bang>')
 function! s:OpenURL(url, bang)
 	let url = a:url
 	if url == ''
-		let github = 'https://github.com/'
-		let t = matchstr(getline('.'), '^\s*Plug\s*''\zs\(.\{-}\)*\ze''')
-		if t != ''
-			let url = (t =~ '^\(http\|https\):\/\/')? t : (github . t)
-		elseif &ft == 'lua'
-			let text = getline('.')
-			let t = matchstr(text, '^\s*''\zs\(.\{-}\)*\ze''')
-			if t != ''
-				let url = (t =~ '^\(http\|https\):\/\/')? t : (github . t)
-			else
-				let t = matchstr(text, '^\s*{\s*''\zs\(.\{-}\)*\ze''')
-				if t != ''
-					let url = (t =~ '^\(http\|https\):\/\/')? t : (github . t)
-				endif
-			endif
-			if url == ''
-				let t = matchstr(text, '^\s*"\zs\(.\{-}\)*\ze"')
-				if t != ''
-					let url = (t =~ '^\(http\|https\):\/\/')? t : (github . t)
-				else
-					let t = matchstr(text, '^\s*{\s*"\zs\(.\{-}\)*\ze"')
-					if t != ''
-						let url = (t =~ '^\(http\|https\):\/\/')? t : (github . t)
-					endif
-				endif
-			endif
-			if url == ''
-				let url = expand('<cfile>')
-			endif
-		else
-			let url = expand('<cfile>')
-		endif
+		let url = asclib#utils#current_url()
 	endif
 	if url != ''
 		call asclib#utils#open_url(url, a:bang)
+	else
+		call asclib#common#errmsg('ERROR: URL is empty')
 	endif
 endfunc
 
