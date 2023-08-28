@@ -113,6 +113,10 @@ function! asclib#python#exec(script) abort
 	endif
 endfunc
 
+
+"----------------------------------------------------------------------
+" eval script
+"----------------------------------------------------------------------
 function! asclib#python#eval(script) abort
 	if s:py_version == 0
 		call asclib#python#checkhealth()
@@ -133,6 +137,10 @@ function! asclib#python#eval(script) abort
 	endif
 endfunc
 
+
+"----------------------------------------------------------------------
+" python file
+"----------------------------------------------------------------------
 function! asclib#python#file(filename) abort
 	if s:py_version == 0
 		call asclib#python#checkhealth()
@@ -141,6 +149,10 @@ function! asclib#python#file(filename) abort
 	endif
 endfunc
 
+
+"----------------------------------------------------------------------
+" python call
+"----------------------------------------------------------------------
 function! asclib#python#call(funcname, args) abort
 	if s:py_version == 0
 		call asclib#python#checkhealth()
@@ -160,6 +172,10 @@ function! asclib#python#call(funcname, args) abort
 	endif
 endfunc
 
+
+"----------------------------------------------------------------------
+" python system
+"----------------------------------------------------------------------
 function! asclib#python#system(cmd, ...)
 	let has_input = 0
 	if a:0 > 0

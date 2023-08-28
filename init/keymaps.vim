@@ -351,7 +351,7 @@ if has('autocmd')
 		autocmd FileType qf call s:quickfix_keymap()
 		autocmd FileType vim noremap <buffer><F4> :<c-u>silent update<cr>:so %<cr>
 		autocmd FileType python noremap <buffer><F4> :<c-u>silent update<cr>:call asclib#python#refresh('%')<cr>
-		autocmd FileType lua noremap <buffer><f4> :<c-u>silent update<cr>:luafile %<cr>
+		autocmd FileType lua noremap <buffer><f4> :<c-u>silent update<cr>:call asclib#lua#refresh('%')<cr>
 		autocmd InsertLeave * call s:insert_leave()
 		" autocmd InsertLeave * set showmode
 	augroup END
