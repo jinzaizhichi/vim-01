@@ -274,7 +274,7 @@ let g:navigator_visual.x = {
 " INSERT mode
 "----------------------------------------------------------------------
 let g:navigator_insert = {}
-let g:navigator_insert.prefix = '<tab><tab>'
+let g:navigator_insert.prefix = '<c-\><c-\>'
 
 let g:navigator_insert.x = [':Leaderf snippet', 'snippet-select']
 
