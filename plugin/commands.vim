@@ -146,6 +146,20 @@ function! s:OpenURL(url, bang)
 					let url = (t =~ '^\(http\|https\):\/\/')? t : (github . t)
 				endif
 			endif
+			if url == ''
+				let t = matchstr(text, '^\s*"\zs\(.\{-}\)*\ze"')
+				if t != ''
+					let url = (t =~ '^\(http\|https\):\/\/')? t : (github . t)
+				else
+					let t = matchstr(text, '^\s*{\s*"\zs\(.\{-}\)*\ze"')
+					if t != ''
+						let url = (t =~ '^\(http\|https\):\/\/')? t : (github . t)
+					endif
+				endif
+			endif
+			if url == ''
+				let url = expand('<cfile>')
+			endif
 		else
 			let url = expand('<cfile>')
 		endif

@@ -6,6 +6,8 @@ return {
 		opts = {
 			options = {
 				icons_enabled = false,
+				-- theme = 'PaperColor',
+				-- theme = 'molokai',
 				theme = 'onedark',
 				component_separators = '|',
 				section_separators = '',
@@ -13,16 +15,16 @@ return {
 		},
 	},
 
-  {
-    -- Add indentation guides even on blank lines
-    'lukas-reineke/indent-blankline.nvim',
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help indent_blankline.txt`
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
-  },
+	{
+		-- Add indentation guides even on blank lines
+		'lukas-reineke/indent-blankline.nvim',
+		-- Enable `lukas-reineke/indent-blankline.nvim`
+		-- See `:help indent_blankline.txt`
+		opts = {
+			char = '┊',
+			show_trailing_blankline_indent = false,
+		},
+	},
 
 }
 

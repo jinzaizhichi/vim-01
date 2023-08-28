@@ -56,6 +56,8 @@ local servers = {
 		Lua = {
 			workspace = { checkThirdParty = false },
 			telemetry = { enable = false },
+			hint = { enable = true, setType = true },
+			codelens = { enable = false },
 		},
 	},
 }

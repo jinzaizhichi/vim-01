@@ -1,12 +1,15 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
+
 	event = "VeryLazy",
+
 	dependencies = {
 		{ "windwp/nvim-ts-autotag" },
 		{ "JoosepAlviste/nvim-ts-context-commentstring" },
 		{ "RRethy/nvim-treesitter-endwise" },
 		{ "RRethy/nvim-treesitter-textsubjects", enabled = false },
 	},
+
 	build = ":TSUpdate",
 	config = function()
 		-- if vim.uv.os_uname().sysname == "Windows" then
@@ -17,7 +20,8 @@ return {
 			-- Add languages to be installed here that you want installed for treesitter
 			ensure_installed = { 'c', 'cpp', 'go', 'lua', 
 				'python', 'rust', 'zig', 'javascript', 'html', 
-			'tsx', 'typescript', 'vimdoc', 'vim' },
+				'awk', 'hlsl', 'ini',
+				'tsx', 'typescript', 'vimdoc', 'vim' },
 
 			highlight = {
 				enable = true,
