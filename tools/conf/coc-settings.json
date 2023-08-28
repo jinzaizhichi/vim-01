@@ -8,6 +8,13 @@
 
 	"inlayHint.enable": false,
 
+	// coc-pyright
+	"python": {
+		"linting.enabled": false,
+		"runLinting": false
+	},
+
+	"pyright.disableDiagnostics": true,
 	"coc.source.coc-snippets.enable": true,
 	"suggest.enablePreview": true,
 
