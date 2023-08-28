@@ -227,6 +227,10 @@ function! asclib#python#path_add(path)
 	return 1
 endfunc
 
+
+"----------------------------------------------------------------------
+" reload 
+"----------------------------------------------------------------------
 function! asclib#python#reload(module_name)
 	if s:py_version == 0
 		call asclib#python#checkhealth()

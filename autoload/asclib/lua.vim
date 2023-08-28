@@ -24,6 +24,15 @@ let g:asclib#lua#has_nvim = s:has_nvim
 
 
 "----------------------------------------------------------------------
+" call lua function
+"----------------------------------------------------------------------
+function! asclib#lua#call(funcname, args) abort
+	lua vim.__temp_args = vim.fn.eval('a:args')
+	return luaeval(a:funcname .. '(vim.__temp_args)')
+endfunc
+
+
+"----------------------------------------------------------------------
 " force import
 "----------------------------------------------------------------------
 function! asclib#lua#require(name)
@@ -100,7 +109,7 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" 
+" timing
 "----------------------------------------------------------------------
 function! asclib#lua#timing()
 	let ts = reltime()
