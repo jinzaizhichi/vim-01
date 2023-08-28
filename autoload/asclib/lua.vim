@@ -27,7 +27,7 @@ let g:asclib#lua#has_nvim = s:has_nvim
 "----------------------------------------------------------------------
 function! asclib#lua#call(funcname, args) abort
 	lua vim.__temp_args = vim.fn.eval('a:args')
-	return luaeval(a:funcname .. '(vim.__temp_args)')
+	return luaeval(a:funcname .. '(table.unpack(vim.__temp_args))')
 endfunc
 
 

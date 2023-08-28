@@ -30,6 +30,12 @@ local utils = {}
 os.path = {}
 os.argv = arg ~= nil and arg or {}
 os.path.sep = windows and '\\' or '/'
+os.has_nvim = (vim ~= nil) and (vim.fn.has('nvim') ~= 0) or false
+
+if vim ~= nil then
+	vim.has_nvim = vim.fn.has('nvim')
+	vim.asc = package.loaded[modname]
+end
 
 
 -----------------------------------------------------------------------
@@ -985,7 +991,23 @@ end
 -- call vim function
 -----------------------------------------------------------------------
 function call(funcname, args)
-	return vim.fn.call(funcname, args)
+	if vim.fn.has('nvim') == 0 then
+		local argv = vim.eval('[]')
+		for _, arg in ipairs(args) do
+			argv:add(arg)
+		end
+		return vim.fn.call(funcname, argv)
+	else
+		return vim.fn.call(funcname, args)
+	end
+end
+
+
+-----------------------------------------------------------------------
+-- call function
+-----------------------------------------------------------------------
+if vim ~= nil then
+	vim.call_function = call
 end
 
 
