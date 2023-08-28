@@ -250,6 +250,10 @@ function! asclib#python#reload(module_name)
 	return 1
 endfunc
 
+
+"----------------------------------------------------------------------
+" import
+"----------------------------------------------------------------------
 function! asclib#python#import(module_name)
 	if s:py_version == 0
 		call asclib#python#checkhealth()
