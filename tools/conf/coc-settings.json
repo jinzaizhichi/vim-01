@@ -6,6 +6,8 @@
 	"suggest.autoTrigger": "always",
 	"suggest.noselect": true,
 
+	"inlayHint.enable": false,
+
 	"coc.source.coc-snippets.enable": true,
 	"suggest.enablePreview": true,
 
@@ -52,4 +54,5 @@
         "variable": "\uf71b"
     }
 }
+
 
