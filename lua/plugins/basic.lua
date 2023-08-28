@@ -8,9 +8,25 @@ return {
 	{'justinmk/vim-dirvish', config = function() inc('site/bundle/dirvish.vim') end },
 	{'bootleq/vim-cycle', config = function() inc('site/bundle/dirvish.vim') end },
 	
-	't9md/vim-choosewin',
-	'tommcdo/vim-exchange',
+
+	{
+		't9md/vim-choosewin',
+		config = function()
+			vim.keymap.set('n', '<m-e>', '<Plug>(choosewin)', {})
+		end,
+	},
+
+	'tommcdo/vim-exchange', 
 	'tommcdo/vim-lion',
+	'skywind3000/vim-dict',
+
+	{
+		'terryma/vim-expand-region',
+		config = function()
+			vim.keymap.set({'n', 'v'}, '<m-+>', '<Plug>(expand_region_expand)', {})
+			vim.keymap.set({'n', 'v'}, '<m-->', '<Plug>(expand_region_shrink)', {})
+		end,
+	},
 }
 
 
