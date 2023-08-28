@@ -494,6 +494,10 @@ function! asclib#utils#current_url() abort
 			return (t =~ '^\(http\|https\):\/\/')? t : (github . t)
 		endif
 	endif
+	let text = expand('<cfile>')
+	if text =~ '^\w\+\/\w\+'
+		return github . text
+	endif
 	return ''
 endfunc
 
