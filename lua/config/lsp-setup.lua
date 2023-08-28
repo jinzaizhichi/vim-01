@@ -101,8 +101,16 @@ cmp.setup {
 		end,
 	},
 	window = {
-		completion = { border = border },
-		documentation = { border = border },
+		-- completion = { border = border },
+		-- documentation = { border = border },
+		completion = {
+			-- border = border('CmpBorder'),
+			border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│', },
+			winhighlight = 'Normal:CmpPmenu,CursorLine:PmenuSel,Search:None',
+		},
+		documentation = {
+			border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│', },
+		},
 	},
 
 	completion = {
