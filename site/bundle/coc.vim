@@ -12,6 +12,12 @@
 set updatetime=300
 set signcolumn=yes
 
+let g:coc_config_home = expand('~/.vim')
+
+if !isdirectory(g:coc_config_home)
+	silent! call mkdir(g:coc_config_home)
+endif
+
 silent! call mkdir($HOME . '/.cache/ccls', 'p')
 silent! call coc#config('languageserver.ccls.initializationOptions.cache.directory', expand('~/.cache/ccls'))
 
