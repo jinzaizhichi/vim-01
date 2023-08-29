@@ -31,6 +31,8 @@ function! module#lsp#hover() abort
 	if tt == 'coc'
 		if CocAction('hasProvider', 'hover')
 			call CocActionAsync('doHover')
+		elseif &ft == 'vim'
+			call feedkeys('K', 'ni')
 		endif
 	elseif tt == 'ycm'
 		exec "normal \<Plug>(YCMHover)"
@@ -59,6 +61,7 @@ function! module#lsp#get_document() abort
 	let tt = module#lsp#type()
 	if tt == 'ycm'
 		exec 'YcmCompleter GetDoc'
+	elseif tt == 'ycm'
 	endif
 endfunc
 
@@ -67,6 +70,10 @@ endfunc
 " 
 "----------------------------------------------------------------------
 function! module#lsp#get_type() abort
-
+	let tt = module#lsp#type()
+	if tt == 'ycm'
+	elseif tt == 'coc'
+	endif
+endfunc
 
 

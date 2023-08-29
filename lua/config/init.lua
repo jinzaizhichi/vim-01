@@ -9,3 +9,5 @@
 
 -- print('init')
 
+vim.diagnostic.disable()
+
