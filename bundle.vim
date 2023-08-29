@@ -195,23 +195,6 @@ if has_key(s:enabled, 'inter')
 	
 	IncScript site/bundle/outliner.vim
 
-	if has_key(s:enabled, 'minisnip')
-		Plug 'Jorengarenar/miniSnip'
-		IncScript site/bundle/minisnip.vim
-	elseif has_key(s:enabled, 'neosnippet')
-		Plug 'Shougo/neosnippet.vim'
-		let s:enabled.neovim = 1
-		IncScript site/bundle/neosnippet.vim
-	elseif has_key(s:enabled, 'ultisnips') == 0 || (has('python3') == 0 && has('python') == 0)
-		Plug 'MarcWeber/vim-addon-mw-utils'
-		Plug 'tomtom/tlib_vim'
-		Plug 'garbas/vim-snipmate'
-		IncScript site/bundle/snipmate.vim
-	else
-		Plug 'SirVer/ultisnips'
-		IncScript site/bundle/ultisnips.vim
-	endif
-
 	if !isdirectory(expand('~/.vim/notes'))
 		silent! call mkdir(expand('~/.vim/notes'), 'p')
 	endif
@@ -301,6 +284,24 @@ endif
 " gdb
 if has_key(s:enabled, 'gdb')
 	IncScript site/bundle/gdb.vim
+endif
+
+" snippet
+if has_key(s:enabled, 'snipmate')
+	Plug 'MarcWeber/vim-addon-mw-utils'
+	Plug 'tomtom/tlib_vim'
+	Plug 'garbas/vim-snipmate'
+	IncScript site/bundle/snipmate.vim
+elseif has_key(s:enabled, 'ultisnips') && (has('python3') || has('python'))
+	Plug 'SirVer/ultisnips'
+	IncScript site/bundle/ultisnips.vim
+elseif has_key(s:enabled, 'minisnip')
+	Plug 'Jorengarenar/miniSnip'
+	IncScript site/bundle/minisnip.vim
+elseif has_key(s:enabled, 'neosnippet')
+	Plug 'Shougo/neosnippet.vim'
+	let s:enabled.neovim = 1
+	IncScript site/bundle/neosnippet.vim
 endif
 
 " CoC
