@@ -33,6 +33,7 @@ function! module#lsp#hover()
 			call CocActionAsync('doHover')
 		endif
 	elseif tt == 'ycm'
+		exec "normal \<Plug>(YCMHover)"
 	endif
 endfunc
 
