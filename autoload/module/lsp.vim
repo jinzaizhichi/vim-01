@@ -26,7 +26,7 @@ endfunc
 "----------------------------------------------------------------------
 " hover
 "----------------------------------------------------------------------
-function! module#lsp#hover()
+function! module#lsp#hover() abort
 	let tt = module#lsp#type()
 	if tt == 'coc'
 		if CocAction('hasProvider', 'hover')
@@ -34,8 +34,39 @@ function! module#lsp#hover()
 		endif
 	elseif tt == 'ycm'
 		exec "normal \<Plug>(YCMHover)"
+	elseif tt == 'cmp'
+		lua vim.lsp.buf.hover()
 	endif
 endfunc
+
+
+"----------------------------------------------------------------------
+" signature help
+"----------------------------------------------------------------------
+function! module#lsp#signature_help() abort
+	let tt = module#lsp#type()
+	if tt == 'coc'
+	elseif tt == 'cmp'
+		lua vim.lsp.buf.signature_help()
+	endif
+endfunc
+
+
+"----------------------------------------------------------------------
+" get doc
+"----------------------------------------------------------------------
+function! module#lsp#get_document() abort
+	let tt = module#lsp#type()
+	if tt == 'ycm'
+		exec 'YcmCompleter GetDoc'
+	endif
+endfunc
+
+
+"----------------------------------------------------------------------
+" 
+"----------------------------------------------------------------------
+function! module#lsp#get_type() abort
 
 
 

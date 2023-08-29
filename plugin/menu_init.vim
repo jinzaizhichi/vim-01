@@ -206,7 +206,7 @@ let g:quickui_context = [
 			\ [ "Goto D&efinition\t(YCM)", 'YcmCompleter GoToDefinitionElseDeclaration'],
 			\ [ "Goto &References\t(YCM)", 'YcmCompleter GoToReferences'],
 			\ [ "Cursor Ho&ver\t(YCM)", 'call module#lsp#hover()'],
-			\ [ "Get D&oc\t(YCM)", 'YcmCompleter GetDoc'],
+			\ [ "Get D&oc\t(YCM)", 'call module#lsp#get_document()'],
 			\ [ "Get &Type\t(YCM)", 'YcmCompleter GetTypeImprecise'],
 			\ ]
 
