@@ -81,9 +81,9 @@ function! MenuHelp_Cppman()
 endfunc
 
 function! MenuHelp_Proxy(enable)
-	let $HTTP_PROXY = (a:enable)? 'socks5h://localhost:1080' : ''
-	let $HTTPS_PROXY = $HTTP_PROXY
-	let $ALL_PROXY = $HTTP_PROXY
+	let $http_proxy = (a:enable)? 'http://localhost:1080' : ''
+	let $https_proxy = $http_proxy
+	let $all_proxy = $http_proxy
 endfunc
 
 function! MenuHelp_WinHelp(help)
