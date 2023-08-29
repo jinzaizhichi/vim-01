@@ -544,7 +544,7 @@ function os.path.isabs(path)
 	end
 	if vim ~= nil then
 		if vim.fn.isabsolutepath ~= nil then
-			return (vim.fn.isabsolutepath(path) ~= 0) and true or false
+			-- return (vim.fn.isabsolutepath(path) ~= 0) and true or false
 		end
 	end
 	if windows then

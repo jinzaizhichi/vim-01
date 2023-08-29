@@ -30,40 +30,36 @@ return {
 
 	{
 		'godlygeek/tabular',
-		config = function()
-			vim.cmd [[
-				nnoremap gb= :Tabularize /=<CR>
-				vnoremap gb= :Tabularize /=<CR>
-				nnoremap gb/ :Tabularize /\/\//l4c1<CR>
-				vnoremap gb/ :Tabularize /\/\//l4c1<CR>
-				nnoremap gb* :Tabularize /\/\*/l4c1<cr>
-				vnoremap gb* :Tabularize /\/\*/l4c1<cr>
-				nnoremap gb, :Tabularize /,/r0l1<CR>
-				vnoremap gb, :Tabularize /,/r0l1<CR>
-				nnoremap gbl :Tabularize /\|<cr>
-				vnoremap gbl :Tabularize /\|<cr>
-				nnoremap gbc :Tabularize /#/l4c1<cr>
-				vnoremap gbc :Tabularize /#/l4c1<cr>
-				nnoremap gb<bar> :Tabularize /\|<cr>
-				vnoremap gb<bar> :Tabularize /\|<cr>
-				nnoremap gbr :Tabularize /\|/r0<cr>
-				vnoremap gbr :Tabularize /\|/r0<cr>
-			]]
-		end,
+		keys = {
+			{'gb=', ':Tabularize /=<cr>', mode = 'n'},
+			{'gb=', ':Tabularize /=<cr>', mode = 'v'},
+			{'gb/', ':Tabularize /\\/\\//l4c1<cr>', mode = 'n'},
+			{'gb/', ':Tabularize /\\/\\//l4c1<cr>', mode = 'v'},
+			{'gb*', ':Tabularize /\\/\\*/l4c1<cr>', mode = 'n'},
+			{'gb*', ':Tabularize /\\/\\*/l4c1<cr>', mode = 'v'},
+			{'gb,', ':Tabularize /,/r0l1<cr>', mode = 'n'},
+			{'gb,', ':Tabularize /,/r0l1<cr>', mode = 'v'},
+			{'gbl', ':Tabularize /\\|<cr>', mode = 'n'},
+			{'gbl', ':Tabularize /\\|<cr>', mode = 'v'},
+			{'gbc', ':Tabularize /#/l4c1<cr>', mode = 'n'},
+			{'gbc', ':Tabularize /#/l4c1<cr>', mode = 'v'},
+			{'gb<bar>', ':Tabularize /\\|<cr>', mode = 'n'},
+			{'gb<bar>', ':Tabularize /\\|<cr>', mode = 'v'},
+			{'gbr', ':Tabularize /\\|/r0<cr>', mode = 'n'},
+			{'gbr', ':Tabularize /\\|/r0<cr>', mode = 'v'},
+		},
 	},
 
 	{
 		'justinmk/vim-sneak',
-		config = function()
-			vim.cmd [[
-				nmap gz <Plug>Sneak_s
-				nmap gZ <Plug>Sneak_S
-				vmap gz <Plug>Sneak_s
-				vmap gZ <Plug>Sneak_S
-				xmap gz <Plug>Sneak_s
-				xmap gZ <Plug>Sneak_S
-			]]
-		end,
+		keys = {
+			{'gz', '<Plug>Sneak_s', mode = 'n'},
+			{'gZ', '<Plug>Sneak_S', mode = 'n'},
+			{'gz', '<Plug>Sneak_s', mode = 'v'},
+			{'gZ', '<Plug>Sneak_S', mode = 'v'},
+			{'gz', '<Plug>Sneak_s', mode = 'x'},
+			{'gZ', '<Plug>Sneak_S', mode = 'x'},
+		},
 	},
 
 	

@@ -123,7 +123,12 @@ return {
 			local cmp = require('cmp')
 			local luasnip = require('luasnip')
 			local lspkind = require('lspkind')
-			require('luasnip.loaders.from_vscode').lazy_load()
+			local utils = require('core.utils')
+			local snipmate = utils.runtime('site/snippets')
+
+			-- require('luasnip.loaders.from_vscode').lazy_load()
+			require('luasnip.loaders.from_snipmate').lazy_load({paths = snipmate})
+
 			luasnip.config.setup {}
 
 			cmp.setup {

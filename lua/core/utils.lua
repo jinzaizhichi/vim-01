@@ -24,6 +24,18 @@ end
 -- internal
 -----------------------------------------------------------------------
 local ascmini = require('core.ascmini')
+local rtpbase = ''
+
+
+-----------------------------------------------------------------------
+-- runtime path
+-----------------------------------------------------------------------
+function runtime(fname)
+	if rtpbase == '' then
+		rtpbase = vim.call('asclib#path#runtime', '')
+	end
+	return os.path.normpath(os.path.join(rtpbase, fname))
+end
 
 
 -----------------------------------------------------------------------
