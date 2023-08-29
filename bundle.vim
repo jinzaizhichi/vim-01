@@ -508,6 +508,7 @@ if has_key(s:enabled, 'colors')
 	Plug 'flazz/vim-colorschemes'
 	Plug 'jaredgorski/SpaceCamp'
 	Plug 'mswift42/vim-themes'
+	Plug 'sainnhe/everforest'
 	IncScript site/bundle/colors.vim
 endif
 
