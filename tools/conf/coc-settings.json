@@ -1,39 +1,49 @@
 {
-	"snippets.ultisnips.directories": [
-		"snippets"
-	],
+	"suggest.floatConfig": {
+		"border": true,
+		"rounded": true,
+		"focusable": false
+	},
+
+	"signature.floatConfig": {
+		"border": true,
+		"rounded": true,
+		"focusable": false
+	},
+
+	"hover.floatConfig": {
+		"border": true,
+		"rounded": false,
+		"focusable": false
+	},
 
 	"suggest.autoTrigger": "always",
 	"suggest.noselect": true,
-
-	"inlayHint.enable": false,
-	"diagnostic.enable": false,
-
-	// coc-pyright
-	"python": {
-		"linting.enabled": false,
-		"runLinting": false
-	},
-
-	"pyright.disableDiagnostics": true,
-	"coc.source.coc-snippets.enable": true,
 	"suggest.enablePreview": true,
+	"suggest.timeout": 5000,
+
+	"signature.target": "echo",
+
+	"diagnostic.enable": false,
+	"inlayHint.enable": false,
+
+	"coc.source.coc-snippets.enable": false,
 
     "list.autoResize": false,
     "list.maxHeight": 15,
     "list.source.grep.defaultArgs": ["-smartcase", "-regex"],
     "list.source.grep.defaultOptions": ["--interactive", "--no-sort", "--regex"],
-    "python.jediEnabled": true,
-    "python.linting.mypyEnabled": true,
-    "python.linting.pylintEnabled": true,
-    "python.linting.pylintArgs": ["--disable=wildcard-import,invalid-name,missing-function-docstring,broad-except,logging-format-interpolation,missing-module-docstring,missing-class-docstring,line-too-long,too-few-public-methods,inconsistent-return-statements,too-many-branches,too-many-locals,too-many-statements,too-many-arguments,too-many-instance-attributes", "--enable=unused-import"],
-    "pyright.reportMissintTypeStubs": false,
-    "snippets.extends": {
-        "cpp": ["c"],
-        "javascriptreact": ["javascript"],
-        "typescript": ["javascript"]
-    },
-    "snippets.trace": "verbose",
+
+	"languageserver": {
+		"clangd": {
+			"command": "clangd",
+			"rootPatterns": [".git", ".svn", ".hg", ".root", ".project"],
+			"filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
+			"initializationOptions": {
+			}
+		}
+	},
+
     "suggest.completionItemKindLabels": {
         "class": "\uf0e8",
         "color": "\ue22b",
@@ -62,5 +72,6 @@
         "variable": "\uf71b"
     }
 }
+
 
 
