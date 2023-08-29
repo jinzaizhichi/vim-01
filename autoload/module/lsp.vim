@@ -16,8 +16,24 @@ function! module#lsp#type()
 		return 'ycm'
 	elseif exists(':CocInstall')
 		return 'coc'
+	elseif exists(':CmpStatus')
+		return 'cmp'
 	endif
 	return ''
+endfunc
+
+
+"----------------------------------------------------------------------
+" hover
+"----------------------------------------------------------------------
+function! module#lsp#hover()
+	let tt = module#lsp#type()
+	if tt == 'coc'
+		if CocAction('hasProvider', 'hover')
+			call CocActionAsync('doHover')
+		endif
+	elseif tt == 'ycm'
+	endif
 endfunc
 
 
