@@ -7,6 +7,10 @@
 "
 "======================================================================
 
+
+"----------------------------------------------------------------------
+" internal
+"----------------------------------------------------------------------
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
 set updatetime=300
@@ -17,10 +21,6 @@ let g:coc_config_home = expand('~/.vim')
 if !isdirectory(g:coc_config_home)
 	silent! call mkdir(g:coc_config_home)
 endif
-
-silent! call mkdir($HOME . '/.cache/ccls', 'p')
-silent! call coc#config('languageserver.ccls.initializationOptions.cache.directory', expand('~/.cache/ccls'))
-
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -158,77 +158,71 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() :
 "       \ <SID>check_back_space() ? "\<TAB>" :
 "       \ coc#refresh()
 
-function! s:check_back_space() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
 
 let g:coc_snippet_next = '<tab>'
 
 " Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
+imap <m-l> <Plug>(coc-snippets-expand)
 
 " Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
+vmap <m-j> <Plug>(coc-snippets-select)
 
 " Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
+let g:coc_snippet_next = '<m-j>'
 
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
+" Use <m-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<m-k>'
 
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-
-let s:coc_extensions = [
-  \ 'coc-bookmark',
-  \ 'coc-css',
-  \ 'coc-dictionary',
-  \ 'coc-docker',
-  \ 'coc-emoji',
-  \ 'coc-eslint',
-  \ 'coc-explorer',
-  \ 'coc-git',
-  \ 'coc-github',
-  \ 'coc-gitignore',
-  \ 'coc-gocode',
-  \ 'coc-highlight',
-  \ 'coc-html',
-  \ 'coc-java',
-  \ 'coc-json',
-  \ 'coc-lists',
-  \ 'coc-lua',
-  \ 'coc-marketplace',
-  \ 'coc-neosnippet',
-  \ 'coc-omni',
-  \ 'coc-pairs',
-  \ 'coc-powershell',
-  \ 'coc-prettier',
-  \ 'coc-pyright',
-  \ 'coc-rls',
-  \ 'coc-smartf',
-  \ 'coc-snippets',
-  \ 'coc-solargraph',
-  \ 'coc-sql',
-  \ 'coc-syntax',
-  \ 'coc-tabnine',
-  \ 'coc-tag',
-  \ 'coc-translator',
-  \ 'coc-tsserver',
-  \ 'coc-ultisnips',
-  \ 'coc-vetur',
-  \ 'coc-vimlsp',
-  \ 'coc-word',
-  \ 'coc-yaml',
-  \ 'coc-yank',
-  \ ]
-
-for e in s:coc_extensions
-    silent! call coc#add_extension(e)
-endfor
-
+" Use <m-j> for both expand and jump (make expand higher priority.)
+" imap <m-j> <Plug>(coc-snippets-expand-jump)
 
 let g:coc_snippet_next = '<tab>'
 
+
+
+"----------------------------------------------------------------------
+" 
+"----------------------------------------------------------------------
+
+function! s:coc_setup() abort
+	call coc#config('suggest', {
+				\   'completionItemKindLabels': {
+				\     'function'              : "\uf794",
+				\     'method'                : "\uf6a6",
+				\     'variable'              : "\uf71b",
+				\     'constant'              : "\uf8ff",
+				\     'struct'                : "\ufb44",
+				\     'class'                 : "\uf0e8",
+				\     'interface'             : "\ufa52",
+				\     'text'                  : "\ue612",
+				\     'enum'                  : "\uf435",
+				\     'enumMember'            : "\uf02b",
+				\     'module'                : "\uf668",
+				\     'color'                 : "\ue22b",
+				\     'property'              : "\ufab6",
+				\     'field'                 : "\uf93d",
+				\     'unit'                  : "\uf475",
+				\     'file'                  : "\uf471",
+				\     'value'                 : "\uf8a3",
+				\     'event'                 : "\ufacd",
+				\     'folder'                : "\uf115",
+				\     'keyword'               : "\uf893",
+				\     'snippet'               : "\uf64d",
+				\     'operator'              : "\uf915",
+				\     'reference'             : "\uf87a",
+				\     'typeParameter'         : "\uf278",
+				\     'default'               : "\uf29c"
+				\   }
+				\ })
+endfunction
+
+
+"----------------------------------------------------------------------
+" event group
+"----------------------------------------------------------------------
+augroup MyCocEventGroup2
+	au!
+	autocmd User CocNvimInit call s:coc_setup()
+augroup END
 
 
