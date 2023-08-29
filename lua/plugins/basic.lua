@@ -11,9 +11,9 @@ return {
 
 	{
 		't9md/vim-choosewin',
-		config = function()
-			vim.keymap.set('n', '<m-e>', '<Plug>(choosewin)', {})
-		end,
+		keys = {
+			{'<m-e>', '<plug>(choosewin)', desc = 'choose-tab-win' },
+		},
 	},
 
 	'tommcdo/vim-exchange', 
@@ -22,14 +22,17 @@ return {
 
 	{
 		'terryma/vim-expand-region',
-		config = function()
-			vim.keymap.set({'n', 'v'}, '<m-+>', '<Plug>(expand_region_expand)', {})
-			vim.keymap.set({'n', 'v'}, '<m-->', '<Plug>(expand_region_shrink)', {})
-		end,
+		keys = {
+			{'<m-+>', '<Plug>(expand_region_expand)', mode = 'n'},
+			{'<m-+>', '<Plug>(expand_region_expand)', mode = 'v'},
+			{'<m-->', '<Plug>(expand_region_shrink)', mode = 'n'},
+			{'<m-->', '<Plug>(expand_region_shrink)', mode = 'v'},
+		},
 	},
 
 	{
 		'godlygeek/tabular',
+		cmd = 'Tabularize',
 		keys = {
 			{'gb=', ':Tabularize /=<cr>', mode = 'n'},
 			{'gb=', ':Tabularize /=<cr>', mode = 'v'},
