@@ -32,8 +32,14 @@ os.argv = arg ~= nil and arg or {}
 os.path.sep = windows and '\\' or '/'
 os.has_nvim = (vim ~= nil) and (vim.fn.has('nvim') ~= 0) or false
 
+
+-----------------------------------------------------------------------
+-- Capacity
+-----------------------------------------------------------------------
 if vim ~= nil then
-	vim.has_nvim = vim.fn.has('nvim')
+	vim.has = {}
+	vim.has.nvim = (vim.fn.has('nvim') ~= 0)
+	vim.has.isabsolutepath = (vim.fn.exists('*isabsolutepath') ~= 0)
 	vim.asc = package.loaded[modname]
 end
 
@@ -543,8 +549,8 @@ function os.path.isabs(path)
 		return true
 	end
 	if vim ~= nil then
-		if vim.fn.isabsolutepath ~= nil then
-			-- return (vim.fn.isabsolutepath(path) ~= 0) and true or false
+		if vim.has.isabsolutepath then
+			return (vim.fn.isabsolutepath(path) ~= 0) and true or false
 		end
 	end
 	if windows then
