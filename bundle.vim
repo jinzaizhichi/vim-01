@@ -55,7 +55,7 @@ if has_key(s:enabled, 'simple')
 
 	" Plug 'romainl/vim-cool'
 	
-	if has('nvim') == 0 && v:version >= 900
+	if has_key(s:enabled, 'stargate') && has('nvim') == 0 && v:version >= 900
 		Plug 'monkoose/vim9-stargate'
 		IncScript site/bundle/stargate.vim
 	else
