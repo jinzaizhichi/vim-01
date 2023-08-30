@@ -23,25 +23,25 @@ end
 -----------------------------------------------------------------------
 -- scheduler
 -----------------------------------------------------------------------
-scheduler = {}
-scheduler.__index = scheduler
+defer_scheduler = {}
+defer_scheduler.__index = defer_scheduler
 
-function scheduler:new()
+function defer_scheduler:new()
 	local obj = {}
-	setmetatable(obj, scheduler)
+	setmetatable(obj, defer_scheduler)
 	obj.tasks = {}
 	return obj
 end
 
-function scheduler:push(level, task)
+function defer_scheduler:push(level, task)
 	table.insert(self.tasks, {level, task})
 end
 
-function scheduler:clear()
+function defer_scheduler:clear()
 	self.tasks = {}
 end
 
-function scheduler:run()
+function defer_scheduler:dispatch()
 	local tasks = {}
 	local names = {}
 	for _, item in ipairs(self.tasks) do
@@ -77,7 +77,7 @@ if not pcall(debug.getlocal, 4, 1) then
 		end
 		return foo
 	end
-	local s = scheduler:new()
+	local s = defer_scheduler:new()
 	s:push(0, getfoo(1000))
 	s:push(0, getfoo(1001))
 	s:push(0, getfoo(1002))
@@ -87,7 +87,10 @@ if not pcall(debug.getlocal, 4, 1) then
 	s:push(3, getfoo(3000))
 	s:push(3, getfoo(3001))
 	s:push(3, getfoo(3002))
-	s:run()
+	s:push(-2, getfoo(9001))
+	s:push(-2, getfoo(9002))
+	s:push(-2, getfoo(9003))
+	s:dispatch()
 end
 
 

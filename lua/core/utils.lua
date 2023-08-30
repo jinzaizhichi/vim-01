@@ -98,4 +98,18 @@ end
 -- local ascmini = require('core.ascmini')
 
 
+-----------------------------------------------------------------------
+-- schedule
+-----------------------------------------------------------------------
+local loader = require('core.loader')
+local scheduler = loader.defer_scheduler:new()
+
+function defer_init(level, task)
+	scheduler:push(level, task)
+end
+
+function defer_dispatch()
+	scheduler:dispatch()
+end
+
 

@@ -7,7 +7,10 @@
 --
 --=====================================================================
 
--- print('config/init.lua')
+local utils = require('core.utils')
 
 vim.diagnostic.disable()
+
+utils.defer_dispatch()
+
 
