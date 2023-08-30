@@ -41,7 +41,9 @@ endfunction
 if 0
 	inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+else
 endif
+
 
 " Use <c-space> to trigger completion.
 if has('nvim')
@@ -149,17 +151,6 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
-
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : 
-                                           \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-" inoremap <silent><expr> <TAB>
-"       \ pumvisible() ? coc#_select_confirm() :
-"       \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-"       \ <SID>check_back_space() ? "\<TAB>" :
-"       \ coc#refresh()
-
 
 let g:coc_snippet_next = '<tab>'
 

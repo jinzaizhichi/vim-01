@@ -182,6 +182,20 @@ return {
 							fallback()
 						end
 					end, { 'i', 's' }),
+					['<m-e>'] = cmp.mapping(function(fallback)
+						if luasnip.expand_or_locally_jumpable() then
+							luasnip.expand_or_jump()
+						else
+							fallback()
+						end
+					end, { 'i' }),
+					['<m-E>'] = cmp.mapping(function(fallback)
+						if luasnip.locally_jumpable(-1) then 
+							luasnip.jump(-1)
+						else
+							fallback()
+						end
+					end, { 'i' }),
 				},
 				sources = {
 					{ name = 'nvim_lsp' },
@@ -204,6 +218,7 @@ return {
 				},
 			}
 
+			vim.g.snips_author = 'skywind3000'
 		end
 	},
 }

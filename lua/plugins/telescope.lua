@@ -23,6 +23,10 @@ return {
 				return vim.fn.executable 'make' == 1
 			end,
 		},
+
+		"kkharji/sqlite.lua",
+		"nvim-telescope/telescope-frecency.nvim",
+		"benfowler/telescope-luasnip.nvim",
 	},
 
 	keys = {
@@ -50,6 +54,8 @@ return {
 		}
 
 		pcall(require('telescope').load_extension, 'fzf')
+		pcall(require('telescope').load_extension, 'luasnip')
+		pcall(require('telescope').load_extension, 'frecency')
 
 		-- See `:help telescope.builtin`
 		vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
