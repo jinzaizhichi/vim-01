@@ -161,9 +161,9 @@ function! s:vim_create_listbox(textlist, opts)
 		let limit1 = (&lines - 2) * 90 / 100
 		let limit2 = (&lines - 2)
 		if h + 4 < limit1
-			let opts.line = (limit1 - hh) / 2 + 1
+			let opts.line = (limit1 - hh) / 2
 		else
-			let opts.line = (limit2 - hh) / 2 + 1
+			let opts.line = (limit2 - hh) / 2
 		endif
 		let opts.line = (opts.line < 1)? 1 : opts.line
 	endif
@@ -488,9 +488,9 @@ function! s:nvim_create_listbox(textlist, opts)
 		let limit2 = (&lines - 2)
 		" echom printf("limit1=%d limit2=%d h=%d hh=%d", limit1, limit2, h, hh)
 		if h + 4 < limit1
-			let opts.row = (limit1 - hh) / 2 + 1
+			let opts.row = (limit1 - hh) / 2
 		else
-			let opts.row = (limit2 - hh) / 2 + 1
+			let opts.row = (limit2 - hh) / 2
 		endif
 		let opts.row = (opts.row < 0)? 0 : opts.row
 	endif
