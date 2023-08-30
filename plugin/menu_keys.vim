@@ -177,7 +177,7 @@ let g:navigator.c = {
 "----------------------------------------------------------------------
 " Easymotion
 "----------------------------------------------------------------------
-let g:navigator.m = ['<plug>(easymotion-bd-w)', 'easy-motion-bd-w']
+let g:navigator.m = ['module#compat#easymotion_word()', 'easy-motion-bd-w']
 let g:navigator.n = ['<plug>(easymotion-s)', 'easy-motion-s']
 
 
