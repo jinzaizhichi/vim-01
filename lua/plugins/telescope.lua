@@ -56,6 +56,7 @@ return {
 		pcall(require('telescope').load_extension, 'fzf')
 		pcall(require('telescope').load_extension, 'luasnip')
 		pcall(require('telescope').load_extension, 'frecency')
+		-- telescope.load_extension('frecency')
 
 		-- See `:help telescope.builtin`
 		vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })

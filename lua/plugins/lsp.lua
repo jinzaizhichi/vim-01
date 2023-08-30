@@ -153,6 +153,7 @@ return {
 						-- border = border('CmpBorder'),
 						border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│', },
 						-- winhighlight = 'Normal:CmpPmenu,CursorLine:PmenuSel,Search:None',
+						col_offset = -1,
 					},
 					documentation = {
 						border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│', },
@@ -223,7 +224,7 @@ return {
 						before = function (entry, vim_item)
 							return vim_item
 						end
-					})
+					}),
 				},
 			}
 

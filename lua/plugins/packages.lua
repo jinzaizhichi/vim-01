@@ -18,7 +18,11 @@ return {
 
 	'jamessan/vim-gnupg',
 
-	'kana/text-textobj-syntax',
+	-- 'kana/vim-textobj-user',
+	{ 'kana/vim-textobj-syntax', dependencies = {'kana/vim-textobj-user'} },
+	{ 'sgur/vim-textobj-parameter', dependencies = {'kana/vim-textobj-user'} },
+	{ 'bps/vim-textobj-python', dependencies = {'kana/vim-textobj-user'} },
+	{ 'jceb/vim-textobj-uri', dependencies = {'kana/vim-textobj-user'} },
 
 	{
 		'nvim-orgmode/orgmode',
