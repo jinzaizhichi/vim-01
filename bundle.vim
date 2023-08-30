@@ -44,7 +44,6 @@ call plug#begin(get(g:, 'bundle_home', '~/.vim/bundles'))
 " package group - simple
 "----------------------------------------------------------------------
 if has_key(s:enabled, 'simple')
-	Plug 'easymotion/vim-easymotion'
 	Plug 'Raimondi/delimitMate'
 	Plug 'justinmk/vim-dirvish'
 	Plug 'justinmk/vim-sneak'
@@ -53,7 +52,16 @@ if has_key(s:enabled, 'simple')
 	Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
 	Plug 'bootleq/vim-cycle'
 	Plug 'tpope/vim-surround'
+
 	" Plug 'romainl/vim-cool'
+	
+	if has('nvim') == 0 && v:version >= 900
+		Plug 'monkoose/vim9-stargate'
+		IncScript site/bundle/stargate.vim
+	else
+		Plug 'easymotion/vim-easymotion'
+		IncScript site/bundle/easymotion.vim
+	endif
 
 	nnoremap gb= :Tabularize /=<CR>
 	vnoremap gb= :Tabularize /=<CR>
@@ -71,6 +79,7 @@ if has_key(s:enabled, 'simple')
 	vnoremap gb<bar> :Tabularize /\|<cr>
 	nnoremap gbr :Tabularize /\|/r0<cr>
 	vnoremap gbr :Tabularize /\|/r0<cr>
+
 	nmap gz <Plug>Sneak_s
 	nmap gZ <Plug>Sneak_S
 	vmap gz <Plug>Sneak_s
@@ -80,7 +89,6 @@ if has_key(s:enabled, 'simple')
 
 	IncScript site/bundle/dirvish.vim
 	IncScript site/bundle/cycle.vim
-	IncScript site/bundle/easymotion.vim
 	IncScript site/bundle/git.vim
 endif
 
