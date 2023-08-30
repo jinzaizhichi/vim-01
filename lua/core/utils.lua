@@ -60,6 +60,25 @@ function include_script(fname)
 end
 
 
+-----------------------------------------------------------------------
+-- current project root
+-----------------------------------------------------------------------
+function current_root()
+	return vim.call('asclib#path#current_root')
+end
+
+
+-----------------------------------------------------------------------
+-- run function in directory
+-----------------------------------------------------------------------
+function with_directory(path, func)
+	local old = vim.call('getcwd')
+	vim.call('asclib#path#chdir_noautocmd', path)
+	func()
+	vim.call('asclib#path#chdir_noautocmd', old)
+end
+
+
 -- local ascmini = require('core.ascmini')
 
 

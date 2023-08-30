@@ -1,6 +1,11 @@
 local ascmini = require('core.ascmini')
 local utils = require('core.utils')
 
+local function find_project()
+	local pwd = utils.current_root()
+	require('telescope.builtin').find_files({cwd = pwd})
+end
+
 return {
 	'nvim-telescope/telescope.nvim',
 	branch = '0.1.x',
@@ -20,15 +25,26 @@ return {
 		},
 	},
 
+	keys = {
+		{'<c-n>', ':Telescope oldfiles<cr>', desc = 'find-old-files'},
+		{'<c-p>', find_project, desc = 'find-project'},
+	},
+
 	config = function()
 		local telescope = require('telescope')
+		local actions = require("telescope.actions")
+
 		require('telescope').setup {
 			defaults = {
 				mappings = {
 					i = {
 						['<C-u>'] = false,
 						['<C-d>'] = false,
+						['<esc>'] = actions.close,
 					},
+					n = {
+						['<esc>'] = actions.close,
+					}
 				},
 			},
 		}

@@ -36,6 +36,7 @@ os.has_nvim = (vim ~= nil) and (vim.fn.has('nvim') ~= 0) or false
 -----------------------------------------------------------------------
 -- Capacity
 -----------------------------------------------------------------------
+local vim = vim
 if vim ~= nil then
 	vim.has = {}
 	vim.has.nvim = (vim.fn.has('nvim') ~= 0)
