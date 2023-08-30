@@ -7,6 +7,7 @@ return {
 	'beyondmarc/hlsl.vim',
 	'peterhoeg/vim-qml',
 	'neovimhaskell/haskell-vim',
+	'dag/vim-fish',
 
 	{'justinmk/vim-syntax-extra', ft = {'c', 'bison', 'flex', 'cpp'} },
 

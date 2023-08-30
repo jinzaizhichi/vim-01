@@ -16,6 +16,10 @@ return {
 		end,
 	},
 
+	'jamessan/vim-gnupg',
+
+	'kana/text-textobj-syntax',
+
 	{
 		'nvim-orgmode/orgmode',
 		config = function()
