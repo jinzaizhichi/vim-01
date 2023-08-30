@@ -1,6 +1,5 @@
 local utils = require('core.utils')
 local inc = utils.include_script
-local package_enabled = utils.package_enabled
 
 return {
 	{'tpope/vim-fugitive', config = function() inc('site/bundle/git.vim') end },
@@ -22,6 +21,11 @@ return {
 	'tommcdo/vim-exchange', 
 	'tommcdo/vim-lion',
 	'skywind3000/vim-dict',
+
+	{
+		'rbong/vim-flog',
+		cmd = {'Flog', 'Floggit', 'Flogjump', 'Flogmarks', 'Flogsetargs', 'Flogsplit' },
+	},
 
 	{
 		'terryma/vim-expand-region',
@@ -80,14 +84,6 @@ return {
 	-- "gc" to comment visual regions/lines
 	{ 'numToStr/Comment.nvim', opts = {} },
 
-	{
-		'itchyny/vim-cursorword',
-		enabled = package_enabled('cursorword'),
-		config = function()
-			vim.g.cursorword_delay = 100
-			vim.g.cursorword = 0
-		end,
-	}
 }
 
 
