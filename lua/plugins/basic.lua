@@ -5,7 +5,13 @@ return {
 	{'tpope/vim-fugitive', config = function() inc('site/bundle/git.vim') end },
 	'tpope/vim-rhubarb',
 	'tpope/vim-unimpaired',
-	'tpope/vim-surround',
+	-- 'tpope/vim-surround',
+	{
+		'kylechui/nvim-surround',
+		config = function()
+			require("nvim-surround").setup({ })
+		end,
+	},
 
 	{'justinmk/vim-dirvish', config = function() inc('site/bundle/dirvish.vim') end },
 	{'bootleq/vim-cycle', config = function() inc('site/bundle/dirvish.vim') end },
