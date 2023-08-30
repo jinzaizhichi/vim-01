@@ -101,7 +101,7 @@ return {
 			capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 			-- Ensure the servers above are installed
-			local mason_lspconfig = require 'mason-lspconfig'
+			local mason_lspconfig = require('mason-lspconfig')
 
 			mason_lspconfig.setup {
 				ensure_installed = vim.tbl_keys(servers),
@@ -186,6 +186,7 @@ return {
 				sources = {
 					{ name = 'nvim_lsp' },
 					{ name = 'luasnip' },
+					{ name = 'orgmode' },
 				},
 				formatting = {
 					format = lspkind.cmp_format({
