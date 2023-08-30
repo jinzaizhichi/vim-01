@@ -1,25 +1,23 @@
 return {
-	{
-		"sainnhe/sonokai",
-		config = function()
-			-- vim.cmd.colorscheme 'sonokai'
-		end,
-	},
-
-	{
-		'sainnhe/everforest',
-		config = function()
-			vim.cmd.colorscheme 'everforest'
-		end
-	},
-
-	{
 		'loctvl842/monokai-pro.nvim',
-		config = function()
-			require("monokai-pro").setup()
-			-- vim.cmd.colorscheme 'monokai-pro'
-		end,
-	},
+		'folke/tokyonight.nvim',
+		'mcchrish/zenbones.nvim',
+
+		"sainnhe/sonokai",
+		'sainnhe/everforest',
+		'mhartington/oceanic-next',
+		'soft-aesthetic/soft-era-vim',
+		'chuling/ci_dark',
+		'arcticicestudio/nord-vim',
+		'romainl/Apprentice',
+		-- 'arzg/vim-colors-xcode',
+		'wuelnerdotexe/vim-enfocado',
+		'kaicataldo/material.vim',
+		'cocopon/iceberg.vim',
+		'rafi/awesome-vim-colorschemes',
+		'flazz/vim-colorschemes',
+		'jaredgorski/SpaceCamp',
+		'mswift42/vim-themes',
 }
 
 

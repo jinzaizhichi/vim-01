@@ -497,6 +497,7 @@ if has_key(s:enabled, 'colors')
 	Plug 'soft-aesthetic/soft-era-vim'
 	Plug 'sonph/onehalf', {'rtp': 'vim/'}
 	Plug 'sainnhe/sonokai'
+	Plug 'sainnhe/everforest'
 	Plug 'chuling/ci_dark'
 	Plug 'arcticicestudio/nord-vim'
 	Plug 'romainl/Apprentice'
@@ -509,7 +510,6 @@ if has_key(s:enabled, 'colors')
 	Plug 'flazz/vim-colorschemes'
 	Plug 'jaredgorski/SpaceCamp'
 	Plug 'mswift42/vim-themes'
-	Plug 'sainnhe/everforest'
 	IncScript site/bundle/colors.vim
 endif
 
