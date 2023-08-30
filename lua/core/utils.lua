@@ -79,6 +79,22 @@ function with_directory(path, func)
 end
 
 
+-----------------------------------------------------------------------
+-- lazy enabled
+-----------------------------------------------------------------------
+local lazy_enabled = nil
+function package_enabled(name)
+	if lazy_enabled == nil then
+		lazy_enabled = {}
+		if vim.g.lazy_group ~= nil then
+			for _, name in ipairs(vim.g.lazy_group) do
+				lazy_enabled[name] = true
+			end
+		end
+	end
+	return lazy_enabled[name] and true or false
+end
+
 -- local ascmini = require('core.ascmini')
 
 
