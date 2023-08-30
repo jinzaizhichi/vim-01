@@ -90,5 +90,22 @@ function! module#snipmate#active()
 endfunc
 
 
+"----------------------------------------------------------------------
+" edit files
+"----------------------------------------------------------------------
+function! module#snipmate#edit(args)
+	let ft = (a:args == '')? &ft : (a:args)
+	let test = asclib#path#runtime('site/snippets')
+	let test = asclib#path#normalize(test)
+	if isdirectory(test)
+		let fn = printf('%s/%s.snippets', test, ft)
+		let cmd = 'FileSwitch -switch=useopen,usetab,auto ' . fnameescape(fn)
+		exec cmd
+	else
+		call asclib#core#errmsg('invalid path: ' . test)
+	endif
+endfunc
+
+
 
 

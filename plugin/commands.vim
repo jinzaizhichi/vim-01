@@ -207,6 +207,8 @@ function! s:CodeSnipEdit(args)
 		exec 'SnipMateEdit ' . ft
 	elseif exists(':UltiSnipsEdit') == 2
 		UltiSnipEdit
+	else
+		call module#snipmate#edit(ft)
 	endif
 	return 0
 endfunc

@@ -7,7 +7,7 @@
 --
 --=====================================================================
 
--- print('init')
+-- print('config/init.lua')
 
 vim.diagnostic.disable()
 
