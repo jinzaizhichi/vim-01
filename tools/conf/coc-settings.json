@@ -51,7 +51,7 @@
 		"operator": "\u03a8 Operator",
 		"function": "\u0192 Function",
 		"reference": "\ufa46 Reference",
-		"constant": "\uf8fe Constant",
+		"constant": "\ue22c Constant",
 		"method": "\uf09a Method",
 		"struct": "\ufb44 Struct",
 		"class": "\uf0e8 Class",

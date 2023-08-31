@@ -336,8 +336,17 @@ if has('autocmd')
 		nnoremap <silent><buffer> q :close<cr>
 		setlocal nonumber
 	endfunc
+	function! s:insert_enter()
+		if get(g:, 'echodoc#enable_at_startup') == 0
+			set noshowmode
+		elseif exists(':CocInstall')
+			set noshowmode
+		endif
+	endfunc
 	function! s:insert_leave()
 		if get(g:, 'echodoc#enable_at_startup') == 0
+			set showmode
+		elseif exists(':CocInstall')
 			set showmode
 		endif
 	endfunc
@@ -348,6 +357,7 @@ if has('autocmd')
 		autocmd FileType python noremap <buffer><F4> :<c-u>silent update<cr>:call asclib#python#refresh('%')<cr>
 		autocmd FileType lua noremap <buffer><f4> :<c-u>silent update<cr>:call asclib#lua#refresh('%')<cr>
 		autocmd InsertLeave * call s:insert_leave()
+		autocmd InsertEnter * call s:insert_enter()
 		" autocmd InsertLeave * set showmode
 	augroup END
 endif
