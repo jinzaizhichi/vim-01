@@ -262,6 +262,19 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" init gtags
+"----------------------------------------------------------------------
+function! asclib#utils#gtags_environment()
+	let conf = asclib#utils#gtags_search_conf()
+	if conf != ''
+		let $GTAGSCONF = conf
+		let $GTAGSLABEL = 'native-pygments'
+		let $GTAGSFORCECPP = '1'
+	endif
+endfunc
+
+
+"----------------------------------------------------------------------
 " get gui colors
 "----------------------------------------------------------------------
 function! s:match_highlight(highlight, pattern) abort
