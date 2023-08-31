@@ -13,9 +13,7 @@ return {
 		end,
 	},
 
-	{'justinmk/vim-dirvish', config = function() inc('site/bundle/dirvish.vim') end },
 	{'bootleq/vim-cycle', config = function() inc('site/bundle/dirvish.vim') end },
-	
 
 	{
 		't9md/vim-choosewin',
