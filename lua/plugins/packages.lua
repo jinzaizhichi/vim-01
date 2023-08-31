@@ -34,6 +34,14 @@ return {
 				end)
 		end
 	},
+
+	{
+		'kshenoy/vim-signature',
+	},
+
+	{
+		'mhinz/vim-signify',
+	},
 }
 
 

@@ -158,6 +158,9 @@ return {
 					documentation = {
 						border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│', },
 					},
+					hover = {
+						border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│', },
+					},
 				},
 
 				completion = {
