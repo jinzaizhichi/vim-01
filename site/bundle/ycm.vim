@@ -70,6 +70,25 @@ if executable(s:lspath(t)) && 0
 endif
 
 
+"----------------------------------------------------------------------
+" hover border
+"----------------------------------------------------------------------
+augroup MyYCMCustom2
+	au!
+	if !has('nvim')
+		autocmd FileType c,cpp let b:ycm_hover = {
+			\ 'command': 'GetDoc',
+			\ 'syntax': &filetype,
+			\ 'popup_params': {
+			\     'maxwidth': 80,
+			\     'border': [],
+			\     'highlight': 'Normal',
+			\     'borderchars': ['─', '│', '─', '│', '┌', '┐', '┘', '└'],
+			\   },
+			\ }
+	endif
+augroup END
+
 
 "----------------------------------------------------------------------
 " keymaps
