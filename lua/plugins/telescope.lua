@@ -29,6 +29,8 @@ return {
 		"benfowler/telescope-luasnip.nvim",
 	},
 
+	cmd = 'Telescope',
+
 	keys = {
 		{'<c-n>', ':Telescope oldfiles<cr>', desc = 'find-old-files'},
 		{'<c-p>', find_project, desc = 'find-project'},
