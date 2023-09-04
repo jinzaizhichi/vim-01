@@ -268,33 +268,11 @@ class Platform (object):
                 text = content.decode('utf-8', 'ignore')
         return text
 
-    # load ini without ConfigParser
-    def load_ini (self, filename, encoding = None):
-        text = self.load_file_text(filename, encoding)
-        config = {}
-        sect = 'default'
-        if text is None:
-            return None
-        for line in text.split('\n'):
-            line = line.strip('\r\n\t ')
-            if not line:
-                continue
-            elif line[:1] in ('#', ';'):
-                continue
-            elif line.startswith('['):
-                if line.endswith(']'):
-                    sect = line[1:-1].strip('\r\n\t ')
-                    if sect not in config:
-                        config[sect] = {}
-            else:
-                pos = line.find('=')
-                if pos >= 0:
-                    key = line[:pos].rstrip('\r\n\t ')
-                    val = line[pos + 1:].lstrip('\r\n\t ')
-                    if sect not in config:
-                        config[sect] = {}
-                    config[sect][key] = val
-        return config
+    def call (self, cmdline):
+        args = 'start ' + cmdline
+        import subprocess
+        p = subprocess.Popen(args, shell = True)
+        return 0
 
 
 #----------------------------------------------------------------------
@@ -322,19 +300,42 @@ def mlog(*args):
 #----------------------------------------------------------------------
 class Configure (object):
     
-    def __init__ (self, ininame):
+    def __init__ (self, confname):
         self.platform = Platform()
         self.tasks = {}
         self.state = {}
         self.filetime = 0
-        self.ininame = os.path.abspath(ininame)
+        self.confname = os.path.abspath(confname)
         self.load_config()
 
     def load_config (self):
-        if not os.path.exists(self.ininame):
-            raise IOError('bad file name: ' + self.ininame)
-        self.tasks = self.platform.load_ini(self.ininame)
+        if not os.path.exists(self.confname):
+            raise IOError('bad file name: ' + self.confname)
+        self.tasks = {}
         self.state = {}
+        for line in self.platform.load_file_text(self.confname):
+            line: str = line.strip('\r\n\t ')
+            if not line:
+                continue
+            elif line.startswith('#'):
+                continue
+            elif line.startswith(';'):
+                continue
+            p1 = line.find(' ')
+            p2 = line.find('\t')
+            if p1 >= 0 and p2 >= 0:
+                pp = min(p1, p2)
+            elif p1 >= 0 and p2 < 0:
+                pp = p1
+            elif p1 < 0 and p2 >= 0:
+                pp = p2
+            else:
+                continue
+            name = line[:pp].strip('\r\n\t ')
+            text = line[pp + 1:].strip('\r\n\t ')
+            if text == '':
+                continue
+            self.tasks[name] = text
         self.filetime = os.stat(self.ininame).st_mtime
         mlog('load %d keymaps from: %s'%(len(self.tasks), self.ininame))
         return 0
@@ -357,8 +358,11 @@ class Configure (object):
         return 0
 
     def _trigger_event (self, name):
-        task = self.tasks[name]
+        cmdline = self.tasks[name]
         mlog('event:', name)
+        mlog('cmdline:', cmdline)
+        self.platform.call(cmdline)
+        return 0
 
 
 #----------------------------------------------------------------------
@@ -371,7 +375,10 @@ if __name__ == '__main__':
             time.sleep(0.1)
             print(plat.KeySequence('CTRL+ENTER'))
         return 0
-    test1()
+    def test2():
+        plat = Platform()
+        plat.call('notepad.exe "d:\\temp\\fish 2\\hello.org')
+    test2()
 
 
 
