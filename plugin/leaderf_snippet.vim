@@ -309,11 +309,19 @@ function! s:lf_snippet_accept(line, arg)
 				call feedkeys('a' . name . "\<c-r>=neosnippet#mappings#expand_impl()\<cr>", '!')
 			endif
 		elseif s:snip_engine == 3
+			if mode(1) =~ 'i'
+				call feedkeys(name . "\<plug>luasnip-expand-or-jump", '!')
+			else
+				call feedkeys('a' . name . "\<Plug>luasnip-expand-or-jump", '!')
+			endif
 		endif
 	endif
 endfunc
 
 
+"----------------------------------------------------------------------
+" preview snippet
+"----------------------------------------------------------------------
 function! s:lf_snippet_preview(orig_buf_nr, orig_cursor, line, args)
 	let text = a:line
 	let pos = stridx(text, ':')
