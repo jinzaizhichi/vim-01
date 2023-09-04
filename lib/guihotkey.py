@@ -175,6 +175,54 @@ KEY_ALIASES = {
 
 
 #----------------------------------------------------------------------
+# logs
+#----------------------------------------------------------------------
+LOGFILE = None
+LOGSTDOUT = True
+
+def mlog(*args):
+    global LOGFILE, LOGSTDOUT
+    text = ' '.join(args)
+    now = time.strftime('%Y-%m-%d %H:%M:%S')
+    txt = '[%s] %s'%(now, text)
+    if LOGFILE:
+        LOGFILE.write(txt + '\n')
+        LOGFILE.flush()
+    if LOGSTDOUT:
+        sys.stdout.write(txt + '\n')
+        sys.stdout.flush()
+    return 0
+
+
+#----------------------------------------------------------------------
+# getopt: returns (options, args)
+#----------------------------------------------------------------------
+def getopt (argv):
+    args = []
+    options = {}
+    if argv is None:
+        argv = sys.argv[1:]
+    index = 0
+    count = len(argv)
+    while index < count:
+        arg = argv[index]
+        if arg != '':
+            head = arg[:1]
+            if head != '-':
+                break
+            if arg == '-':
+                break
+            name = arg.lstrip('-')
+            key, _, val = name.partition('=')
+            options[key.strip()] = val.strip()
+        index += 1
+    while index < count:
+        args.append(argv[index])
+        index += 1
+    return options, args
+
+
+#----------------------------------------------------------------------
 # platform
 #----------------------------------------------------------------------
 class Platform (object):
@@ -194,7 +242,7 @@ class Platform (object):
             elif len(keycode) == 1:
                 code = ord(keycode)
             else:
-                raise KeyError('invalid key: %s'%keycode)
+                return False
         else:
             code = keycode
         if self._GetAsyncKeyState:
@@ -209,6 +257,26 @@ class Platform (object):
             if key == '':
                 continue
             if not self.KeyState(key):
+                return False
+        return True
+
+    def __KeyAvailable (self, keycode):
+        if isinstance(keycode, str):
+            if keycode in KEY_DEFINITION:
+                return True
+            elif keycode in KEY_ALIASES:
+                return True
+            elif len(keycode) == 1:
+                return True
+        else:
+            return True
+        return False
+
+    def SequenceAvailable (keys):
+        keys = keys.strip().split('+')
+        for key in keys:
+            key = key.strip()
+            if not self.__KeyAvailable(key):
                 return False
         return True
 
@@ -284,42 +352,22 @@ class Platform (object):
 
 
 #----------------------------------------------------------------------
-# logs
-#----------------------------------------------------------------------
-LOGFILE = None
-LOGSTDOUT = True
-
-def mlog(*args):
-    global LOGFILE, LOGSTDOUT
-    text = ' '.join(args)
-    now = time.strftime('%Y-%m-%d %H:%M:%S')
-    txt = '[%s] %s'%(now, text)
-    if LOGFILE:
-        LOGFILE.write(txt + '\n')
-        LOGFILE.flush()
-    if LOGSTDOUT:
-        sys.stdout.write(txt + '\n')
-        sys.stdout.flush()
-    return 0
-
-
-#----------------------------------------------------------------------
 # Configure
 #----------------------------------------------------------------------
 class Configure (object):
     
-    def __init__ (self, confname):
+    def __init__ (self, cfgname):
         self.platform = Platform()
         self.tasks = {}
         self.state = {}
         self.filetime = 0
-        self.confname = os.path.abspath(confname)
+        self.cfgname = os.path.abspath(cfgname)
         self.load_config()
 
     def load_config (self):
-        if not os.path.exists(self.confname):
-            raise IOError('bad file name: ' + self.confname)
-        content = self.platform.load_file_text(self.confname)
+        if not os.path.exists(self.cfgname):
+            raise IOError('bad file name: ' + self.cfgname)
+        content = self.platform.load_file_text(self.cfgname)
         if content is None:
             return False
         tasks = {}
@@ -348,7 +396,7 @@ class Configure (object):
             tasks[name] = text
         self.tasks = tasks
         self.state = {}
-        self.filetime = self.platform.mtime(self.confname)
+        self.filetime = self.platform.mtime(self.cfgname)
         mlog('load %d keymaps from: %s'%(len(self.tasks), self.ininame))
         return True
 
@@ -372,15 +420,62 @@ class Configure (object):
     def _trigger_event (self, name):
         cmdline = self.tasks[name]
         mlog('event:', cmdline)
-        cwd = os.path.dirname(self.confname)
+        cwd = os.path.dirname(self.cfgname)
         self.platform.call(cmdline, cwd)
         return 0
 
     def mtime_detect (self):
-        filetime = self.platform.mtime(self.confname)
+        filetime = self.platform.mtime(self.cfgname)
         if filetime != self.filetime:
             self.load_config()
         return 0
+
+
+#----------------------------------------------------------------------
+# start_service
+#----------------------------------------------------------------------
+def start_service(cfgname):
+    if cfgname == '':
+        print('ERROR: missing configuration file name')
+        return 0
+    if not os.path.exists(cfgname):
+        print('ERROR: can not read: %s'%cfgname)
+        return 0
+    cfg = Configure(cfgname)
+    while 1:
+        time.sleep(0.01)
+        cfg.key_detect()
+        cfg.mtime_detect()
+    return 0
+
+
+#----------------------------------------------------------------------
+# main
+#----------------------------------------------------------------------
+def main(args):
+    argv = args and args or sys.argv
+    argv = [n for n in argv]
+    if len(args) == 1:
+        print('No config file name. Try --help for more information.')
+        return 0
+    opts, args = getopt(argv[1:])
+    if 'help' in opts or 'h' in opts:
+        print('Usage: guihotkey.py [options] filename')
+        print('')
+        print('Options:')
+        print('  -h, --help            show this message and exit')
+        print('  -i PID, --pid=PID     pid file path')
+        print('  -l LOG, --log=LOG     log file')
+        print('')
+        return 0
+    if not args:
+        print('ERROR: missing configuration file name')
+        return 0
+    elif not os.path.exists(args[0]):
+        print('ERROR: can not read: %s'%args[0])
+        return 0
+    cfgname = args[0]
+    return 0
 
 
 #----------------------------------------------------------------------
@@ -396,7 +491,12 @@ if __name__ == '__main__':
     def test2():
         plat = Platform()
         plat.call('notepad.exe "d:\\temp\\fish 2\\hello.org"', 'e:\\lab')
-    test2()
+        return 0
+    def test3():
+        # args = ['', '-h']
+        main(['', '-h'])
+        return 0
+    test3()
 
 
 
