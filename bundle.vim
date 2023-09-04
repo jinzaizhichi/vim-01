@@ -115,7 +115,9 @@ if has_key(s:enabled, 'basic')
 	Plug 'lark-parser/vim-lark-syntax'
 	Plug 'dylon/vim-antlr'
 	Plug 'beyondmarc/hlsl.vim'
-	Plug 'peterhoeg/vim-qml'
+	if has('patch-9.0.1767') == 0
+		Plug 'peterhoeg/vim-qml'
+	endif
 	Plug 'neovimhaskell/haskell-vim'
 	Plug 'preservim/vim-markdown'
 
