@@ -28,6 +28,25 @@ return {
 			require('oil').setup()
 		end
 	},
+
+	{
+		'Yggdroot/LeaderF',
+		cmd = {'Leaderf'},
+		enabled = function()
+			if vim.fn.has('python3') == 0 then
+				return false
+			end
+			return true
+		end,
+		dependencies = {
+			'tamago324/LeaderF-filer',
+			'voldikss/LeaderF-emoji',
+		},
+		config = function () 
+			vim.g.lf_disable_normal_map = 0
+			inc('site/bundle/leaderf.vim')
+		end,
+	},
 }
 
 

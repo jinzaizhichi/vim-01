@@ -64,8 +64,8 @@ nnoremap <silent><tab>0 :exe "NERDTree ".fnameescape(expand("%:p:h"))<cr>
 nnoremap <silent><tab>y :exe "NERDTree ".fnameescape(asclib#path#get_root("%"))<cr>
 nnoremap <silent><tab>g <c-w>p
 
-nnoremap <silent><space>ha :GuiSignRemove
-			\ errormarker_error errormarker_warning<cr>
+" nnoremap <silent><space>ha :GuiSignRemove
+" 			\ errormarker_error errormarker_warning<cr>
 
 " replace
 nnoremap <space>p viw"0p
@@ -419,6 +419,7 @@ nnoremap <silent><space>hg :FileSwitch ~/.vim/scratch.txt<cr>
 nnoremap <silent><space>hd :FileSwitch ~/.vim/notes.md<cr>
 nnoremap <silent><space>ho :FileSwitch ~/.vim/cloud/Documents/cloudnote.txt<cr>
 nnoremap <silent><space>hi :FileSwitch ~/.vim/tasks.ini<cr>
+nnoremap <silent><space>ha :
 nnoremap <silent><space>h; :call asclib#nextcloud_sync()<cr>
 
 if (!has('nvim')) && (has('win32') || has('win64'))
@@ -442,6 +443,12 @@ nnoremap <silent><space>hv :FileSwitch $RTP/bundle.vim<cr>
 nnoremap <silent><space>hc :FileSwitch $RTP/autoload/asclib.vim<cr>
 nnoremap <silent><space>hu :FileSwitch $RTP/autoload/auxlib.vim<cr>
 nnoremap <silent><space>ht :FileSwitch $RTP/tasks.ini<cr>
+
+if has('win32') || has('win16') || has('win95') || has('win64')
+	let s:autohk = expand('~/AppData/Roaming/Microsoft/Windows/Start Menu')
+	let s:autohk = s:autohk . '/Programs/Startup/QuickKeys.ahk'
+	exec 'nnoremap <space>ha :FileSwitch '. fnameescape(s:autohk). ' <cr>'
+endif
 
 let s:nvimrc = expand("~/.config/nvim/init.vim")
 if has('win32') || has('win16') || has('win95') || has('win64')

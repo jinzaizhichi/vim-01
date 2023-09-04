@@ -1,5 +1,6 @@
 local utils = require('core.utils')
 local package_enabled = utils.package_enabled
+local inc = utils.include_script
 
 return {
 	{
