@@ -268,11 +268,19 @@ class Platform (object):
                 text = content.decode('utf-8', 'ignore')
         return text
 
-    def call (self, cmdline):
+    def call (self, cmdline, cwd = None):
         args = 'start ' + cmdline
         import subprocess
-        p = subprocess.Popen(args, shell = True)
+        p = subprocess.Popen(args, shell = True, cwd = cwd)
         return 0
+
+    def mtime (self, filename):
+        try:
+            filetime = os.stat(filename).st_mtime
+            return filetime
+        except:
+            pass
+        return None
 
 
 #----------------------------------------------------------------------
@@ -311,9 +319,11 @@ class Configure (object):
     def load_config (self):
         if not os.path.exists(self.confname):
             raise IOError('bad file name: ' + self.confname)
-        self.tasks = {}
-        self.state = {}
-        for line in self.platform.load_file_text(self.confname):
+        content = self.platform.load_file_text(self.confname)
+        if content is None:
+            return False
+        tasks = {}
+        for line in content.split('\n'):
             line: str = line.strip('\r\n\t ')
             if not line:
                 continue
@@ -335,10 +345,12 @@ class Configure (object):
             text = line[pp + 1:].strip('\r\n\t ')
             if text == '':
                 continue
-            self.tasks[name] = text
-        self.filetime = os.stat(self.ininame).st_mtime
+            tasks[name] = text
+        self.tasks = tasks
+        self.state = {}
+        self.filetime = self.platform.mtime(self.confname)
         mlog('load %d keymaps from: %s'%(len(self.tasks), self.ininame))
-        return 0
+        return True
 
     def key_detect (self):
         for name in self.tasks:
@@ -359,9 +371,15 @@ class Configure (object):
 
     def _trigger_event (self, name):
         cmdline = self.tasks[name]
-        mlog('event:', name)
-        mlog('cmdline:', cmdline)
-        self.platform.call(cmdline)
+        mlog('event:', cmdline)
+        cwd = os.path.dirname(self.confname)
+        self.platform.call(cmdline, cwd)
+        return 0
+
+    def mtime_detect (self):
+        filetime = self.platform.mtime(self.confname)
+        if filetime != self.filetime:
+            self.load_config()
         return 0
 
 
@@ -377,7 +395,7 @@ if __name__ == '__main__':
         return 0
     def test2():
         plat = Platform()
-        plat.call('notepad.exe "d:\\temp\\fish 2\\hello.org')
+        plat.call('notepad.exe "d:\\temp\\fish 2\\hello.org"', 'e:\\lab')
     test2()
 
 
