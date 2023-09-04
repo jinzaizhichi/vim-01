@@ -2,6 +2,7 @@ local utils = require('core.utils')
 local custom = require('config.custom')
 local package_enabled = utils.package_enabled
 local inc = utils.include_script
+local has_py3 = (vim.fn.has('python3') ~= 0)
 
 return {
 	{
@@ -29,24 +30,6 @@ return {
 		end
 	},
 
-	{
-		'Yggdroot/LeaderF',
-		cmd = {'Leaderf'},
-		enabled = function()
-			if vim.fn.has('python3') == 0 then
-				return false
-			end
-			return true
-		end,
-		dependencies = {
-			'tamago324/LeaderF-filer',
-			'voldikss/LeaderF-emoji',
-		},
-		config = function () 
-			vim.g.lf_disable_normal_map = 0
-			inc('site/bundle/leaderf.vim')
-		end,
-	},
 }
 
 

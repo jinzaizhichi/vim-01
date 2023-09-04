@@ -126,9 +126,8 @@ function! LuaSnipQuery()
 	if !has('nvim')
 		return []
 	endif
-	lua vim.leaderf_snippets = require('leaderf.snippets')
-	lua vim.__temp_ft = vim.fn.eval("&ft")
-	lua vim.__temp1 = vim.leaderf_snippets.query(vim.__temp_ft)
+	lua vim.leaderf_snippet = require('leaderf.snippet')
+	lua vim.__temp1 = vim.leaderf_snippet.query(vim.o.filetype)
 	let hr = luaeval('vim.__temp1')
 	let list = []
 	let size = 4
