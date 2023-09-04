@@ -446,7 +446,7 @@ nnoremap <silent><space>ht :FileSwitch $RTP/tasks.ini<cr>
 
 if has('win32') || has('win16') || has('win95') || has('win64')
 	let s:autohk = expand('~/AppData/Roaming/Microsoft/Windows/Start Menu')
-	let s:autohk = s:autohk . '/Programs/Startup/QuickKeys.ahk'
+	let s:autohk = s:autohk . '/Programs/Startup/quickkeys.ahk'
 	exec 'nnoremap <space>ha :FileSwitch '. fnameescape(s:autohk). ' <cr>'
 endif
 
