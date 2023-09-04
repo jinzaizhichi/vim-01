@@ -3,7 +3,7 @@
 " textproc.vim -
 "
 " Created by skywind on 2022/01/21
-" Last Modified: 2023/08/16 22:22
+" Last Modified: 2023/09/04 21:06
 "
 "======================================================================
 
@@ -79,6 +79,7 @@ function! s:script_list() abort
 		let check[mark] = 1
 	endfor
 	let roots = s:script_roots()
+	let underscore = get(g:, 'textproc_underscore', 1)
 	for root in roots
 		if isdirectory(root) == 0
 			continue
@@ -98,6 +99,13 @@ function! s:script_list() abort
 				let ext = (s:windows == 0)? ext : tolower(ext)
 				if s:windows
 					let fn = substitute(fn, '\/', '\\', 'g')
+				endif
+				if underscore
+					if name =~ '^_' || name =~ '^\.'
+						continue
+					endif
+				elseif name =~ '^\.'
+					continue
 				endif
 				if has_key(check, ext)
 					let select[main] = fn
