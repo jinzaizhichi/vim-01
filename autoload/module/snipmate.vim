@@ -107,5 +107,61 @@ function! module#snipmate#edit(args)
 endfunc
 
 
+"----------------------------------------------------------------------
+" detect snippet engine
+"----------------------------------------------------------------------
+function! module#snipmate#detect()
+	if exists(':SnipMateOpenSnippetFiles') == 2
+		return 'snipmate'
+	elseif exists(':UltiSnipsEdit') == 2
+		return 'ultisnips'
+	elseif exists(':NeoSnippetEdit') == 2
+		return 'neosnippet'
+	elseif has('nvim') && exists('*luasnip#expandable') == 1
+		return 'luasnip'
+	endif
+	return ''
+endfunc
 
 
+"----------------------------------------------------------------------
+" trigger
+"----------------------------------------------------------------------
+function! module#snipmate#trigger(name) 
+	let engine = module#snipmate#detect()
+	let name = a:name
+	let follow = ''
+	if engine == 'snipmate'
+		let follow = "\<Plug>snipMateTrigger"
+		if mode(1) =~ 'i'
+			call feedkeys(name . follow, '!')
+		else
+			call feedkeys('a' . name . follow, '!')
+		endif
+	elseif engine == 'ultisnips'
+		let follow = "\<c-r>=UltiSnips#ExpandSnippet()\<cr>"
+		if mode(1) =~ 'i'
+			call feedkeys("\<right>", '!')
+			call feedkeys(name . follow, '!')
+		else
+			call feedkeys('a' . name . follow, '!')
+		endif
+	elseif engine == 'neosnippet'
+		let follow = "\<c-r>=neosnippet#mappings#expand_impl()\<cr>"
+		if mode(1) =~ 'i'
+			call feedkeys(name . follow, '!')
+		else
+			call feedkeys('a' . name . follow, '!')
+		endif
+	elseif engine == 'luasnip'
+		let follow = "\<plug>luasnip-expand-or-jump"
+		if mode(1) =~ 'i'
+			call feedkeys(name . follow, '!')
+		else
+			call feedkeys('a' . name . follow, '!')
+		endif
+	endif
+endfunc
+
+
+	
