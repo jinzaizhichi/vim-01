@@ -205,6 +205,7 @@ let g:navigator.x = {
 			\ 'm': [':messages', 'messages-list'],
 			\ 'M': [':messages clear', 'messages-clear'],
 			\ 'd': [':LocalRcDisplay', 'display-localrc-messages'],
+			\ 'z': [':AsyncTask git-lazygit', 'lazygit'],
 			\ }
 
 
