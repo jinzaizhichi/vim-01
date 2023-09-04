@@ -107,26 +107,32 @@ let g:Lf_FilerNormalMap = {'i': 'switch_insert_mode', '<esc>': 'quit',
 "----------------------------------------------------------------------
 " keymap
 "----------------------------------------------------------------------
-nnoremap <space>ff :<c-u>Leaderf file<cr>
-nnoremap <space>fe :<c-u>Leaderf filer<cr>
-nnoremap <space>fb :<c-u>Leaderf buffer<cr>
-nnoremap <space>fm :<c-u>Leaderf mru<cr>
-nnoremap <space>fg :<c-u>Leaderf gtags<cr>
-nnoremap <space>fr :<c-u>Leaderf rg<cr>
-" nnoremap <space>fw :<c-u>Leaderf window<cr>
-nnoremap <space>fn :<c-u>Leaderf function<cr>
-nnoremap <space>ft :<c-u>Leaderf tag<cr>
-nnoremap <space>fu :<c-u>Leaderf bufTag<cr>
-nnoremap <space>fs :<c-u>Leaderf self<cr>
-nnoremap <space>fc :<c-u>Leaderf colorscheme<cr>
-nnoremap <space>fy :<c-u>Leaderf cmdHistory<cr>
-" nnoremap <space>fh :<c-u>Leaderf help<cr>
-nnoremap <space>fj :<c-u>Leaderf jumps<cr>
-nnoremap <space>fp :<c-u>Leaderf snippet<cr>
-nnoremap <space>fq :<c-u>Leaderf quickfix<cr>
-nnoremap <space>fa :<c-u>Leaderf tasks<cr>
+if get(g:, 'lf_disable_normal_map', 0) == 0
+	nnoremap <space>ff :<c-u>Leaderf file<cr>
+	nnoremap <space>fe :<c-u>Leaderf filer<cr>
+	nnoremap <space>fb :<c-u>Leaderf buffer<cr>
+	nnoremap <space>fm :<c-u>Leaderf mru<cr>
+	nnoremap <space>fg :<c-u>Leaderf gtags<cr>
+	nnoremap <space>fr :<c-u>Leaderf rg<cr>
+	" nnoremap <space>fw :<c-u>Leaderf window<cr>
+	nnoremap <space>fn :<c-u>Leaderf function<cr>
+	nnoremap <space>ft :<c-u>Leaderf tag<cr>
+	nnoremap <space>fu :<c-u>Leaderf bufTag<cr>
+	nnoremap <space>fs :<c-u>Leaderf self<cr>
+	nnoremap <space>fc :<c-u>Leaderf colorscheme<cr>
+	nnoremap <space>fy :<c-u>Leaderf cmdHistory<cr>
+	" nnoremap <space>fh :<c-u>Leaderf help<cr>
+	nnoremap <space>fj :<c-u>Leaderf jumps<cr>
+	nnoremap <space>fp :<c-u>Leaderf snippet<cr>
+	nnoremap <space>fq :<c-u>Leaderf quickfix<cr>
+	nnoremap <space>fa :<c-u>Leaderf tasks<cr>
+	" filer
+	nnoremap <space>fd :exec 'Leaderf filer ' . shellescape(expand('%:p:h'))<cr>
+endif
 
-inoremap <c-x><c-x> <c-\><c-o>:Leaderf snippet<cr>
+if get(g:, 'lf_disable_snippet_map', 0) == 0
+	inoremap <c-x><c-x> <c-\><c-o>:Leaderf snippet<cr>
+endif
 
-nnoremap <space>fd :exec 'Leaderf filer ' . shellescape(expand('%:p:h'))<cr>
+
 
