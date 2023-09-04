@@ -168,6 +168,9 @@ KEY_ALIASES = {
     'BACKSPACE': 'BACK',
     'BS': 'BACK',
     'DEL': 'DELETE',
+    'CTRL': 'CONTROL',
+    'LCTRL': 'LCONTROL',
+    'RCTRL': 'RCONTROL',
 }
 
 
@@ -196,8 +199,18 @@ class Platform (object):
             code = keycode
         if self._GetAsyncKeyState:
             hr = self._GetAsyncKeyState(code)
-            return (hr != 0) and True or False
+            return (hr < 0) and True or False
         return False
+
+    def KeySequence (self, keys):
+        keys = keys.strip().split('+')
+        for key in keys:
+            key = key.strip()
+            if key == '':
+                continue
+            if not self.KeyState(key):
+                return False
+        return True
 
     def __setup_ctypes (self):
         import ctypes
@@ -285,13 +298,67 @@ class Platform (object):
 
 
 #----------------------------------------------------------------------
+# logs
+#----------------------------------------------------------------------
+LOGFILE = None
+LOGSTDOUT = True
+
+def mlog(*args):
+    global LOGFILE, LOGSTDOUT
+    text = ' '.join(args)
+    now = time.strftime('%Y-%m-%d %H:%M:%S')
+    txt = '[%s] %s'%(now, text)
+    if LOGFILE:
+        LOGFILE.write(txt + '\n')
+        LOGFILE.flush()
+    if LOGSTDOUT:
+        sys.stdout.write(txt + '\n')
+        sys.stdout.flush()
+    return 0
+
+
+#----------------------------------------------------------------------
 # Configure
 #----------------------------------------------------------------------
 class Configure (object):
     
-    def __init__ (self):
+    def __init__ (self, ininame):
         self.platform = Platform()
         self.tasks = {}
+        self.state = {}
+        self.filetime = 0
+        self.ininame = os.path.abspath(ininame)
+        self.load_config()
+
+    def load_config (self):
+        if not os.path.exists(self.ininame):
+            raise IOError('bad file name: ' + self.ininame)
+        self.tasks = self.platform.load_ini(self.ininame)
+        self.state = {}
+        self.filetime = os.stat(self.ininame).st_mtime
+        mlog('load %d keymaps from: %s'%(len(self.tasks), self.ininame))
+        return 0
+
+    def key_detect (self):
+        for name in self.tasks:
+            key = name.strip()
+            if key == '':
+                continue
+            if key == 'default':
+                continue
+            state = self.platform.KeySequence(key)
+            if state:
+                if not self.state.get(key, False):
+                    self.state[key] = True
+                    self._trigger_event(name)
+            else:
+                if self.state.get(key, False):
+                    self.state[key] = False
+        return 0
+
+    def _trigger_event (self, name):
+        task = self.tasks[name]
+        mlog('event:', name)
 
 
 #----------------------------------------------------------------------
@@ -302,7 +369,7 @@ if __name__ == '__main__':
         plat = Platform()
         while 1:
             time.sleep(0.1)
-            print(plat.KeyState('ENTER'))
+            print(plat.KeySequence('CTRL+ENTER'))
         return 0
     test1()
 
