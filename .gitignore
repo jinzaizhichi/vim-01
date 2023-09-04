@@ -58,3 +58,6 @@ tags
 .lvimrc
 .localrc
 
+/etc/test_*.*
+/lua/?/test_*.*
+
