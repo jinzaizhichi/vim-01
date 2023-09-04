@@ -1,9 +1,56 @@
 "======================================================================
 "
-" textproc.vim -
+" textproc.vim - Text Processor Manager
 "
-" Created by skywind on 2022/01/21
+" Maintainer: skywind3000 (at) gmail.com, 2022-2023
+" Homepage: https://github.com/skywind3000/textproc.vim
+"
 " Last Modified: 2023/09/04 21:06
+"
+" A filter is a program that accepts text at standard input, changes
+" it in some way, and sends it to standard output. You can send some
+" text through a filter, so that it is replaced by the filter output.
+"
+" Command:
+"
+" This script provides a command:
+"
+"     :{range}TP[!] {name}
+"
+" It will filter {range} lines through the external program {name},
+" the external program will be found in a "text" sub-directory inside
+" every runtimepath, eg.:
+"
+"     ~/.vim/text
+"     ~/.config/nvim/text
+"
+" Command line completion can be utilized to query available filters.
+" It can be done by pressing '<TAB>' after the ":TP " command.
+"
+" When a "!" is included, the selected text will not be replaced, and
+" you can preview the result from a split window. The text filter 
+" programs are hard to debug, and it can mess up the selected text 
+" unexpectly due to defects. Using "TP! xxx" is helpful for debugging.
+"
+" Searching:
+"
+" Text filter programs will be searched from directories below:
+"
+"     - "text" sub-directory inside every runtimepath.
+"     - "text/{filetype}" sub-directory inside every runtimepath.
+"     - every location defined in the list of "g:textproc_root"
+"     - every "{filetype}" sub-directories of "g:textproc_root"
+"
+" Settings:
+"     
+"     g:textproc_home    - sub-directory name, default to "text"
+"     g:textproc_root    - a list of extra search path.
+"     g:textproc_split   - preview split mode: "auto", "vert" or ""
+"     g:textproc_runner  - a directory of filter runners
+"
+" If a filter program name is starting with a underscore "_" it will 
+" not be included, like "_textlib.py", disable this behavior by 
+" changing "g:textproc_underscore" to zero.
 "
 "======================================================================
 
@@ -36,13 +83,14 @@ function! s:script_roots() abort
 	let candidate += [fn]
 	if exists('g:textproc_root')
 		if type(g:textproc_root) == type('')
-			let loc_list = [g:textproc_root]
+			let loc_list = split(g:textproc_root, ',')
 		elseif type(g:textproc_root) == type([])
 			let loc_list = g:textproc_root
 		elseif type(g:textproc_root) == type({})
 			let loc_list = keys(g:textproc_root)
 		endif
 		for location in loc_list
+			let location = expand(location)
 			if location != '' && isdirectory(location)
 				let candidate += [location]
 			endif
