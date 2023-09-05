@@ -68,7 +68,7 @@ function! s:check_omni_avail() abort
 	call setpos('.', new)
 	let hr = call(&omnifunc, [0, base])
 	call setpos('.', pos)
-	if type(hr) == type(v:none)
+	if type(hr) == type(v:null)
 		return 0
 	elseif type(hr) == type([])
 		if len(hr) == 0
