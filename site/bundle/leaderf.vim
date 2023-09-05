@@ -13,11 +13,6 @@
 "----------------------------------------------------------------------
 let g:Lf_ShortcutF = '<c-p>'
 let g:Lf_ShortcutB = '<m-n>'
-noremap <c-n> :cclose<cr>:Leaderf --nowrap mru --regexMode<cr>
-noremap <m-p> :cclose<cr>:Leaderf! --nowrap function<cr>
-noremap <m-P> :cclose<cr>:Leaderf! --nowrap buftag<cr>
-noremap <m-n> :cclose<cr>:Leaderf! --nowrap buffer<cr>
-noremap <m-m> :cclose<cr>:Leaderf --nowrap tag<cr>
 let g:Lf_MruMaxFiles = 2048
 let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
 " let g:Lf_PreviewHorizontalPosition = 'center'
@@ -128,6 +123,13 @@ if get(g:, 'lf_disable_normal_map', 0) == 0
 	nnoremap <space>fa :<c-u>Leaderf tasks<cr>
 	" filer
 	nnoremap <space>fd :exec 'Leaderf filer ' . shellescape(expand('%:p:h'))<cr>
+
+	" basic keymaps
+	noremap <c-n> :cclose<cr>:Leaderf --nowrap mru --regexMode<cr>
+	noremap <m-p> :cclose<cr>:Leaderf! --nowrap function<cr>
+	noremap <m-P> :cclose<cr>:Leaderf! --nowrap buftag<cr>
+	noremap <m-n> :cclose<cr>:Leaderf! --nowrap buffer<cr>
+	noremap <m-m> :cclose<cr>:Leaderf --nowrap tag<cr>
 endif
 
 if get(g:, 'lf_disable_snippet_map', 0) == 0
