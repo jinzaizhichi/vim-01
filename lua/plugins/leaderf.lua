@@ -13,7 +13,7 @@ return {
 			{'<c-x><c-x>', '<c-\\><c-o>:Leaderf snippet<cr>', mode = 'i', 'leaderf-snippet'},
 		},
 		config = function () 
-			-- vim.g.lf_disable_normal_map = 0
+			vim.g.lf_disable_normal_map = 1
 			inc('site/bundle/leaderf.vim')
 		end,
 	},

@@ -13,37 +13,6 @@
 " internal help
 "----------------------------------------------------------------------
 
-function! menu#FindInProject()
-	let p = vimmake#get_root('%')
-	echohl Type
-	call inputsave()
-	let t = input('find word ('. p.'): ', expand('<cword>'))
-	call inputrestore()
-	echohl None
-	redraw | echo "" | redraw
-	if strlen(t) > 0
-		silent exec "GrepCode! ".fnameescape(t)
-		call asclib#quickfix_title('- searching "'. t. '"')
-	endif
-endfunc
-
-function! menu#CodeCheck()
-	if &ft == 'python'
-		call asclib#lint_pylint('')
-	elseif &ft == 'c' || &ft == 'cpp'
-		call asclib#lint_cppcheck('')
-	else
-		call asclib#errmsg('file type unsupported, only support python/c/cpp')
-	endif
-endfunc
-
-function! menu#DelimitSwitch(on)
-	if a:on
-		exec "DelimitMateOn"
-	else
-		exec "DelimitMateOff"
-	endif
-endfunc
 
 function! menu#TogglePaste()
 	if &paste

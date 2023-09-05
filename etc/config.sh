@@ -42,6 +42,11 @@ if [ -d /usr/local/app/bin ]; then
 	export PATH="/usr/local/app/bin:$PATH"
 fi
 
+# setup for /home/data/shim if it exists
+if [ -d /home/data/shim ]; then
+	export PATH="/home/data/shim:$PATH"
+fi
+
 # setup for go if it exists
 if [ -d /usr/local/app/go ]; then
 	export GOROOT="/usr/local/app/go"
