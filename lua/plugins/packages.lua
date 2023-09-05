@@ -5,12 +5,15 @@ local inc = utils.include_script
 return {
 	{
 		'skywind3000/vim-gutentags',
+		enable = function()
+			return (vim.fn.executable('ctags') ~= 0)
+		end,
 		config = function()
 			local modules = {}
-			if vim.fn.executable('ctags') then
+			if vim.fn.executable('ctags') ~= 0 then
 				table.insert(modules, 'ctags')
 			end
-			if vim.fn.executable('gtags-cscope') then
+			if vim.fn.executable('gtags-cscope') ~= 0 then
 				table.insert(modules, 'gtags_cscope')
 			end
 			vim.g.gutentags_modules = modules
