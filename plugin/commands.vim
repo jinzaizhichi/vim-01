@@ -215,6 +215,15 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" expand snip
+"----------------------------------------------------------------------
+command! -nargs=1 CodeSnipExpand call s:CodeSnipExpand(<q-args>)
+function! s:CodeSnipExpand(args)
+	call module#snipmate#expand(a:args)
+endfunc
+
+
+"----------------------------------------------------------------------
 " list loaded scripts
 "----------------------------------------------------------------------
 command! -nargs=0 ScriptNames call s:ScriptNames()

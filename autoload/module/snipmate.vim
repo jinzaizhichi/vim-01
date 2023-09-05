@@ -127,7 +127,7 @@ endfunc
 "----------------------------------------------------------------------
 " trigger
 "----------------------------------------------------------------------
-function! module#snipmate#trigger(name) 
+function! module#snipmate#expand(name) 
 	let engine = module#snipmate#detect()
 	let name = a:name
 	let follow = ''
