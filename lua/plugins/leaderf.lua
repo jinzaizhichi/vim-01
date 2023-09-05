@@ -7,7 +7,7 @@ local has_py3 = (vim.fn.has('python3') ~= 0)
 return {
 	{
 		'Yggdroot/LeaderF',
-		cmd = 'Leaderf',
+		cmd = 'Leaderf', -- haha
 		enabled = has_py3,
 		keys = {
 			{'<c-x><c-x>', '<c-\\><c-o>:Leaderf snippet<cr>', mode = 'i', 'leaderf-snippet'},
