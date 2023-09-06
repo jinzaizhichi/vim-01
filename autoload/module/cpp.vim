@@ -129,10 +129,10 @@ function! module#cpp#copy_definition()
 	endif
 	" Go back to definition
 	call setpos('.', pos)
-	exe 'normal 0'
-	exe 'normal "zY'
-	call setpos('.', pos)
-	let s:defline = substitute(@z, ';\s*$', '', 'g')
+	let text = getline('.')
+	let text = substitute(text, '\/\/.*$', '', 'g')
+	let s:defline = substitute(text, ';[\r\n\t ]*$', '', 'g')
+	let g:defline = s:defline
 	let comments = []
 	let curline = line('.')
 	let nextline = curline - 1
