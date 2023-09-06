@@ -92,7 +92,7 @@ function! module#cpp#function_name()
 		endif
 		let tempstring = getline(".")
 		for item in strList
-			if ( match(tempstring,item) >= 0 )
+			if (match(tempstring,item) >= 0)
 			let position = item . " - " . position
 			let foundcontrol = 1
 			break
@@ -114,6 +114,7 @@ endfunc
 " copy function definition
 "----------------------------------------------------------------------
 function! module#cpp#copy_definition()
+	let view = winsaveview()
 	let pos = getcurpos()
 	" Get class
 	call search('^\s*\<class\>', 'b')
@@ -129,9 +130,13 @@ function! module#cpp#copy_definition()
 	endif
 	" Go back to definition
 	call setpos('.', pos)
+	call winrestview(view)
 	let text = getline('.')
+	let text = substitute(text, '\/\*.*\*\/', '', 'g')
 	let text = substitute(text, '\/\/.*$', '', 'g')
-	let s:defline = substitute(text, ';[\r\n\t ]*$', '', 'g')
+	let text = substitute(text, '^\s*', '', 'g')
+	let text = substitute(text, ';[\r\n\t ]*$', '', 'g')
+	let s:defline = text
 	let g:defline = s:defline
 	let comments = []
 	let curline = line('.')
