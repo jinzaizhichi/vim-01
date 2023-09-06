@@ -129,9 +129,10 @@ function! module#cpp#copy_definition()
 	endif
 	" Go back to definition
 	call setpos('.', pos)
+	exe 'normal 0'
 	exe 'normal "zY'
 	call setpos('.', pos)
-	let s:defline = substitute(@z, ';\n', '', '')
+	let s:defline = substitute(@z, ';\s*$', '', 'g')
 endfunc
 
 
