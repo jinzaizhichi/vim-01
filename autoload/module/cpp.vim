@@ -155,6 +155,9 @@ endfunc
 " paste imp
 "----------------------------------------------------------------------
 function! module#cpp#paste_implementation()
+	if exists('s:defline') == 0
+		return 0
+	endif
 	if len(s:fcomments) > 0
 		call append(line('.') - 1, '')
 		call append(line('.') - 1, '//' .. repeat('-', 69))
@@ -183,6 +186,7 @@ function! module#cpp#paste_implementation()
 	exe "normal $o{\<CR>\<TAB>\<CR>}\<CR>\<ESC>kkkk"
 	" Fix indentation
 	exe 'normal =4j^'
+	return 1
 endfunc
 
 
