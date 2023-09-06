@@ -178,14 +178,20 @@ function! module#cpp#paste_implementation()
 	else
 		let l:classString = s:namespace . "::" . s:class . "::"
 	endif
+	if s:class == '' || &ft == 'c'
+		let l:classString = ''
+	endif
 	" Remove default parameters
 	s/\s\{-}=\s\{-}[^,)]\{1,}//e
 	" Add class qualifier
-	exe 'normal ^f(bi' . l:classString
+	exe 'normal! ^f(bi' . l:classString
+	stopinsert
 	" Add brackets
-	exe "normal $o{\<CR>\<TAB>\<CR>}\<CR>\<ESC>kkkk"
+	exe "normal! $o{\<CR>\<TAB>\<CR>}\<CR>"
+	stopinsert
+	exec "normal! kkkk"
 	" Fix indentation
-	exe 'normal =4j^'
+	exe 'normal! =4j^<4jjj'
 	return 1
 endfunc
 
