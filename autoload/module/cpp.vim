@@ -133,6 +133,21 @@ function! module#cpp#copy_definition()
 	exe 'normal "zY'
 	call setpos('.', pos)
 	let s:defline = substitute(@z, ';\s*$', '', 'g')
+	let comments = []
+	let curline = line('.')
+	let nextline = curline - 1
+	while nextline > 0
+		let text = getline(nextline)
+		let text = asclib#string#strip(text)
+		if text =~ '^\/\/'
+			call add(comments, text)
+		else
+			break
+		endif
+		let nextline -= 1
+	endwhile
+	call reverse(comments)
+	let s:fcomments = comments
 endfunc
 
 
@@ -140,6 +155,15 @@ endfunc
 " paste imp
 "----------------------------------------------------------------------
 function! module#cpp#paste_implementation()
+	if len(s:fcomments) > 0
+		call append(line('.') - 1, '')
+		call append(line('.') - 1, '//' .. repeat('-', 69))
+		for text in s:fcomments
+			call append(line('.') - 1, text)
+		endfor
+		call append(line('.') - 1, '//' .. repeat('-', 69))
+		exe 'normal k'
+	endif
 	call append('.', s:defline)
 	exe 'normal j'
 	" Remove keywords
