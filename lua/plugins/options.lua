@@ -30,6 +30,15 @@ return {
 		end
 	},
 
+	{
+		'andymass/vim-matchup',
+		enabled = package_enabled('matchup'),
+		config = function()
+			-- disable matchit
+			vim.g.loaded_matchit = 1
+			inc('site/bundle/matchup.vim')
+		end
+	},
 }
 
 
