@@ -196,7 +196,7 @@ function! module#cpp#paste_implementation()
 	stopinsert
 	exec "normal! kkkk"
 	" Fix indentation
-	exe 'normal! =4j^<4jjj'
+	exe 'normal! =4j^<4j'
 	return 1
 endfunc
 
