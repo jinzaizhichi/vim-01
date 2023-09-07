@@ -619,80 +619,24 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" glob() / globpath()
+" glob
 "----------------------------------------------------------------------
-if v:version == 704 && has('patch279') || v:version > 704
-	" This one has both {nosuf} and {list}.
-	function! s:glob( ... )
-		return call('glob', a:000)
-	endfunc
-	function! s:globpath( ... )
-		return call('globpath', a:000)
-	endfunc
-elseif v:version == 703 && has('patch465') || v:version > 703
-	" This one has glob() with both {nosuf} and {list}.
-	function! s:glob( ... )
-		return call('glob', a:000)
-	endfunc
-	function! s:globpath( ... )
-		let l:list = (a:0 > 3 && a:4)
-		let l:result = call('globpath', a:000[0:2])
-		return (l:list ? split(l:result, '\n') : l:result)
-	endfunc
-elseif v:version == 702 && has('patch051') || v:version > 702
-	" This one has {nosuf}.
-	function! s:glob( ... )
-		let l:list = (a:0 > 2 && a:3)
-		let l:result = call('glob', a:000[0:1])
-		return (l:list ? split(l:result, '\n') : l:result)
-	endfunc
-	function! s:globpath( ... )
-		let l:list = (a:0 > 3 && a:4)
-		let l:result = call('globpath', a:000[0:2])
-		return (l:list ? split(l:result, '\n') : l:result)
-	endfunc
-else
-	" This one has neither {nosuf} nor {list}.
-	function! s:glob( ... )
-		let l:nosuf = (a:0 > 1 && a:2)
-		let l:list = (a:0 > 2 && a:3)
-		if l:nosuf
-			let l:save_wildignore = &wildignore
-			set wildignore=
-		endif
-		try
-			let l:result = call('glob', [a:1])
-			return (l:list ? split(l:result, '\n') : l:result)
-		finally
-			if exists('l:save_wildignore')
-				let &wildignore = l:save_wildignore
-			endif
-		endtry
-	endfunc
-	function! s:globpath( ... )
-		let l:nosuf = (a:0 > 2 && a:3)
-		let l:list = (a:0 > 3 && a:4)
-		if l:nosuf
-			let l:save_wildignore = &wildignore
-			set wildignore=
-		endif
-		try
-			let l:result = call('globpath', a:000[0:1])
-			return (l:list ? split(l:result, '\n') : l:result)
-		finally
-			if exists('l:save_wildignore')
-				let &wildignore = l:save_wildignore
-			endif
-		endtry
-	endfunc
-endif
-
 function! asclib#path#glob(...)
-	return call('s:glob', a:000)
+	return call('glob', a:000)
 endfunc
 
+
+"----------------------------------------------------------------------
+" globpath
+"----------------------------------------------------------------------
 function! asclib#path#globpath(...)
-	return call('s:globpath', a:000)
+	if v:version == 704 && has('patch279') || v:version > 704
+		return call('s:globpath', a:000)
+	elseif v:version == 703 && has('patch465') || v:version > 703
+		let l:list = (a:0 > 3 && a:4)
+		let l:result = call('globpath', a:000[0:2])
+		return (l:list ? split(l:result, '\n') : l:result)
+	endif
 endfunc
 
 
@@ -714,6 +658,24 @@ function! asclib#path#list(path, ...)
 		endif
 	endfor
 	return candidate
+endfunc
+
+
+"----------------------------------------------------------------------
+" win path to msys path
+"----------------------------------------------------------------------
+function! asclib#path#msyspath(winpath)
+	let abspath = asclib#path#abspath(a:winpath)
+	return '/' . substitute(tr(abspath, '\', '/'), ':', '', 'g')
+endfunc
+
+
+"----------------------------------------------------------------------
+" win path to cygpath
+"----------------------------------------------------------------------
+function! asclib#path#cygpath(winpath)
+	let abspath = asclib#path#abspath(a:winpath)
+	return '/cygdrive/' . substitute(tr(abspath, '\', '/'), ':', '', 'g')
 endfunc
 
 
