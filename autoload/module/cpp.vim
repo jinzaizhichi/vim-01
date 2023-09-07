@@ -189,7 +189,12 @@ function! module#cpp#paste_implementation()
 	" Remove default parameters
 	s/\s\{-}=\s\{-}[^,)]\{1,}//e
 	" Add class qualifier
-	exe 'normal! ^f(bi' . l:classString
+	exe 'normal! ^f(b'
+	let curline = strpart(getline('.'), 0, col('.'))
+	if curline =~ '~$'
+		exe 'normal! h'
+	endif
+	exe 'normal! i' . l:classString
 	stopinsert
 	" Add brackets
 	exe "normal! $o{\<CR>\<TAB>\<CR>}\<CR>"
