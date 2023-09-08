@@ -57,7 +57,7 @@ require('lazy').setup("plugins", opts)
 
 
 -----------------------------------------------------------------------
--- local config
+-- try to load lua/config/init.lua 
 -----------------------------------------------------------------------
 if vim.fn.filereadable(scripthome .. '/lua/config/init.lua') ~= 0 then
 	require('config')
