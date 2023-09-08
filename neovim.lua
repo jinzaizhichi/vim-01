@@ -51,7 +51,7 @@ local opts = {
 
 
 -----------------------------------------------------------------------
--- lazy setup
+-- lazy setup: load plugin specs from lua/plugins/*.lua
 -----------------------------------------------------------------------
 require('lazy').setup("plugins", opts)
 

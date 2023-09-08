@@ -111,26 +111,45 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" get class name
+"----------------------------------------------------------------------
+function! module#cpp#get_class_name()
+	let lnum = line('.')
+	while lnum > 0
+		let text = getline(lnum)
+		let name = matchstr(text, '^\s*\<class\>\s*\zs\w\+')
+		if name != ''
+			return name
+		endif
+		let lnum -= 1
+	endwhile
+	return ''
+endfunc
+
+
+"----------------------------------------------------------------------
+" get namespace
+"----------------------------------------------------------------------
+function! module#cpp#get_namespace()
+	let lnum = line('.')
+	while lnum > 0
+		let text = getline(lnum)
+		let name = matchstr(text, '^\s*\<namespace\>\s*\zs\w\+')
+		if name != ''
+			return name
+		endif
+		let lnum -= 1
+	endwhile
+	return ''
+endfunc
+
+
+"----------------------------------------------------------------------
 " copy function definition
 "----------------------------------------------------------------------
 function! module#cpp#copy_definition()
-	let view = winsaveview()
-	let pos = getcurpos()
-	" Get class
-	call search('^\s*\<class\>', 'b')
-	exe 'normal ^w"zyw'
-	let s:class = @z
-	let l:ns = search('^\s*\<namespace\>', 'b')
-	" Get namespace
-	if l:ns != 0
-		exe 'normal ^w"zyw'
-		let s:namespace = asclib#string#strip(@z)
-	else
-		let s:namespace = ''
-	endif
-	" Go back to definition
-	call setpos('.', pos)
-	call winrestview(view)
+	let s:class = module#cpp#get_class_name()
+	let s:namespace = module#cpp#get_namespace()
 	let text = getline('.')
 	let text = substitute(text, '\/\*.*\*\/', '', 'g')
 	let text = substitute(text, '\/\/.*$', '', 'g')
@@ -199,5 +218,6 @@ function! module#cpp#paste_implementation()
 	exe 'normal! =4j^<4j'
 	return 1
 endfunc
+
 
 
