@@ -37,6 +37,7 @@ class Configure (object):
         self.found = (self.tslib != '') and True or False
         self.__lang_cache = {}
         self.__parser_cache = {}
+        self.error = ''
 
     def __init_std_path (self):
         t1 = os.path.normpath(self.HOME + '/.config')
@@ -90,7 +91,7 @@ class Configure (object):
             raise RuntimeError('can not find parser dll for %s'%langname)
         self.__lang_cache[langname] = lang
         return lang
-        
+
     def create_parser (self, langname: str):
         lang = self.language(langname)
         if not lang:
@@ -107,6 +108,15 @@ class Configure (object):
             self.__parser_cache[langname] = parser
         return parser
 
+    def check (self, langname: str):
+        try:
+            lang = self.language(langname)  # noqa
+            parser = self.parser(langname)  # noqa
+        except RuntimeError as e:
+            self.error = str(e)
+            return False
+        return True
+        
     def get_parser (self, langname: str):
         try:
             parser = self.parser(langname)
@@ -127,6 +137,14 @@ class Configure (object):
             return None
         return parser.parse(code)
 
+    def query (self, langname, query):
+        try:
+            language = self.language(langname)
+        except RuntimeError:
+            return None
+        return language.query(query)
+
+
 
 #----------------------------------------------------------------------
 # instance
@@ -137,7 +155,7 @@ config = Configure()
 #----------------------------------------------------------------------
 # test code
 #----------------------------------------------------------------------
-test_code = '''
+sample_python = '''
 import sys
 import os
 
@@ -153,6 +171,18 @@ if __name__ == '__main__':
     bar()
 '''
 
+sample_c = '''
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    printf("Hello, World !!\n");
+    return 0;
+}
+'''
+
+
 #----------------------------------------------------------------------
 # testing suit
 #----------------------------------------------------------------------
@@ -161,9 +191,14 @@ if __name__ == '__main__':
         print(config.tslib)
         print(config.NVIMDATA)
         print(config.get_parser('c'))
+        print(config.check('go'))
+        print(config.check('go2'))
         return 0
     def test2():
-        tree = config.parse('python', test_code)
+        tree = config.parse('python', sample_python)
+        print('tree', tree.root_node.sexp())
+        print()
+        tree = config.parse('c', sample_c)
         print('tree', tree.root_node.sexp())
     test2()
 
