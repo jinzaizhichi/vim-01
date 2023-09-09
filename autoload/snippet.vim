@@ -7,14 +7,17 @@
 "
 "======================================================================
 
-" this is well known Filename found in snipmate (and the other engines), but
-" rewritten and documented :)
+
+"----------------------------------------------------------------------
+" this is well known Filename found in snipmate (and the other 
+" engines), but rewritten and documented :)
 "
-" optional arg1: string in which to replace '$1' by filename with extension
-"   and path dropped. Defaults to $1
+" optional arg1: string in which to replace '$1' by filename with 
+" extension and path dropped. Defaults to $1
 " optional arg2: return this value if buffer has no filename
 "  But why not use the template in this case, too?
 "  Doesn't make sense to me
+"----------------------------------------------------------------------
 function! snippet#filename(...)
 	let template = get(a:000, 0, "$1")
 	let arg2 = get(a:000, 1, "")
@@ -28,5 +31,12 @@ function! snippet#filename(...)
 	endif
 endfunc
 
+
+"----------------------------------------------------------------------
+" get cpp function name
+"----------------------------------------------------------------------
+function! snippet#cpp_clsname()
+	return module#cpp#get_class_name()
+endfunc
 
 
