@@ -230,15 +230,15 @@ function! module#cpp#create_non_copyable()
 	endif
 	let t = ['']
 	if 0
-		let t += [printf("\t%s(const %s &) = delete;", cc, cc)]
+		let t += [printf("\t%s(const %s&) = delete;", cc, cc)]
 		let t += [printf("\t%s & operator = (const %s&) = delete;", cc, cc)]
 	elseif 1
 		let t += ['private:']
-		let t += [printf("\t%s(const %s &);", cc, cc)]
+		let t += [printf("\t%s(const %s&);", cc, cc)]
 		let t += [printf("\t%s & operator = (const %s&);", cc, cc)]
 	else
 		let t += ['private:']
-		let t += [printf("\t%s(const %s &) = delete;", cc, cc)]
+		let t += [printf("\t%s(const %s&) = delete;", cc, cc)]
 		let t += [printf("\t%s & operator = (const %s&) = delete;", cc, cc)]
 	endif
 	let t += ['']
