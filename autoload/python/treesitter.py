@@ -218,7 +218,7 @@ class Inspector (object):
         if lnum < start[0] or lnum > endup[0]:
             return False
         elif lnum == start[0] and lnum == endup[0]:
-            return (column >= start[1] and column < endup[1])
+            return (start[1] <= column < endup[1])
         elif lnum == start[0]:
             return (column >= start[1])
         elif lnum == endup[0]:
