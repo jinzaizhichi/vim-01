@@ -16,6 +16,12 @@ import tree_sitter
 
 from tree_sitter.binding import Node, Tree, Parser, Query, Range
 
+try:
+    import vim
+    has_vim = True
+except ImportError:
+    has_vim = False
+
 
 #----------------------------------------------------------------------
 # internal
@@ -130,6 +136,9 @@ class Configure (object):
             code = source.encode('utf-8', errors = 'ignore')
         elif isinstance(source, bytes):
             code = source
+        elif isinstance(source, list):
+            text = '\n'.join(source)
+            code = text.encode('utf-8', errors = 'ignore')
         else:
             return None
         tree: Tree = parser.parse(code)
@@ -149,11 +158,26 @@ class Configure (object):
             code: str = source.decode('utf-8', errors = 'ignore')
         elif isinstance(source, Tree):
             code: str = source.text.decode('utf-8', errors = 'ignore')
-        elif isinstance(source, list[str]):
+        elif isinstance(source, list):
             return source
         else:
             return None
         return code.split('\n')
+
+
+#----------------------------------------------------------------------
+# instance
+#----------------------------------------------------------------------
+config = Configure()
+
+
+#----------------------------------------------------------------------
+# Utils
+#----------------------------------------------------------------------
+class Utils (object):
+
+    def __init__ (self):
+        self.__buffer_cache = {}
 
     def source_range (self, source: list[str], start: tuple, endup: tuple) -> str:
         if start[0] == endup[0]:
@@ -184,11 +208,57 @@ class Configure (object):
         t = self.source_range(source, node.start_point, node.end_point)
         return t
 
+    def load_file_content (self, filename, mode = 'r'):
+        if hasattr(filename, 'read'):
+            try: content = filename.read()
+            except: pass
+            return content
+        try:
+            fp = open(filename, mode)
+            content = fp.read()
+            fp.close()
+        except:
+            content = None
+        return content
+
+    # load file and guess encoding
+    def load_file_text (self, filename, encoding = None):
+        content = self.load_file_content(filename, 'rb')
+        if content is None:
+            return None
+        if content[:3] == b'\xef\xbb\xbf':
+            text = content[3:].decode('utf-8')
+        elif encoding is not None:
+            text = content.decode(encoding, 'ignore')
+        else:
+            text = None
+            guess = [sys.getdefaultencoding(), 'utf-8']
+            if sys.stdout and sys.stdout.encoding:
+                guess.append(sys.stdout.encoding)
+            try:
+                import locale
+                guess.append(locale.getpreferredencoding())
+            except:
+                pass
+            visit = {}
+            for name in guess + ['gbk', 'ascii', 'latin1']:
+                if name in visit:
+                    continue
+                visit[name] = 1
+                try:
+                    text = content.decode(name)
+                    break
+                except:
+                    pass
+            if text is None:
+                text = content.decode('utf-8', 'ignore')
+        return text
+
 
 #----------------------------------------------------------------------
 # instance
 #----------------------------------------------------------------------
-config = Configure()
+utils = Utils()
 
 
 #----------------------------------------------------------------------
@@ -210,6 +280,11 @@ class Inspector (object):
         output = []
         self.__access_node(0, root, output)
         return output
+
+    def print_list (self, node: Node) -> int:
+        for node in self.list_nodes(node):
+            print((' ' * node[0]) + str(node[1:]))
+        return 0
 
     def point_in_node (self, node: Node, point: tuple[int, int]) -> bool:
         lnum, column = point
@@ -312,14 +387,21 @@ if __name__ == '__main__':
         node = inspector.inspect(tree.root_node, (9, 11))
         print(node)
         print(node.text)
-        print(config.node_text(node))
+        print(utils.node_text(node))
         path = inspector.parents_path(node)
         for p in path:
             print('->', p)
         print()
         for node in inspector.list_nodes(tree.root_node):
             print((' ' * node[0]) + str(node[1:]))
-    test4()
+        return 0
+    def test5():
+        uri = 'e:/lab/workshop/network/CoreRuntime.h'
+        source = utils.load_file_text(uri)
+        tree = config.parse('cpp', source)
+        inspector.print_list(tree.root_node)
+        return 0
+    test5()
 
 
 
