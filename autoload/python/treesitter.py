@@ -57,20 +57,16 @@ class Configure (object):
         return 0
 
     def __search_parser_home (self):
+        t0 = os.path.join(self.VIMHOME, 'lib/parser')
+        t1 = t0 + (self.has64 and '/64' or '/32')
+        t2 = os.path.join(self.NVIMDATA, 'lazy/nvim-treesitter/parser')    
         if self.win32:
-            if not self.has64:
-                t = os.path.join(self.VIMHOME, 'lib/parser')
-            else:
-                t = os.path.join(self.VIMHOME, 'lib/parser/64')
-            if os.path.exists(t):
-                return os.path.normpath(t)
-            t = os.path.join(self.NVIMDATA, 'lazy/nvim-treesitter/parser')    
-            if os.path.exists(t):
-                return os.path.normpath(t)
+            if os.path.exists(t1):
+                return os.path.normpath(t1)
+            if self.has64 and os.path.exists(t2):
+                return os.path.normpath(t2)
         else:
-            t1 = os.path.join(self.NVIMDATA, 'lazy/nvim-treesitter/parser')    
-            t2 = os.path.join(self.VIMHOME, 'lib/parser')
-            tries = [t1, t2]
+            tries = [t1, t2, t0]
             for t in tries:
                 if os.path.exists(t):
                     return os.path.normpath(t)
@@ -193,6 +189,7 @@ if __name__ == '__main__':
         print(config.get_parser('c'))
         print(config.check('go'))
         print(config.check('go2'))
+        print(config.error)
         return 0
     def test2():
         tree = config.parse('python', sample_python)
@@ -200,7 +197,7 @@ if __name__ == '__main__':
         print()
         tree = config.parse('c', sample_c)
         print('tree', tree.root_node.sexp())
-    test2()
+    test1()
 
 
 
