@@ -24,6 +24,11 @@ snippet scripthome
 	let s:scripthome = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 	${0}
 
+snippet errmsg
+	echohl ErrorMsg
+	echo ${0:"ERROR"}
+	echohl None
+
 snippet try
 	try
 		${0}
@@ -33,9 +38,4 @@ snippet try
 snippet while
 	while ${0}
 	endwhile
-
-snippet errmsg
-	echohl ErrorMsg
-	echo ${0:"ERROR"}
-	echohl None
 

@@ -21,6 +21,6 @@ let b:navigator.c = get(b:navigator, 'c', {'name': '+coding'})
 
 let b:navigator.c.c = ['module#cpp#copy_definition()', 'copy-method-definition']
 let b:navigator.c.p = ['module#cpp#paste_implementation()', 'paste-implementation']
-
+let b:navigator.c.n = ['module#cpp#create_non_copyable()', 'create-non-copyable']
 
 
