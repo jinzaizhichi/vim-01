@@ -66,10 +66,10 @@ class Configure (object):
             if self.has64 and os.path.exists(t2):
                 return os.path.normpath(t2)
         else:
-            tries = [t1, t2, t0]
-            for t in tries:
-                if os.path.exists(t):
-                    return os.path.normpath(t)
+            if os.path.exists(t1):
+                return os.path.normpath(t1)
+            if os.path.exists(t2):
+                return os.path.normpath(t2)
         return ''
 
     def language (self, langname: str):
@@ -197,7 +197,8 @@ if __name__ == '__main__':
         print()
         tree = config.parse('c', sample_c)
         print('tree', tree.root_node.sexp())
-    test1()
+
+    test2()
 
 
 
