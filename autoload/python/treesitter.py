@@ -14,6 +14,7 @@ import time
 import os
 import tree_sitter
 
+from tree_sitter.binding import Node, Tree, Parser, Query, Range
 
 
 #----------------------------------------------------------------------
@@ -24,7 +25,7 @@ has_unix = (not has_win32)
 
 
 #----------------------------------------------------------------------
-# configure
+# Configure: treesitter dll loading
 #----------------------------------------------------------------------
 class Configure (object):
 
@@ -88,7 +89,7 @@ class Configure (object):
         self.__lang_cache[langname] = lang
         return lang
 
-    def create_parser (self, langname: str):
+    def create_parser (self, langname: str) -> Parser:
         lang = self.language(langname)
         if not lang:
             raise RuntimeError('can not load dll for %s'%langname)
@@ -96,7 +97,7 @@ class Configure (object):
         parser.set_language(lang)
         return parser
 
-    def parser (self, langname: str):
+    def parser (self, langname: str) -> Parser:
         if langname in self.__parser_cache:
             return self.__parser_cache[langname]
         parser = self.create_parser(langname)
@@ -104,7 +105,7 @@ class Configure (object):
             self.__parser_cache[langname] = parser
         return parser
 
-    def check (self, langname: str):
+    def check (self, langname: str) -> bool:
         try:
             lang = self.language(langname)  # noqa
             parser = self.parser(langname)  # noqa
@@ -113,7 +114,7 @@ class Configure (object):
             return False
         return True
         
-    def get_parser (self, langname: str):
+    def get_parser (self, langname: str) -> Parser:
         try:
             parser = self.parser(langname)
             return parser
@@ -121,7 +122,7 @@ class Configure (object):
             pass
         return None
 
-    def parse (self, langname, source):
+    def parse (self, langname, source) -> Tree:
         parser = self.get_parser(langname)
         if parser is None:
             return None
@@ -131,21 +132,122 @@ class Configure (object):
             code = source
         else:
             return None
-        return parser.parse(code)
+        tree: Tree = parser.parse(code)
+        return tree
 
-    def query (self, langname, query):
+    def query (self, langname, query) -> Query:
         try:
             language = self.language(langname)
         except RuntimeError:
             return None
         return language.query(query)
 
+    def source (self, source) -> list[str]:
+        if isinstance(source, str):
+            code: str = source
+        elif isinstance(source, bytes):
+            code: str = source.decode('utf-8', errors = 'ignore')
+        elif isinstance(source, Tree):
+            code: str = source.text.decode('utf-8', errors = 'ignore')
+        elif isinstance(source, list[str]):
+            return source
+        else:
+            return None
+        return code.split('\n')
+
+    def source_range (self, source: list[str], start: tuple, endup: tuple) -> str:
+        if start[0] == endup[0]:
+            lnum = start[0]
+            if lnum < 0:
+                return None
+            elif lnum >= len(source):
+                return None
+            left: int = start[1]
+            right: int = endup[1]
+            return source[lnum][left:right]
+        elif start[0] > endup[0]:
+            return None
+        lnum = start[0]
+        output = []
+        output.append(source[lnum][start[1]:])
+        lnum += 1
+        while lnum < endup[0]:
+            output.append(source[lnum])
+            lnum += 1
+        output.append(source[lnum][:endup[1]])
+        return '\n'.join(output)
+
+    def node_text (self, node: Node) -> str:
+        return node.text.decode('utf-8', errors = 'ignore')
+
+    def node_source (self, source: list[str], node: Node) -> str:
+        t = self.source_range(source, node.start_point, node.end_point)
+        return t
 
 
 #----------------------------------------------------------------------
 # instance
 #----------------------------------------------------------------------
 config = Configure()
+
+
+#----------------------------------------------------------------------
+# Inspector
+#----------------------------------------------------------------------
+class Inspector (object):
+
+    def __init__ (self):
+        self._inited = True
+
+    def __access_node (self, level: int, node: Node, output):
+        item = (level, node.type, node.start_point, node.end_point)
+        output.append(item)
+        for child in node.children:
+            self.__access_node(level + 1, child, output)
+        return 0
+
+    def list_nodes (self, root: Node):
+        output = []
+        self.__access_node(0, root, output)
+        return output
+
+    def point_in_node (self, node: Node, point: tuple[int, int]) -> bool:
+        lnum, column = point
+        start = node.start_point
+        endup = node.end_point
+        if lnum < start[0] or lnum > endup[0]:
+            return False
+        elif lnum == start[0] and lnum == endup[0]:
+            return (column >= start[1] and column < endup[1])
+        elif lnum == start[0]:
+            return (column >= start[1])
+        elif lnum == endup[0]:
+            return (column < endup[1])
+        return True
+
+    def inspect (self, root: Node, point: tuple[int, int]) -> Node:
+        if not self.point_in_node(root, point):
+            return None
+        for child in root.children:
+            if self.point_in_node(child, point):
+                return self.inspect(child, point)
+        return root
+
+    def parents_path (self, node: Node) -> list[Node]:
+        path: list[Node] = []
+        while True:
+            path.append(node)
+            if node.parent is None:
+                break
+            node = node.parent
+        path.reverse()
+        return path
+
+
+#----------------------------------------------------------------------
+# instance
+#----------------------------------------------------------------------
+inspector = Inspector()
 
 
 #----------------------------------------------------------------------
@@ -160,7 +262,7 @@ class foo:
         print('foo')
 
 def bar():
-    print('bar')
+    print('bar\\nhaha')
 
 if __name__ == '__main__':
     f = foo()
@@ -197,8 +299,27 @@ if __name__ == '__main__':
         print()
         tree = config.parse('c', sample_c)
         print('tree', tree.root_node.sexp())
-
-    test2()
+    def test3():
+        tree = config.parse('python', sample_python)
+        output = inspector.list_nodes(tree.root_node)
+        for node in output:
+            print((' ' * node[0]) + str(node[1:]))
+        print(dir(tree))
+        print(tree.text.decode('utf-8', errors = 'ignore'))
+        return 0
+    def test4():
+        tree = config.parse('python', sample_python)
+        node = inspector.inspect(tree.root_node, (9, 11))
+        print(node)
+        print(node.text)
+        print(config.node_text(node))
+        path = inspector.parents_path(node)
+        for p in path:
+            print('->', p)
+        print()
+        for node in inspector.list_nodes(tree.root_node):
+            print((' ' * node[0]) + str(node[1:]))
+    test4()
 
 
 
