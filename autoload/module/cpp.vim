@@ -229,7 +229,7 @@ function! module#cpp#create_non_copyable()
 		return 0
 	endif
 	let t = ['']
-	if 0
+	if 1
 		let t += [printf("\t%s(const %s&) = delete;", cc, cc)]
 		let t += [printf("\t%s & operator = (const %s&) = delete;", cc, cc)]
 	elseif 1
