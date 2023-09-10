@@ -331,6 +331,19 @@ class Inspector (object):
                 text = child.type.replace('\n', '\\n')
                 # continue
             t = (depth, text, child.start_point, child.end_point)
+            if child.type == 'class_specifier':
+                print('class', child.named_child_count)
+                n1 = child.child_by_field_name('name')
+                n2 = child.field_name_for_child(-1)
+                print('n1', n1, n2)
+                for i in range(child.named_child_count):
+                    cc = child.named_children[i]
+                    nn = child.field_name_for_child(i + 0)
+                    print(' ->', cc.type, nn)
+                for i in range(2000):
+                    nn = child.field_name_for_child(i - 1000)
+                    if nn:
+                        print('fuck', nn)
             if child.is_named:
                 output.append(t)
             self.traverse(child, depth + 1, output)

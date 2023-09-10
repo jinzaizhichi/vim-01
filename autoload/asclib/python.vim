@@ -229,6 +229,21 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" addsitedir
+"----------------------------------------------------------------------
+function! asclib#python#site_add(path)
+	if s:py_version == 0
+		call asclib#python#checkhealth()
+		return 0
+	endif
+	exec s:py_cmd "import site, os, vim"
+	exec s:py_cmd '__pp = os.path.abspath(vim.eval("a:path"))'
+	exec s:py_cmd 'site.addsitedir(__pp)'
+	return 1
+endfunc
+
+
+"----------------------------------------------------------------------
 " reload 
 "----------------------------------------------------------------------
 function! asclib#python#reload(module_name)
@@ -277,15 +292,32 @@ function! asclib#python#init()
 	elseif s:py_inited != 0
 		return 1
 	endif
-	exec s:py_cmd 'import vim'
-	exec s:py_cmd 'import os'
-	call asclib#python#path_add(s:script_home)
+	exec s:py_cmd 'import vim, sys, os, site'
+	call asclib#python#site_add(s:script_home)
 	exec s:py_cmd '__path = vim.eval("s:script_home") + "/../python"'
 	exec s:py_cmd '__path = os.path.normpath(__path)'
-	exec s:py_cmd 'sys.path.append(__path)'
+	exec s:py_cmd 'site.addsitedir(__path)'
 	exec s:py_cmd '__path = vim.eval("s:script_home") + "/../../lib"'
 	exec s:py_cmd '__path = os.path.normpath(__path)'
-	exec s:py_cmd 'sys.path.append(__path)'
+	exec s:py_cmd 'site.addsitedir(__path)'
+	exec s:py_cmd '__path = vim.eval("s:script_home") + "/../../python"'
+	exec s:py_cmd '__path = os.path.normpath(__path)'
+	exec s:py_cmd 'site.addsitedir(__path)'
+	exec s:py_cmd '__path = vim.eval("s:script_home") + "/../../site"'
+	exec s:py_cmd '__path = os.path.normpath(__path + "/site-packages")'
+	exec s:py_cmd 'site.addsitedir(__path)'
+	let script = []
+	let script += ['__pset = {}']
+	let script += ['__plst = []']
+	let script += ['for __path in sys.path:']
+	let script += ['    if not os.path.exists(__path):']
+	let script += ['        if __path != "_vim_path_":']
+	let script += ['            continue']
+	let script += ['    if __path not in __pset:']
+	let script += ['        __pset[__path] = 1']
+	let script += ['        __plst.append(__path)']
+	let script += ['sys.path = __plst']
+	exec s:py_cmd join(script, "\n")
 	let fn = s:script_home . '/_asclib.py'
 	if filereadable(fn)
 		exec s:py_cmd 'import _asclib'
@@ -362,5 +394,17 @@ function! asclib#python#refresh(pyfile)
 	let iname = asclib#python#get_imp_name(a:pyfile)
 	call asclib#python#reload(iname)
 endfunc
+
+
+"----------------------------------------------------------------------
+" test time
+"----------------------------------------------------------------------
+function! asclib#python#timing() abort
+	let ts = reltime()
+	call asclib#python#import('site')
+	let tt = reltimestr(reltime(ts))
+	return tt
+endfunc
+
 
 
