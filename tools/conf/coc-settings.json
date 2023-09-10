@@ -47,10 +47,10 @@
 	"suggest.completionItemKindLabels": {
 		"keyword": "\uf1de Keyword",
 		"variable": "\ue79b Variable",
-		"value": "\uf89f Value",
-		"operator": "\u03a8 Operator",
+		"value": "\uf4f7 Value",
+		"operator": "\ueb64 Operator",
 		"function": "\u0192 Function",
-		"reference": "\ufa46 Reference",
+		"reference": "\uf4bd Reference",
 		"constant": "\ue22c Constant",
 		"method": "\uf09a Method",
 		"struct": "\ufb44 Struct",
@@ -62,13 +62,13 @@
 		"module": "\uf40d Module",
 		"color": "\ue22b Color",
 		"property": "\ue624 Property",
-		"field": "\uf9be Field",
+		"field": "\ueb5f Field",
 		"unit": "\uf475 Unit",
-		"event": "\ufacd Event",
+		"event": "\uea86 Event",
 		"file": "\uf15c File",
 		"folder": "\uf114 Folder",
 		"snippet": "\ue60b Snippet",
-		"typeParameter": "\uf728 Parameter",
+		"typeParameter": "\ueaa8 Parameter",
 		"default": "\uf29c Default"
 	}
 }
