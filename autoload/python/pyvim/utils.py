@@ -19,7 +19,6 @@ import vim
 def cursor_get() -> tuple[int, int]:
     lnum = vim.eval('line(".")')
     column = vim.eval('col(".")')
-    return (lnum, column)
+    return (int(lnum), int(column))
 
 # print(cursor_get())
-

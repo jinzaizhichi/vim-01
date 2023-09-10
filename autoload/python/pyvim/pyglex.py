@@ -16,6 +16,7 @@ except:
     import buffer
 
 from parser import ctoken_pygments
+from pygments.token import Token
 
 
 #----------------------------------------------------------------------
@@ -58,5 +59,50 @@ def locate_token(bid, lnum, column) -> int:
         return -1
     index: int = ctoken_pygments.token_locate(tokens, lnum, column)
     return index
+
+
+#----------------------------------------------------------------------
+# find matched token forwards
+#----------------------------------------------------------------------
+def find_forwards(tokens, index, match_token: Token, text = None) -> int:
+    if not tokens:
+        return -1
+    if index < 0:
+        return len(tokens) - 1
+    if index >= len(tokens):
+        index = len(tokens) - 1
+    limit = len(tokens)
+    while index < limit:
+        token = tokens[index]
+        t: Token = token[0]
+        if t in match_token:
+            if text is None:
+                return index
+            elif token[1] == text:
+                return index
+        index += 1
+    return -1
+
+
+#----------------------------------------------------------------------
+# find matched token backwards
+#----------------------------------------------------------------------
+def find_backwards(tokens, index, match_token: Token, text = None) -> int:
+    if not tokens:
+        return -1
+    if index < 0:
+        return len(tokens) - 1
+    if index >= len(tokens):
+        index = len(tokens) - 1
+    while index >= 0:
+        token = tokens[index]
+        t: Token = token[0]
+        if t in match_token:
+            if text is None:
+                return index
+            elif token[1] == text:
+                return index
+        index -= 1
+    return -1
 
 
