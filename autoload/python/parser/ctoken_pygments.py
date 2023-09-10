@@ -51,7 +51,7 @@ _translate_types = {
 #----------------------------------------------------------------------
 # get pygments tokens
 #----------------------------------------------------------------------
-def _pygments_get_tokens(source, lang = 'cpp'):
+def pygments_get_tokens(source, lang = 'cpp'):
     import pygments
     import pygments.lexers
     lexer = pygments.lexers.get_lexer_by_name(lang)
@@ -60,9 +60,65 @@ def _pygments_get_tokens(source, lang = 'cpp'):
     else:
         code = source.read()
     tokens = []
+    lnum = 1
+    column = 1
     for token in lexer.get_tokens(code):
-        tokens.append(token)
+        start = (lnum, column)
+        text = token[1]
+        if '\n' not in text:
+            column += len(text)
+            endup = (lnum, column)
+        else:
+            lines = text.split('\n')
+            lnum += len(lines) - 1
+            column = len(lines[-1]) + 1
+            endup = (lnum, column)
+        t = (token[0], token[1], start, endup)
+        tokens.append(t)
     return tokens
+
+
+#----------------------------------------------------------------------
+# check token is target
+#----------------------------------------------------------------------
+def token_is(token, target) -> bool:
+    if token == target:
+        return True
+    if token in target:
+        return True
+    return False
+
+
+#----------------------------------------------------------------------
+# cursor 
+#----------------------------------------------------------------------
+def cursor_in_token(token, lnum: int, column: int) -> bool:
+    start = token[2]
+    endup = token[3]
+    if lnum < start[0] or lnum > endup[0]:
+        return False
+    elif start[0] == endup[0]:
+        if lnum == start[0]:
+            if start[1] <= column < endup[1]:
+                return True
+        return False
+    elif lnum == start[0]:
+        return (column >= start[1])
+    elif lnum == endup[0]:
+        return (column < endup[1])
+    return True
+
+
+#----------------------------------------------------------------------
+# find token
+#----------------------------------------------------------------------
+def token_locate(tokens, lnum: int, column: int) -> int:
+    if len(tokens) <= 0:
+        return -1
+    for index, token in enumerate(tokens):
+        if cursor_in_token(token, lnum, column):
+            return index
+    return -1
 
 
 #----------------------------------------------------------------------
@@ -94,11 +150,15 @@ def translate(pygments_tokens):
 #----------------------------------------------------------------------
 if __name__ == '__main__':
     def test1():
-        f = 'e:/lab/workshop/language/test_tok.c'
-        tokens = _pygments_get_tokens(open(f), 'cpp')
+        f = 'e:/lab/workshop/language/test_tok.cpp'
+        tokens = pygments_get_tokens(open(f), 'cpp')
         for t in tokens:
             print(t)
             # print(dir(t))
+        print('')
+        index = token_locate(tokens, 17, 17)
+        print(tokens[index])
         return 0
     test1()
+
 
