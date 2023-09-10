@@ -270,7 +270,7 @@ class Inspector (object):
         self._inited = True
 
     def __access_node (self, level: int, node: Node, output):
-        item = (level, node.type, node.start_point, node.end_point)
+        item = (level, node.type, node.is_named, node.start_point, node.end_point)
         output.append(item)
         for child in node.children:
             self.__access_node(level + 1, child, output)
@@ -317,6 +317,31 @@ class Inspector (object):
             node = node.parent
         path.reverse()
         return path
+
+    def traverse (self, node: Node, depth: int, output):
+        for index in range(node.child_count):
+            child: Node = node.children[index]
+            field: str = node.field_name_for_child(index)
+            if child.is_named:
+                if field:
+                    text = '%s: (%s)'%(field, child.type)
+                else:
+                    text = '(%s)'%(child.type, )
+            else:
+                text = child.type.replace('\n', '\\n')
+                # continue
+            t = (depth, text, child.start_point, child.end_point)
+            if child.is_named:
+                output.append(t)
+            self.traverse(child, depth + 1, output)
+        return output
+
+    def list_print (self, root):
+        output = []
+        self.traverse(root, 0, output)
+        for item in output:
+            print((' ' * item[0]) + item[1] + ' ' + str(item[2:]))
+        return 0
 
 
 #----------------------------------------------------------------------
@@ -399,7 +424,10 @@ if __name__ == '__main__':
         uri = 'e:/lab/workshop/network/CoreRuntime.h'
         source = utils.load_file_text(uri)
         tree = config.parse('cpp', source)
-        inspector.print_list(tree.root_node)
+        inspector.list_print(tree.root_node)
+        node = tree.root_node
+        # node.is_named
+        # node.field_name_for_child
         return 0
     test5()
 
