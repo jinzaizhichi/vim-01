@@ -121,6 +121,7 @@ function! module#cpp#get_class_name()
 		if name != ''
 			return name
 		endif
+		let name = matchstr(text, '^\s*\<struct\>\s*\zs\w\+')
 		let lnum -= 1
 	endwhile
 	return ''
