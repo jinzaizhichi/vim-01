@@ -3,7 +3,7 @@
 " template.vim - 
 "
 " Created by skywind on 2023/09/12
-" Last Modified: 2023/09/12 23:56
+" Last Modified: 2023/09/13 00:14
 "
 "======================================================================
 
@@ -218,7 +218,7 @@ endfunc
 "----------------------------------------------------------------------
 " :Template[!] [filetype/]{name}
 "----------------------------------------------------------------------
-function! s:Template(bang, name)
+function! s:Template(bang, name, preview)
 	if a:name == ''
 		echohl ErrorMsg
 		echo 'ERROR: template name required'
@@ -240,7 +240,15 @@ function! s:Template(bang, name)
 		echohl None
 		return 0
 	endif
-	if a:bang == 0
+	if a:preview != 0
+		for text in content
+			if text == ''
+				echo ' '
+			else
+				echo text
+			endif
+		endfor
+	elseif a:bang == 0
 		let bid = bufnr('%')
 		silent call deletebufline(bid, 1, '$')
 		silent call setbufline(bid, 1, content)
@@ -364,8 +372,11 @@ endfunc
 "----------------------------------------------------------------------
 " command defintion
 "----------------------------------------------------------------------
-command! -bang -nargs=1 -range=0 -complete=customlist,s:complete Template
-			\ call s:Template(<bang>0, <q-args>)
+command! -bang -nargs=1 -range=0 -complete=customlist,s:complete 
+			\ Template call s:Template(<bang>0, <q-args>, 0)
+
+command! -bang -nargs=1 -range=0 -complete=customlist,s:complete 
+			\ TemplatePreview call s:Template(<bang>0, <q-args>, 1)
 
 command! -bang -nargs=1 -range=0 -complete=customlist,s:complete 
 			\ TemplateEdit  call s:TemplateEdit('<mods>', <q-args>)
