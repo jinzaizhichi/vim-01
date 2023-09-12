@@ -21,27 +21,27 @@ set cpo&vim
 " shut case off
 syn case ignore
 
-syn match  dosiniLabel    "^.\{-}\ze\s*=" nextgroup=dosiniNumber,dosiniValue
-syn match  dosiniValue    "=\zs.*"
-syn match  dosiniNumber   "=\zs\s*\d\+\s*$"
-syn match  dosiniNumber   "=\zs\s*\d*\.\d\+\s*$"
-syn match  dosiniNumber   "=\zs\s*\d\+e[+-]\=\d\+\s*$"
-syn region dosiniHeader   start="^\s*\[" end="\]"
-syn match  dosiniComment  "^[#;].*$"
-syn region dosiniSection  start="\s*\[.*\]" end="\ze\s*\[.*\]" fold
-      \ contains=dosiniLabel,dosiniValue,dosiniNumber,dosiniHeader,dosiniComment
+syn match  taskiniLabel    "^.\{-}\ze\s*=" nextgroup=taskiniNumber,taskiniValue
+syn match  taskiniValue    "=\zs.*"
+syn match  taskiniNumber   "=\zs\s*\d\+\s*$"
+syn match  taskiniNumber   "=\zs\s*\d*\.\d\+\s*$"
+syn match  taskiniNumber   "=\zs\s*\d\+e[+-]\=\d\+\s*$"
+syn region taskiniHeader   start="^\s*\[" end="\]"
+syn match  taskiniComment  "^[#;].*$"
+syn region taskiniSection  start="\s*\[.*\]" end="\ze\s*\[.*\]" fold
+      \ contains=taskiniLabel,taskiniValue,taskiniNumber,taskiniHeader,taskiniComment
 
 " Define the default highlighting.
 " Only when an item doesn't have highlighting yet
 
-hi def link dosiniNumber   Number
-hi def link dosiniHeader   Special
-hi def link dosiniComment  Comment
-hi def link dosiniLabel    Type
-hi def link dosiniValue    String
+hi def link taskiniNumber   Number
+hi def link taskiniHeader   Special
+hi def link taskiniComment  Comment
+hi def link taskiniLabel    Type
+hi def link taskiniValue    String
 
 
-let b:current_syntax = "dosini"
+let b:current_syntax = "taskini"
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
