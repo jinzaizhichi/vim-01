@@ -14,6 +14,12 @@ let g:template_name = get(g:, 'template_name', 'template')
 " absolute path list
 let g:template_path = get(g:, 'template_path', ['~/.vim/template'])
 
+" absolute path for :TemplateEdit
+let g:template_edit = get(g:, 'template_path', '~/.vim/template')
+
+" set to 1 to insert above cursor when using :Template! {name}
+let g:template_above = get(g:, 'template_above', 0)
+
 
 "----------------------------------------------------------------------
 " internal
@@ -196,9 +202,16 @@ endfunc
 "----------------------------------------------------------------------
 " :Template[!] {name} [, filetype]
 "----------------------------------------------------------------------
-function! s:Template(bang, name, ...)
-	let ft = (a:0 > 0)? (a:1) : (&filetype)
-	let content = s:template_load(ft, a:name)
+function! s:Template(bang, name)
+	let part = split(a:name, '/', 1)
+	if len(part) == 1
+		let name = part[0]
+		let ft = &ft
+	else
+		let name = part[1]
+		let ft = part[0]
+	endif
+	let content = s:template_load(ft, name)
 	if type(content) == type(0)
 		echohl ErrorMsg
 		echo 'ERROR: template not find: ' .. a:name
@@ -206,7 +219,15 @@ function! s:Template(bang, name, ...)
 		return 0
 	endif
 	if a:bang == 0
+		let bid = bufnr('%')
+		silent call deletebufline(bid, 1, '$')
+		silent call setbufline(bid, 1, content)
 	else
+		if g:template_above == 0
+			call append('.', content)
+		else
+			call append(line('.') - 1, content)
+		endif
 	endif
 	return 0
 endfunc
@@ -217,8 +238,19 @@ endfunc
 "----------------------------------------------------------------------
 function! s:complete(ArgLead, CmdLine, CursorPos)
 	let candidate = []
-	let templates = s:template_list(&ft)
-	let names = keys(templates)
+	if stridx(a:ArgLead, '/') < 0
+		let templates = s:template_list(&ft)
+		let names = keys(templates)
+	else
+		let part = split(a:ArgLead, '/', 1)
+		let ft = part[0]
+		let templates = s:template_list(ft)
+		let names = []
+		" echo type(templates)
+		for temp in keys(templates)
+			call add(names, ft . '/' . temp)
+		endfor
+	endif
 	call sort(names)
 	for name in names
 		if stridx(name, a:ArgLead) == 0
@@ -232,8 +264,8 @@ endfunc
 "----------------------------------------------------------------------
 " command defintion
 "----------------------------------------------------------------------
-command! -bang -nargs=+ -range=0 -complete=customlist,s:complete Template
-			\ call s:Template('<bang>', <q-args>)
+command! -bang -nargs=1 -range=0 -complete=customlist,s:complete Template
+			\ call s:Template(<bang>0, <q-args>)
 
 
 
