@@ -1867,7 +1867,8 @@ let s:macros = {
 			\ 'VIM_RELNAME': 'File name relativize to current directory',
 			\ 'VIM_ROOT': 'Project root directory',
 			\ 'VIM_PRONAME': 'Name of current project root directory',
-			\ 'VIM_DIRNAME': "Name of current directory",
+			\ 'VIM_CWDNAME': "Name of current directory",
+			\ 'VIM_DIRNAME': "Directory name of current file",
 			\ 'VIM_CWORD': 'Current word under cursor',
 			\ 'VIM_CFILE': 'Current filename under cursor',
 			\ 'VIM_CLINE': 'Cursor line number in current buffer',
@@ -1920,7 +1921,8 @@ function! s:expand_macros()
 	let macros['VIM_ROOT'] = asyncrun#get_root('%')
 	let macros['VIM_HOME'] = expand(split(&rtp, ',')[0])
 	let macros['VIM_PRONAME'] = fnamemodify(macros['VIM_ROOT'], ':t')
-	let macros['VIM_DIRNAME'] = fnamemodify(macros['VIM_CWD'], ':t')
+	let macros['VIM_DIRNAME'] = fnamemodify(macros['VIM_FILEDIR'], ':t')
+	let macros['VIM_CWDNAME'] = fnamemodify(macros['VIM_CWD'], ':t')
 	let macros['VIM_PROFILE'] = g:asynctasks_profile
 	let macros['<cwd>'] = macros['VIM_CWD']
 	let macros['<root>'] = macros['VIM_ROOT']
@@ -1948,7 +1950,8 @@ function! s:task_macro(wsl)
 	let names = ['FILEPATH', 'FILENAME', 'FILEDIR', 'FILEEXT', 'FILETYPE']
 	let names += ['FILENOEXT', 'PATHNOEXT', 'CWD', 'RELDIR', 'RELNAME']
 	let names += ['CWORD', 'CFILE', 'CLINE', 'VERSION', 'SVRNAME', 'COLUMNS']
-	let names += ['LINES', 'GUI', 'ROOT', 'DIRNAME', 'PRONAME', 'PROFILE']
+	let names += ['LINES', 'GUI', 'ROOT', 'CWDNAME', 'PRONAME', 'DIRNAME']
+	let names += ['PROFILE']
 	let rows = []
 	let rows += [['Macro', 'Detail', 'Value']]
 	let highmap = {}

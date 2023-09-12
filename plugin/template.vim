@@ -160,7 +160,8 @@ function! s:expand_macros()
 	let macros['ROOT'] = asyncrun#get_root('%')
 	let macros['HOME'] = expand(split(&rtp, ',')[0])
 	let macros['PRONAME'] = fnamemodify(macros['ROOT'], ':t')
-	let macros['DIRNAME'] = fnamemodify(macros['CWD'], ':t')
+	let macros['DIRNAME'] = fnamemodify(macros['FILEDIR'], ':t')
+	let macros['CWDNAME'] = fnamemodify(macros['CWD'], ':t')
 	let macros['<cwd>'] = macros['CWD']
 	let macros['<root>'] = macros['ROOT']
 	let macros['YEAR'] = strftime('%Y')
