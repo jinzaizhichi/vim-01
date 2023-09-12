@@ -66,6 +66,7 @@ endif
 " settings
 "----------------------------------------------------------------------
 let g:template_edit = s:scripthome .. '/site/template'
+let g:template_user = 'skywind'
 
 
 "----------------------------------------------------------------------

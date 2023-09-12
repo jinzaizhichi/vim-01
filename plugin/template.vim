@@ -3,7 +3,7 @@
 " template.vim - 
 "
 " Created by skywind on 2023/09/12
-" Last Modified: 2023/09/12 22:47
+" Last Modified: 2023/09/12 23:56
 "
 "======================================================================
 
@@ -157,26 +157,37 @@ function! s:expand_macros()
 	let macros['COLUMNS'] = ''.&columns
 	let macros['LINES'] = ''.&lines
 	let macros['GUI'] = has('gui_running')? 1 : 0
-	let macros['ROOT'] = asyncrun#get_root('%')
+	let macros['ROOT'] = ''
 	let macros['HOME'] = expand(split(&rtp, ',')[0])
-	let macros['PRONAME'] = fnamemodify(macros['ROOT'], ':t')
+	let macros['PRONAME'] = ''
 	let macros['DIRNAME'] = fnamemodify(macros['FILEDIR'], ':t')
 	let macros['CWDNAME'] = fnamemodify(macros['CWD'], ':t')
+	let macros['CLASSNAME'] = macros['FILENOEXT']
 	let macros['GUARD'] = toupper(tr(macros['FILENAME'], '.', '_'))
 	let macros['<cwd>'] = macros['CWD']
 	let macros['<root>'] = macros['ROOT']
 	let macros['YEAR'] = strftime('%Y')
 	let macros['MONTH'] = strftime('%m')
 	let macros['DAY'] = strftime('%d')
-	let macros['TIME'] = strftime('%H:M')
+	let macros['TIME'] = strftime('%H:%M')
 	let macros['DATE'] = strftime('%Y-%m-%d')
 	let macros['USER'] = ''
+	if macros['GUARD'] != ''
+		let macros['GUARD'] = '_' .. macros['GUARD'] .. '_'
+	endif
 	if expand("%:e") == ''
 		let macros['FILEEXT'] = ''
 	endif
 	let t = expand('~')
 	if t != ''
 		let macros['USER'] = fnamemodify(t, ':t')
+	endif
+	if exists('*asyncrun#get_root')
+		let macros['ROOT'] = asyncrun#get_root('%')
+		let macros['PRONAME'] = fnamemodify(macros['ROOT'], ':t')
+	endif
+	if get(g:, 'template_user', '') != ''
+		let macros['USER'] = g:template_user
 	endif
 	return macros
 endfunc
@@ -247,7 +258,7 @@ endfunc
 "----------------------------------------------------------------------
 " :TemplateEdit [filetype/]{name}
 "----------------------------------------------------------------------
-function! s:TemplateEdit(name)
+function! s:TemplateEdit(mods, name)
 	if a:name == ''
 		echohl ErrorMsg
 		echo 'ERROR: template name required'
@@ -295,7 +306,15 @@ function! s:TemplateEdit(name)
 	let savebid = bufnr('%')
 	let cs = &commentstring
 	let oldft = &ft
-	if mods == ''
+	if a:mods != ''
+		if a:mods != 'auto'
+			exec a:mods .. ' split ' .. name
+		elseif winwidth(0) >= 160
+			exec 'vert split ' .. name
+		else
+			exec 'split ' .. name
+		endif
+	elseif mods == ''
 		exec 'split ' .. name
 	elseif mods == 'auto'
 		if winwidth(0) >= 160
@@ -349,7 +368,7 @@ command! -bang -nargs=1 -range=0 -complete=customlist,s:complete Template
 			\ call s:Template(<bang>0, <q-args>)
 
 command! -bang -nargs=1 -range=0 -complete=customlist,s:complete 
-			\ TemplateEdit  call s:TemplateEdit(<q-args>)
+			\ TemplateEdit  call s:TemplateEdit('<mods>', <q-args>)
 
 
 
