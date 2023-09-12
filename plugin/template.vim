@@ -3,9 +3,10 @@
 " template.vim - 
 "
 " Created by skywind on 2023/09/12
-" Last Modified: 2023/09/12 16:53:27
+" Last Modified: 2023/09/12 19:08
 "
 "======================================================================
+
 
 " template path in every runtime path
 let g:template_name = get(g:, 'template_name', 'template')
@@ -54,7 +55,7 @@ function! s:template_dirs() abort
 	endif
 	for t in loc_list
 		let t = expand(t)
-		if isdirectory(t)
+		if t != '' && isdirectory(t)
 			call add(dirlist, tr(t, '\', '/'))
 		endif
 	endfor
@@ -111,12 +112,13 @@ function! s:text_expand(text, mark_open, mark_close, macros) abort
 		let replace = '<ERROR>'
 		if name != '' && has_key(a:macros, name)
 			let replace = a:macros[name]
+		else
+			try
+				let replace = printf('%s', eval(body))
+			catch
+				let replace = v:exception
+			endtry
 		endif
-		try
-			let replace = printf('%s', eval(body))
-		catch
-			let replace = v:exception
-		endtry
 		let text = before .. replace .. after
 	endwhile
 	return text
@@ -156,6 +158,7 @@ function! s:expand_macros()
 	let macros['MONTH'] = strftime('%m')
 	let macros['DAY'] = strftime('%d')
 	let macros['TIME'] = strftime('%H:M')
+	let macros['DATE'] = strftime('%Y-%m-%d')
 	let macros['USER'] = ''
 	if expand("%:e") == ''
 		let macros['FILEEXT'] = ''
@@ -172,9 +175,9 @@ endfunc
 " load template
 "----------------------------------------------------------------------
 function! s:template_load(filetype, name) abort
-	let templates = s:template(a:filetype)
+	let templates = s:template_list(a:filetype)
 	if !has_key(templates, a:name)
-		return v:null
+		return 0
 	endif
 	let textlist = []
 	let content = readfile(templates[a:name])
@@ -184,10 +187,53 @@ function! s:template_load(filetype, name) abort
 		if p1 >= 0
 			let text = s:text_expand(text, '`', '`', macros)
 		endif
-		call add(content, text)
+		call add(textlist, text)
 	endfor
 	return textlist
 endfunc
+
+
+"----------------------------------------------------------------------
+" :Template[!] {name} [, filetype]
+"----------------------------------------------------------------------
+function! s:Template(bang, name, ...)
+	let ft = (a:0 > 0)? (a:1) : (&filetype)
+	let content = s:template_load(ft, a:name)
+	if type(content) == type(0)
+		echohl ErrorMsg
+		echo 'ERROR: template not find: ' .. a:name
+		echohl None
+		return 0
+	endif
+	if a:bang == 0
+	else
+	endif
+	return 0
+endfunc
+
+
+"----------------------------------------------------------------------
+" command complete
+"----------------------------------------------------------------------
+function! s:complete(ArgLead, CmdLine, CursorPos)
+	let candidate = []
+	let templates = s:template_list(&ft)
+	let names = keys(templates)
+	call sort(names)
+	for name in names
+		if stridx(name, a:ArgLead) == 0
+			let candidate += [name]
+		endif
+	endfor
+	return candidate
+endfunc
+
+
+"----------------------------------------------------------------------
+" command defintion
+"----------------------------------------------------------------------
+command! -bang -nargs=+ -range=0 -complete=customlist,s:complete Template
+			\ call s:Template('<bang>', <q-args>)
 
 
 
