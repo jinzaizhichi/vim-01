@@ -162,6 +162,7 @@ function! s:expand_macros()
 	let macros['PRONAME'] = fnamemodify(macros['ROOT'], ':t')
 	let macros['DIRNAME'] = fnamemodify(macros['FILEDIR'], ':t')
 	let macros['CWDNAME'] = fnamemodify(macros['CWD'], ':t')
+	let macros['GUARD'] = toupper(tr(macros['FILENAME'], '.', '_'))
 	let macros['<cwd>'] = macros['CWD']
 	let macros['<root>'] = macros['ROOT']
 	let macros['YEAR'] = strftime('%Y')
