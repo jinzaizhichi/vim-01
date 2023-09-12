@@ -2,6 +2,7 @@
 " startup
 "----------------------------------------------------------------------
 let g:asc_uname = asclib#platform#uname()
+let s:scripthome = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 exec 'set rtp+='. fnameescape(expand('<sfile>:p:h') . '/site/package')
 
 
@@ -25,7 +26,7 @@ call after_object#enable(['r', 'R'], '=', ':', '-', '#', ' ', '/', ';', '(', ')'
 
 
 "----------------------------------------------------------------------
-"- Global Settings
+"- asyncrun / asynctasks
 "----------------------------------------------------------------------
 let g:asyncrun_msys = ''
 for msys in ['d:/Linux', 'd:/software/msys32']
@@ -60,6 +61,11 @@ if executable('playwav.exe')
 	endif
 endif
 
+
+"----------------------------------------------------------------------
+" settings
+"----------------------------------------------------------------------
+let g:template_edit = s:scripthome .. '/site/template'
 
 
 "----------------------------------------------------------------------

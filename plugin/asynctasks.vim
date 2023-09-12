@@ -4,7 +4,7 @@
 "
 " Maintainer: skywind3000 (at) gmail.com, 2020-2021
 "
-" Last Modified: 2023/08/23 15:22
+" Last Modified: 2023/09/12 22:12
 " Verision: 1.9.15
 "
 " For more information, please visit:
@@ -1615,7 +1615,7 @@ endfunc
 " config template
 "----------------------------------------------------------------------
 let s:template = [
-			\ '# vim: set fenc=utf-8 ft=dosini:',
+			\ '# vim: set fenc=utf-8 ft=taskini:',
 			\ '# see: https://github.com/skywind3000/asynctasks.vim/wiki/Task-Config',
 			\ '',
 			\ '# define a new task named "file-build"',
@@ -1773,12 +1773,12 @@ function! s:task_edit(mode, path, template)
 	if type(temp) == 0
 		if temp == 0
 			let t = 'https://github.com/skywind3000/asynctasks.vim/wiki/Task-Config'
-			let template = ['# vim: set fenc=utf-8 ft=dosini:']
+			let template = ['# vim: set fenc=utf-8 ft=taskini:']
 			let template += ['# see: ' . wiki, '']
 		endif
 	else
 		let templates = s:template_load()
-		let template = ['# vim: set fenc=utf-8 ft=dosini:']
+		let template = ['# vim: set fenc=utf-8 ft=taskini:']
 		let template += ['# see: ' . wiki, '']
 		if a:template == ''
 			if get(g:, 'asynctasks_template_ask', 1) != 0
@@ -1833,10 +1833,12 @@ function! s:task_edit(mode, path, template)
 		else
 			exec "split ". fnameescape(name)
 		endif
+	elseif mods == 'tab'
+		exec "tabe " . fnameescape(name)
 	else
 		exec mods . " split " . fnameescape(name)
 	endif
-	setlocal ft=dosini
+	setlocal ft=taskini
 	if newfile
 		exec "normal ggVGx"
 		call append(line('.') - 1, template)

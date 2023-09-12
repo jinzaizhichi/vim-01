@@ -3,7 +3,7 @@
 " template.vim - 
 "
 " Created by skywind on 2023/09/12
-" Last Modified: 2023/09/12 19:08
+" Last Modified: 2023/09/12 22:47
 "
 "======================================================================
 
@@ -15,10 +15,13 @@ let g:template_name = get(g:, 'template_name', 'template')
 let g:template_path = get(g:, 'template_path', ['~/.vim/template'])
 
 " absolute path for :TemplateEdit
-let g:template_edit = get(g:, 'template_path', '~/.vim/template')
+let g:template_edit = get(g:, 'template_edit', '~/.vim/template')
 
 " set to 1 to insert above cursor when using :Template! {name}
 let g:template_above = get(g:, 'template_above', 0)
+
+" edit split mode: 'auto', 'vert', 'tab'
+let g:template_split = get(g:, 'template_split', 'auto')
 
 
 "----------------------------------------------------------------------
@@ -200,9 +203,15 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" :Template[!] {name} [, filetype]
+" :Template[!] [filetype/]{name}
 "----------------------------------------------------------------------
 function! s:Template(bang, name)
+	if a:name == ''
+		echohl ErrorMsg
+		echo 'ERROR: template name required'
+		echohl None
+		return 0
+	endif
 	let part = split(a:name, '/', 1)
 	if len(part) == 1
 		let name = part[0]
@@ -234,6 +243,77 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" :TemplateEdit [filetype/]{name}
+"----------------------------------------------------------------------
+function! s:TemplateEdit(name)
+	if a:name == ''
+		echohl ErrorMsg
+		echo 'ERROR: template name required'
+		echohl None
+		return 1
+	endif
+	let part = split(a:name, '/', 1)
+	if len(part) == 1
+		let name = part[0]
+		let ft = &ft
+	else
+		let name = part[1]
+		let ft = part[0]
+	endif
+	" echo printf("%s '%s'", type(g:template_edit), g:template_edit)
+	if g:template_edit == ''
+		echohl ErrorMsg
+		echo 'ERROR: variable g:template_edit is empty'
+		echohl None
+		return 2
+	endif
+	let home = fnamemodify(g:template_edit .. '/', ':p')
+	let home = home .. ((ft == '')? '' : (ft .. '/'))
+	let home = tr(home, '\', '/')
+	if !isdirectory(home)
+		try
+			call mkdir(home, 'p')
+		catch
+			echohl ErrorMsg
+			echo v:exception
+			echohl None
+			return 3
+		endtry
+	endif
+	if !isdirectory(home)
+		echohl ErrorMsg
+		echo 'ERROR: failed to create: ' .. home
+		echohl None
+		return 3
+	endif
+	let path = printf('%s%s.txt', home, name)
+	let name = fnameescape(path)
+	let mods = g:template_split
+	let newfile = (filereadable(path) == 0)? 1 : 0
+	let savebid = bufnr('%')
+	let cs = &commentstring
+	let oldft = &ft
+	if mods == ''
+		exec 'split ' .. name
+	elseif mods == 'auto'
+		if winwidth(0) >= 160
+			exec 'vert split ' .. name
+		else
+			exec 'split ' .. name
+		endif
+	elseif mods == 'tab'
+		exec 'tabe ' .. name
+	else
+		exec mods .. ' split ' .. name
+	endif
+	if savebid != bufnr('%') && ft != ''
+		exec 'setlocal ft=' . ft
+	endif
+	return 0
+endfunc
+
+
+"----------------------------------------------------------------------
 " command complete
 "----------------------------------------------------------------------
 function! s:complete(ArgLead, CmdLine, CursorPos)
@@ -246,7 +326,6 @@ function! s:complete(ArgLead, CmdLine, CursorPos)
 		let ft = part[0]
 		let templates = s:template_list(ft)
 		let names = []
-		" echo type(templates)
 		for temp in keys(templates)
 			call add(names, ft . '/' . temp)
 		endfor
@@ -266,6 +345,9 @@ endfunc
 "----------------------------------------------------------------------
 command! -bang -nargs=1 -range=0 -complete=customlist,s:complete Template
 			\ call s:Template(<bang>0, <q-args>)
+
+command! -bang -nargs=1 -range=0 -complete=customlist,s:complete 
+			\ TemplateEdit  call s:TemplateEdit(<q-args>)
 
 
 
