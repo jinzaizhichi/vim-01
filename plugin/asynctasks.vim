@@ -22,6 +22,7 @@ let s:windows = has('win32') || has('win64') || has('win16') || has('win95')
 let s:scriptname = expand('<sfile>:p')
 let s:scripthome = fnamemodify(s:scriptname, ':h:h')
 let s:inited = 0
+let s:taskft = get(g:, 'asynctasks_filetype', 'dosini')
 
 
 "----------------------------------------------------------------------
@@ -1615,7 +1616,7 @@ endfunc
 " config template
 "----------------------------------------------------------------------
 let s:template = [
-			\ '# vim: set fenc=utf-8 ft=taskini:',
+			\ '# vim: set fenc=utf-8 ft=' . s:taskft . ' :',
 			\ '# see: https://github.com/skywind3000/asynctasks.vim/wiki/Task-Config',
 			\ '',
 			\ '# define a new task named "file-build"',
@@ -1767,18 +1768,19 @@ function! s:task_edit(mode, path, template)
 			endif
 		endif
 	endfor
+	let taskft = get(g:, 'asynctasks_filetype', 'dosini')
 	let template = s:template
 	let temp = get(g:, 'asynctasks_template', 1)
 	let wiki = 'https://github.com/skywind3000/asynctasks.vim/wiki/Task-Config'
 	if type(temp) == 0
 		if temp == 0
 			let t = 'https://github.com/skywind3000/asynctasks.vim/wiki/Task-Config'
-			let template = ['# vim: set fenc=utf-8 ft=taskini:']
+			let template = ['# vim: set fenc=utf-8 ft=' . taskft . ':']
 			let template += ['# see: ' . wiki, '']
 		endif
 	else
 		let templates = s:template_load()
-		let template = ['# vim: set fenc=utf-8 ft=taskini:']
+		let template = ['# vim: set fenc=utf-8 ft=' . taskft . ':']
 		let template += ['# see: ' . wiki, '']
 		if a:template == ''
 			if get(g:, 'asynctasks_template_ask', 1) != 0
@@ -1838,7 +1840,9 @@ function! s:task_edit(mode, path, template)
 	else
 		exec mods . " split " . fnameescape(name)
 	endif
-	setlocal ft=taskini
+	if taskft != ''
+		exec 'setlocal ft=' . taskft
+	endif
 	if newfile
 		exec "normal ggVGx"
 		call append(line('.') - 1, template)
