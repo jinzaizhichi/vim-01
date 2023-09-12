@@ -5,7 +5,7 @@
 " Maintainer: skywind3000 (at) gmail.com, 2022-2023
 " Homepage: https://github.com/skywind3000/textproc.vim
 "
-" Last Modified: 2023/09/04 21:06
+" Last Modified: 2023/09/12 18:53
 "
 " A filter is a program that accepts text at standard input, changes
 " it in some way, and sends it to standard output. You can send some
@@ -81,6 +81,7 @@ function! s:script_roots() abort
 	let fn = s:script_home . '/site/text'
 	let fn = substitute(fn, '\\', '\/', 'g')
 	let candidate += [fn]
+	let loc_list = []
 	if exists('g:textproc_root')
 		if type(g:textproc_root) == type('')
 			let loc_list = split(g:textproc_root, ',')
@@ -89,13 +90,22 @@ function! s:script_roots() abort
 		elseif type(g:textproc_root) == type({})
 			let loc_list = keys(g:textproc_root)
 		endif
-		for location in loc_list
-			let location = expand(location)
-			if location != '' && isdirectory(location)
-				let candidate += [location]
-			endif
-		endfor
 	endif
+	if exists('b:textproc_root')
+		if type(b:textproc_root) == type('')
+			call extend(loc_list, split(b:textproc_root, ','))
+		elseif type(b:textproc_root) == type([])
+			call extend(loc_list, b:textproc_root)
+		elseif type(b:textproc_root) == type({})
+			call extend(loc_list, keys(b:textproc_root))
+		endif
+	endif
+	for location in loc_list
+		let location = expand(location)
+		if location != '' && isdirectory(location)
+			let candidate += [location]
+		endif
+	endfor
 	let rtp_name = get(g:, 'textproc_home', 'text')
 	for rtp in split(&rtp, ',')
 		if rtp != ''

@@ -35,14 +35,25 @@ function! s:template_dirs() abort
 			call add(dirlist, tr(t, '\', '/'))
 		endif
 	endfor
+	let loc_list = []
 	if type(g:template_path) == type('')
-		let path = split(g:template_path, ',')
+		let loc_list = split(g:template_path, ',')
 	elseif type(g:template_path) == type([])
-		let path = g:template_path
-	else
-		let path = []
+		let loc_list = g:template_path
+	elseif type(g:template_path) == type({})
+		let loc_list = keys(g:template_path)
 	endif
-	for t in path
+	if exists('b:template_path')
+		if type(b:template_path) == type('')
+			call extend(loc_list, split(b:template_path, ','))
+		elseif type(b:template_path) == type([])
+			call extend(loc_list, b:template_path)
+		elseif type(b:template_path) == type({})
+			call extend(loc_list, keys(b:template_path))
+		endif
+	endif
+	for t in loc_list
+		let t = expand(t)
 		if isdirectory(t)
 			call add(dirlist, tr(t, '\', '/'))
 		endif
@@ -78,7 +89,7 @@ endfunc
 "----------------------------------------------------------------------
 " expand text
 "----------------------------------------------------------------------
-function! s:text_expand(text, mark_open, mark_close, environ) abort
+function! s:text_expand(text, mark_open, mark_close, macros) abort
 	let mark_open = a:mark_open
 	let mark_close = a:mark_close
 	let size_open = strlen(mark_open)
@@ -96,12 +107,10 @@ function! s:text_expand(text, mark_open, mark_close, environ) abort
 		let before = strpart(text, 0, p1)
 		let body = strpart(text, p1 + size_open, p2 - p1 - size_open)
 		let after = strpart(text, p2 + size_close)
-		let envname = matchstr(body, '^%\zs.*\ze%$')
+		let name = matchstr(body, '^%\zs.*\ze%$')
 		let replace = '<ERROR>'
-		if envname != ''
-			if has_key(a:environ, envname)
-				let replace = a:environ[envname]
-			endif
+		if name != '' && has_key(a:macros, name)
+			let replace = a:macros[name]
 		endif
 		try
 			let replace = printf('%s', eval(body))
@@ -115,6 +124,51 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" create environ
+"----------------------------------------------------------------------
+function! s:expand_macros()
+	let macros = {}
+	let macros['FILEPATH'] = expand("%:p")
+	let macros['FILENAME'] = expand("%:t")
+	let macros['FILEDIR'] = expand("%:p:h")
+	let macros['FILENOEXT'] = expand("%:t:r")
+	let macros['PATHNOEXT'] = expand("%:p:r")
+	let macros['FILEEXT'] = "." . expand("%:e")
+	let macros['FILETYPE'] = (&filetype)
+	let macros['CWD'] = getcwd()
+	let macros['RELDIR'] = expand("%:h:.")
+	let macros['RELNAME'] = expand("%:p:.")
+	let macros['CWORD'] = expand("<cword>")
+	let macros['CFILE'] = expand("<cfile>")
+	let macros['CLINE'] = line('.')
+	let macros['VERSION'] = ''.v:version
+	let macros['SVRNAME'] = v:servername
+	let macros['COLUMNS'] = ''.&columns
+	let macros['LINES'] = ''.&lines
+	let macros['GUI'] = has('gui_running')? 1 : 0
+	let macros['ROOT'] = asyncrun#get_root('%')
+	let macros['HOME'] = expand(split(&rtp, ',')[0])
+	let macros['PRONAME'] = fnamemodify(macros['ROOT'], ':t')
+	let macros['DIRNAME'] = fnamemodify(macros['CWD'], ':t')
+	let macros['<cwd>'] = macros['CWD']
+	let macros['<root>'] = macros['ROOT']
+	let macros['YEAR'] = strftime('%Y')
+	let macros['MONTH'] = strftime('%m')
+	let macros['DAY'] = strftime('%d')
+	let macros['TIME'] = strftime('%H:M')
+	let macros['USER'] = ''
+	if expand("%:e") == ''
+		let macros['FILEEXT'] = ''
+	endif
+	let t = expand('~')
+	if t != ''
+		let macros['USER'] = fnamemodify(t, ':t')
+	endif
+	return macros
+endfunc
+
+
+"----------------------------------------------------------------------
 " load template
 "----------------------------------------------------------------------
 function! s:template_load(filetype, name) abort
@@ -124,11 +178,11 @@ function! s:template_load(filetype, name) abort
 	endif
 	let textlist = []
 	let content = readfile(templates[a:name])
-	let environ = s:create_environ()
+	let macros = s:expand_macros()
 	for text in content
 		let p1 = stridx(text, '`')
 		if p1 >= 0
-			let text = s:text_expand(text, '`', '`', environ)
+			let text = s:text_expand(text, '`', '`', macros)
 		endif
 		call add(content, text)
 	endfor
