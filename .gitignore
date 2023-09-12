@@ -46,6 +46,7 @@ tags
 /autoload/quickui/test_*
 /autoload/quickui/**/test_*
 /autoload/python/test_*
+/autoload/tweak/test_*
 /plugin/test_*
 /lua/test/*
 
