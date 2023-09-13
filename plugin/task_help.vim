@@ -156,8 +156,6 @@ function! s:detect_taskini()
 	for cname in parts
 		let cname = fnamemodify(cname, ':t')
 		if sname == cname
-			setlocal ft=taskini
-			exec 'setlocal commentstring=;\ %s'
 			return 1
 		endif
 	endfor
@@ -169,8 +167,6 @@ function! s:detect_taskini()
 			let t = printf('%s/%s', dirname, rtp_config)
 			if asyncrun#utils#path_equal(filepath, t) != 0
 				" echom printf("test: '%s' '%s'", filepath, t)
-				setlocal ft=taskini
-				exec 'setlocal commentstring=;\ %s'
 				return 1
 			endif
 		endfor
@@ -180,11 +176,23 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" init filetype
+"----------------------------------------------------------------------
+function! s:init_filetype()
+	let ft = get(g:, 'asynctasks_filetype', 'dosini')
+	if s:detect_taskini()
+		exec 'setlocal ft=' . fnameescape(ft)
+		exec 'setlocal commentstring=#\ %s'
+	endif
+endfunc
+
+
+"----------------------------------------------------------------------
 " autocmd
 "----------------------------------------------------------------------
 augroup TaskHelpAuto
 	au!
-	au BufNewFile,BufRead * call s:detect_taskini()
+	au BufNewFile,BufRead * call s:init_filetype()
 augroup end
 
 
