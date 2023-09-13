@@ -4,8 +4,8 @@
 "
 " Maintainer: skywind3000 (at) gmail.com, 2020-2021
 "
-" Last Modified: 2023/09/13 10:47
-" Verision: 1.9.15
+" Last Modified: 2023/09/13 10:51
+" Verision: 1.9.16
 "
 " For more information, please visit:
 " https://github.com/skywind3000/asynctasks.vim
@@ -1771,7 +1771,6 @@ function! s:task_edit(mode, path, template)
 	if type(temp) == 0
 		let template = ['# vim: set fenc=utf-8 ft=' . taskft . ':']
 		let template += ['# see: ' . wiki, '']
-		let template += []
 		if temp != 0
 			call extend(template, s:template)
 		endif
