@@ -3,7 +3,7 @@
 " template.vim - 
 "
 " Created by skywind on 2023/09/12
-" Last Modified: 2023/09/13 00:14
+" Last Modified: 2023/09/13 09:21
 "
 "======================================================================
 
@@ -38,6 +38,9 @@ function! s:template_dirs() abort
 	let root = s:scripthome .. '/site/template'
 	if isdirectory(root)
 		call add(dirlist, tr(root, '\', '/'))
+	endif
+	if g:template_edit != ''
+		call add(dirlist, g:template_edit)
 	endif
 	for rtp in split(&rtp, ',')
 		let t = rtp .. '/' .. g:template_name

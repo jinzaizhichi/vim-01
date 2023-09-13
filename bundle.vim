@@ -44,7 +44,6 @@ call plug#begin(get(g:, 'bundle_home', '~/.vim/bundles'))
 " package group - simple
 "----------------------------------------------------------------------
 if has_key(s:enabled, 'simple')
-	Plug 'Raimondi/delimitMate'
 	Plug 'justinmk/vim-dirvish'
 	Plug 'justinmk/vim-sneak'
 	Plug 'tpope/vim-fugitive'
@@ -52,6 +51,12 @@ if has_key(s:enabled, 'simple')
 	Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
 	Plug 'bootleq/vim-cycle'
 	Plug 'tpope/vim-surround'
+
+	if !has_key(s:enabled, 'autopair')
+		Plug 'Raimondi/delimitMate'
+	else
+		Plug 'jiangmiao/auto-pairs'
+	endif
 
 	" Plug 'romainl/vim-cool'
 	
