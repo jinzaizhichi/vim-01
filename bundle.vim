@@ -301,6 +301,11 @@ if has_key(s:enabled, 'gdb')
 	IncScript site/bundle/gdb.vim
 endif
 
+" endwise
+if has_key(s:enabled, 'endwise')
+	Plug 'tpope/vim-endwise'
+endif
+
 " snippet
 if has_key(s:enabled, 'snipmate')
 	Plug 'MarcWeber/vim-addon-mw-utils'
