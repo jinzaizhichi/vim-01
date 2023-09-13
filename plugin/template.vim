@@ -3,7 +3,7 @@
 " template.vim - 
 "
 " Created by skywind on 2023/09/12
-" Last Modified: 2023/09/13 09:21
+" Last Modified: 2023/09/13 09:22
 "
 "======================================================================
 
@@ -40,7 +40,9 @@ function! s:template_dirs() abort
 		call add(dirlist, tr(root, '\', '/'))
 	endif
 	if g:template_edit != ''
-		call add(dirlist, g:template_edit)
+		if g:template_edit != root
+			call add(dirlist, g:template_edit)
+		endif
 	endif
 	for rtp in split(&rtp, ',')
 		let t = rtp .. '/' .. g:template_name
