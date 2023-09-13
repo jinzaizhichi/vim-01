@@ -199,7 +199,7 @@ let g:asynctasks_environ = get(g:, 'asynctasks_environ', {})
 "----------------------------------------------------------------------
 " template
 "----------------------------------------------------------------------
-let g:template_edit = s:scripthome .. '/site/template'
+let g:template_edit = s:home .. '/site/template'
 let g:template_user = 'skywind'
 
 
