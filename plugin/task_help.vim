@@ -148,6 +148,9 @@ endfunc
 " detect taskini
 "----------------------------------------------------------------------
 function! s:detect_taskini()
+	if expand('%') == ''
+		return 1
+	endif
 	let cname = get(g:, 'asynctasks_config_name', '.tasks')
 	let parts = (type(cname) == 1)? split(cname, ',') : cname
 	let sname = expand('%:t')
