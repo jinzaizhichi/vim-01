@@ -40,8 +40,9 @@ function! s:template_dirs() abort
 		call add(dirlist, tr(root, '\', '/'))
 	endif
 	if g:template_edit != ''
-		if g:template_edit != root
-			call add(dirlist, g:template_edit)
+		let path = expand(g:template_edit)
+		if path != root
+			call add(dirlist, path)
 		endif
 	endif
 	for rtp in split(&rtp, ',')
