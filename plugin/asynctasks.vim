@@ -4,7 +4,7 @@
 "
 " Maintainer: skywind3000 (at) gmail.com, 2020-2021
 "
-" Last Modified: 2023/09/13 10:42
+" Last Modified: 2023/09/13 10:47
 " Verision: 1.9.15
 "
 " For more information, please visit:
@@ -1615,8 +1615,6 @@ endfunc
 " config template
 "----------------------------------------------------------------------
 let s:template = [
-			\ '# see: https://github.com/skywind3000/asynctasks.vim/wiki/Task-Config',
-			\ '',
 			\ '# define a new task named "file-build"',
 			\ '[file-build]',
 			\ '',
@@ -1772,10 +1770,9 @@ function! s:task_edit(mode, path, template)
 	let wiki = 'https://github.com/skywind3000/asynctasks.vim/wiki/Task-Config'
 	if type(temp) == 0
 		let template = ['# vim: set fenc=utf-8 ft=' . taskft . ':']
-		if temp == 0
-			let t = 'https://github.com/skywind3000/asynctasks.vim/wiki/Task-Config'
-			let template += ['# see: ' . wiki, '']
-		else
+		let template += ['# see: ' . wiki, '']
+		let template += []
+		if temp != 0
 			call extend(template, s:template)
 		endif
 	else
