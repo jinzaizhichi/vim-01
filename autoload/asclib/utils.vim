@@ -434,7 +434,7 @@ function! asclib#utils#display(name, mods) abort
 			endif
 		endfor
 		if avail > 0
-			exec avail .. 'wincmd w'
+			exec avail . 'wincmd w'
 		elseif a:mods == 'auto'
 			if winwidth(0) >= 160
 				exec 'vsplit'
@@ -442,13 +442,13 @@ function! asclib#utils#display(name, mods) abort
 				exec 'split'
 			endif
 		else
-			exec a:mods .. ' split'
+			exec a:mods . ' split'
 		endif
 	endif
 	if type(a:name) == type(0)
 		exec printf('buffer %d', a:name)
 	else 
-		exec 'edit ' .. fnameescape(a:name)
+		exec 'edit ' . fnameescape(a:name)
 	endif
 	call asclib#buffer#setvar(0, '_for_display', 1)
 	return 0

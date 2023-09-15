@@ -255,7 +255,7 @@ endfunc
 function! asclib#core#errmsg(what)
 	redraw
 	echohl ErrorMsg
-	echom 'ERROR: ' .. a:what
+	echom 'ERROR: ' . a:what
 	echohl None
 endfunc
 
@@ -278,8 +278,8 @@ function! s:system_wsl(cmd)
 	endif
 	let cmd = shellescape(substitute(tt, '\\', '\/', 'g'))
 	let dist = get(g:, 'asclib#core#wsl_dist', '')
-	let cmd = (dist == '')? cmd : (cmd .. ' -d ' .. shellescape(dist))
-	return asclib#core#system(cmd .. ' ' .. a:cmd)
+	let cmd = (dist == '')? cmd : (cmd . ' -d ' . shellescape(dist))
+	return asclib#core#system(cmd . ' ' . a:cmd)
 endfunc
 
 
@@ -298,17 +298,17 @@ function! s:system_msys(cmd)
 	endif
 	let msys = tr(msys, "\\", '/')
 	if !isdirectory(msys)
-		call asclib#core#errmsg("msys does not exist in " .. msys)
+		call asclib#core#errmsg("msys does not exist in " . msys)
 		return ''
 	endif
 	let last = strpart(msys, strlen(msys) - 1, 1)
-	let name = (last == '/' || last == "\\")? msys : (msys .. '/')
-	let name = name .. 'usr/bin/bash.exe'
+	let name = (last == '/' || last == "\\")? msys : (msys . '/')
+	let name = name . 'usr/bin/bash.exe'
 	if !executable(name)
-		call asclib#core#errmsg("invalid msys path " .. msys)
+		call asclib#core#errmsg("invalid msys path " . msys)
 		return ''
 	endif
-	let cmd = shellescape(name) .. ' --login -c ' .. shellescape(a:cmd)
+	let cmd = shellescape(name) . ' --login -c ' . shellescape(a:cmd)
 	return asclib#core#system(cmd)
 endfunc
 

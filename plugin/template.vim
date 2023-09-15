@@ -35,7 +35,7 @@ let s:scripthome = fnamemodify(resolve(expand('<sfile>:p')), ':h:h')
 "----------------------------------------------------------------------
 function! s:template_dirs() abort
 	let dirlist = []
-	let root = s:scripthome .. '/site/template'
+	let root = s:scripthome . '/site/template'
 	if isdirectory(root)
 		call add(dirlist, tr(root, '\', '/'))
 	endif
@@ -46,7 +46,7 @@ function! s:template_dirs() abort
 		endif
 	endif
 	for rtp in split(&rtp, ',')
-		let t = rtp .. '/' .. g:template_name
+		let t = rtp . '/' . g:template_name
 		if isdirectory(t)
 			call add(dirlist, tr(t, '\', '/'))
 		endif
@@ -87,7 +87,7 @@ function! s:template_list(filetype) abort
 	for base in dirs
 		let path = base
 		if a:filetype != ''
-			let path = base .. '/' .. (a:filetype)
+			let path = base . '/' . (a:filetype)
 		endif
 		if !isdirectory(path)
 			continue
@@ -134,7 +134,7 @@ function! s:text_expand(text, mark_open, mark_close, macros) abort
 				let replace = v:exception
 			endtry
 		endif
-		let text = before .. replace .. after
+		let text = before . replace . after
 	endwhile
 	return text
 endfunc
@@ -179,7 +179,8 @@ function! s:expand_macros()
 	let macros['DATE'] = strftime('%Y-%m-%d')
 	let macros['USER'] = ''
 	if macros['GUARD'] != ''
-		let macros['GUARD'] = '_' .. macros['GUARD'] .. '_'
+		let t = tr(macros['GUARD'], '-', '_')
+		let macros['GUARD'] = '_' . t . '_'
 	endif
 	if expand("%:e") == ''
 		let macros['FILEEXT'] = ''
@@ -242,7 +243,7 @@ function! s:Template(bang, name, preview)
 	let content = s:template_load(ft, name)
 	if type(content) == type(0)
 		echohl ErrorMsg
-		echo 'ERROR: template not find: ' .. a:name
+		echo 'ERROR: template not find: ' . a:name
 		echohl None
 		return 0
 	endif
@@ -294,8 +295,8 @@ function! s:TemplateEdit(mods, name)
 		echohl None
 		return 2
 	endif
-	let home = fnamemodify(g:template_edit .. '/', ':p')
-	let home = home .. ((ft == '')? '' : (ft .. '/'))
+	let home = fnamemodify(g:template_edit . '/', ':p')
+	let home = home . ((ft == '')? '' : (ft . '/'))
 	let home = tr(home, '\', '/')
 	if !isdirectory(home)
 		try
@@ -309,7 +310,7 @@ function! s:TemplateEdit(mods, name)
 	endif
 	if !isdirectory(home)
 		echohl ErrorMsg
-		echo 'ERROR: failed to create: ' .. home
+		echo 'ERROR: failed to create: ' . home
 		echohl None
 		return 3
 	endif
@@ -322,24 +323,24 @@ function! s:TemplateEdit(mods, name)
 	let oldft = &ft
 	if a:mods != ''
 		if a:mods != 'auto'
-			exec a:mods .. ' split ' .. name
+			exec a:mods . ' split ' . name
 		elseif winwidth(0) >= 160
-			exec 'vert split ' .. name
+			exec 'vert split ' . name
 		else
-			exec 'split ' .. name
+			exec 'split ' . name
 		endif
 	elseif mods == ''
-		exec 'split ' .. name
+		exec 'split ' . name
 	elseif mods == 'auto'
 		if winwidth(0) >= 160
-			exec 'vert split ' .. name
+			exec 'vert split ' . name
 		else
-			exec 'split ' .. name
+			exec 'split ' . name
 		endif
 	elseif mods == 'tab'
-		exec 'tabe ' .. name
+		exec 'tabe ' . name
 	else
-		exec mods .. ' split ' .. name
+		exec mods . ' split ' . name
 	endif
 	if savebid != bufnr('%') && ft != ''
 		exec 'setlocal ft=' . ft
