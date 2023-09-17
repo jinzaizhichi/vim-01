@@ -3,7 +3,7 @@
 " template.vim - 
 "
 " Created by skywind on 2023/09/12
-" Last Modified: 2023/09/18 02:33
+" Last Modified: 2023/09/18 02:36
 "
 "======================================================================
 
@@ -249,7 +249,7 @@ function! s:Template(bang, name, preview)
 	endif
 	if &modifiable == 0 && a:preview == 0
 		echohl ErrorMsg
-		echo "E21: Cannot make changes, 'modifiable' is off"
+		echo "ERROR: Cannot make changes, 'modifiable' is off"
 		echohl None
 		return 0
 	endif

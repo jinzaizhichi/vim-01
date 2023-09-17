@@ -5,7 +5,7 @@
 " Maintainer: skywind3000 (at) gmail.com, 2022-2023
 " Homepage: https://github.com/skywind3000/textproc.vim
 "
-" Last Modified: 2023/09/12 18:56
+" Last Modified: 2023/09/18 02:35
 "
 " A filter is a program that accepts text at standard input, changes
 " it in some way, and sends it to standard output. You can send some
@@ -345,6 +345,12 @@ function! s:script_run(name, args, lnum, count, debug) abort
 		redraw
 		echohl ErrorMsg
 		echo 'ERROR: script not find: ' . a:name
+		echohl None
+		return 0
+	elseif &modifiable == 0
+		redraw
+		echohl ErrorMsg
+		echo "ERROR: Cannot make changes, 'modifiable' is off"
 		echohl None
 		return 0
 	endif
