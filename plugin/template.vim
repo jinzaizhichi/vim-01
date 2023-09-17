@@ -3,7 +3,7 @@
 " template.vim - 
 "
 " Created by skywind on 2023/09/12
-" Last Modified: 2023/09/13 09:22
+" Last Modified: 2023/09/18 02:33
 "
 "======================================================================
 
@@ -244,6 +244,12 @@ function! s:Template(bang, name, preview)
 	if type(content) == type(0)
 		echohl ErrorMsg
 		echo 'ERROR: template not find: ' . a:name
+		echohl None
+		return 0
+	endif
+	if &modifiable == 0 && a:preview == 0
+		echohl ErrorMsg
+		echo "E21: Cannot make changes, 'modifiable' is off"
 		echohl None
 		return 0
 	endif
