@@ -55,10 +55,15 @@ if has('patch-8.2.4500')
 endif
 
 if executable('playwav.exe')
-	let f = 'c:/share/vim/tools/sample/sample-6.wav'
-	if filereadable(f)
-		let g:asyncrun_exit = printf('silent !start playwav.exe "%s" 200', f)
-	endif
+	let f1 = 'c:/share/vim/tools/sample/sample-6.wav'
+	let f2 = 'c:/share/resource/samples/sample-6.vim'
+	for f in [f1, f2]
+		if filereadable(f)
+			let t = printf('silent !start playwav.exe "%s" 200', f1)
+			let g:asyncrun_exit = t
+			break
+		endif
+	endfor
 endif
 
 
