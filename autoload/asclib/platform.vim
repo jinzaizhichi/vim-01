@@ -129,9 +129,12 @@ function! asclib#platform#has(what)
 		return asclib#platform#has_python()
 	elseif what == 'gui_running'
 		return asclib#platform#gui_running()
-	else
-		return has(what)
+	elseif what == 'msys'
+		return (has('win32unix') && isdirectory('/cygdrive/c') == 0)
+	elseif what == 'cygwin'
+		return (has('win32unix') && isidrectory('/cygdrive/c'))
 	endif
+	return has(what)
 endfunc
 
 
