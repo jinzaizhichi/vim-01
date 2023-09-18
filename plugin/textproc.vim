@@ -45,6 +45,7 @@
 "     
 "     g:textproc_home    - sub-directory name, default to "text"
 "     g:textproc_root    - a list of extra search path.
+"     b:textproc_root    - local list of extra search path.
 "     g:textproc_split   - preview split mode: "auto", "vert" or ""
 "     g:textproc_runner  - a directory of filter runners
 "
