@@ -128,6 +128,22 @@ function! asclib#platform#has_wsl()
 		return 0
 	endif
 	let s:has_wsl = 0
+	let f = '/proc/version'
+	if filereadable(f)
+		try
+			let text = readfile(f, '', 3)
+		catch
+			let text = []
+		endtry
+		echom "suck wsl"
+		for t in text
+			if match(t, 'Microsoft') >= 0
+				let s:has_wsl = 1
+				echom "WSL"
+				return 1
+			endif
+		endfor
+	endif
 	let cmd = '/mnt/c/Windows/System32/cmd.exe'
 	if !executable(cmd)
 		return 0
