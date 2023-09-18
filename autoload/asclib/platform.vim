@@ -132,7 +132,7 @@ function! asclib#platform#has(what)
 	elseif what == 'msys'
 		return (has('win32unix') && isdirectory('/cygdrive/c') == 0)
 	elseif what == 'cygwin'
-		return (has('win32unix') && isidrectory('/cygdrive/c'))
+		return (has('win32unix') && isdirectory('/cygdrive/c'))
 	endif
 	return has(what)
 endfunc
