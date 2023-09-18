@@ -135,11 +135,9 @@ function! asclib#platform#has_wsl()
 		catch
 			let text = []
 		endtry
-		echom "suck wsl"
 		for t in text
 			if match(t, 'Microsoft') >= 0
 				let s:has_wsl = 1
-				echom "WSL"
 				return 1
 			endif
 		endfor
