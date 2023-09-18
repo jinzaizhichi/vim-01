@@ -119,6 +119,23 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" omni "has" interface
+"----------------------------------------------------------------------
+function! asclib#platform#has(what)
+	let what = a:what
+	if what == 'wsl'
+		return asclib#platform#has_wsl()
+	elseif what == 'python'
+		return asclib#platform#has_python()
+	elseif what == 'gui_running'
+		return asclib#platform#gui_running()
+	else
+		return has(what)
+	endif
+endfunc
+
+
+"----------------------------------------------------------------------
 " check wsl
 "----------------------------------------------------------------------
 function! asclib#platform#has_wsl()
