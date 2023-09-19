@@ -177,7 +177,7 @@ function! s:expand_macros()
 	let macros['DAY'] = strftime('%d')
 	let macros['TIME'] = strftime('%H:%M')
 	let macros['DATE'] = strftime('%Y-%m-%d')
-	let macros['USER'] = ''
+	let macros['USER'] = get(g:, 'template_user', 'NOBODY')
 	if macros['GUARD'] != ''
 		let t = tr(macros['GUARD'], '-', '_')
 		let macros['GUARD'] = '_' . t . '_'
@@ -192,9 +192,6 @@ function! s:expand_macros()
 	if exists('*asyncrun#get_root')
 		let macros['ROOT'] = asyncrun#get_root('%')
 		let macros['PRONAME'] = fnamemodify(macros['ROOT'], ':t')
-	endif
-	if get(g:, 'template_user', '') != ''
-		let macros['USER'] = g:template_user
 	endif
 	return macros
 endfunc
