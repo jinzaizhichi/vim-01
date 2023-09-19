@@ -4,7 +4,7 @@
 "
 " Maintainer: skywind3000 (at) gmail.com, 2020-2021
 "
-" Last Modified: 2023/09/13 10:51
+" Last Modified: 2023/09/19 21:36
 " Verision: 1.9.16
 "
 " For more information, please visit:
@@ -2488,9 +2488,34 @@ function! s:task_environ(bang, ...)
 		echon environ[name]
 		echohl None
 	elseif nargs > 2
+		let index = -1
 		let name = args[0]
+		let text = get(g:asynctasks_environ, name, '')
 		let argv = slice(args, 1)
+		let candidates = []
+		for ii in range(len(argv))
+			if has_key(environ, name)
+				if text == argv[ii]
+					let index = ii + 1
+				endif
+			endif
+			let candidates += [printf('&%d %s', ii + 1, argv[ii])]
+		endfor
 		let prompt = printf("Set variable '%s' to: ", name)
+		let choice = s:api_confirm(prompt, join(candidates, "\n"), index)
+		if choice < 1 || choice > len(argv)
+			return 0
+		endif
+		let environ[name] = argv[choice - 1]
+		echohl Statement
+		echon 'assigned '
+		echohl Keyword
+		echon name
+		echohl Comment
+		echon '='
+		echohl Number
+		echon environ[name]
+		echohl None
 	else
 		echom args
 		call s:errmsg('too many arguments, use AsyncTaskEnviron -h for help')
