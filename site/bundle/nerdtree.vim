@@ -24,11 +24,33 @@ let NERDTreeRespectWildIgnore = 1
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeHijackNetrw = 0
+
 " let g:NERDTreeFileExtensionHighlightFullName = 1
 " let g:NERDTreeExactMatchHighlightFullName = 1
 " let g:NERDTreePatternMatchHighlightFullName = 1
+
 nnoremap <space>tn :exec "NERDTree " . fnameescape(asclib#path#get_root('%'))<cr>
 nnoremap <space>to :NERDTreeFocus<cr>
 nnoremap <space>tm :NERDTreeMirror<cr>
 nnoremap <space>tt :exec "NERDTreeToggle " . fnameescape(asclib#path#get_root('%'))<cr>
+
+
+"----------------------------------------------------------------------
+" 
+"----------------------------------------------------------------------
+function! s:init_nerdtree_ft()
+	if exists('+cursorlineopt')
+		setlocal cursorlineopt=number,line
+	endif
+endfunc
+
+
+"----------------------------------------------------------------------
+" 
+"----------------------------------------------------------------------
+augroup MyNERDTreeEvent
+	au!
+	au FileType nerdtree call s:init_nerdtree_ft()
+augroup END
+
 

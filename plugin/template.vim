@@ -170,14 +170,12 @@ function! s:expand_macros()
 	let macros['CWDNAME'] = fnamemodify(macros['CWD'], ':t')
 	let macros['CLASSNAME'] = macros['FILENOEXT']
 	let macros['GUARD'] = toupper(tr(macros['FILENAME'], '.', '_'))
-	let macros['<cwd>'] = macros['CWD']
-	let macros['<root>'] = macros['ROOT']
 	let macros['YEAR'] = strftime('%Y')
 	let macros['MONTH'] = strftime('%m')
 	let macros['DAY'] = strftime('%d')
 	let macros['TIME'] = strftime('%H:%M')
 	let macros['DATE'] = strftime('%Y-%m-%d')
-	let macros['USER'] = get(g:, 'template_user', 'NOBODY')
+	let macros['USER'] = get(g:, 'template_user', 'NONAME')
 	if macros['GUARD'] != ''
 		let t = tr(macros['GUARD'], '-', '_')
 		let macros['GUARD'] = '_' . t . '_'

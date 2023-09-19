@@ -70,7 +70,7 @@ function! asclib#path#abspath(path)
 		let f = expand('%')
 		if &bt == 'terminal'
 			let f = ''
-		elseif &bt == 'nofile'
+		elseif &bt != ''
 			let is_directory = 0
 			if f =~ '[\/\\]$'
 				if f =~ '^[\/\\]' || f =~ '^.:[\/\\]'
@@ -357,42 +357,47 @@ endfunc
 
 
 "----------------------------------------------------------------------
+" guess root
+"----------------------------------------------------------------------
+function! s:guess_root(filename, markers)
+	let fullname = asclib#path#abspath(a:filename)
+	if fullname =~ '^fugitive:/'
+		if exists('b:git_dir')
+			return fnamemodify(b:git_dir, ':h')
+		endif
+		return '' " skip any fugitive buffers early
+	endif
+	let pivot = fullname
+	if !isdirectory(pivot)
+		let pivot = fnamemodify(pivot, ':h')
+	endif
+	while 1
+		let prev = pivot
+		for marker in a:markers
+			let newname = asclib#path#join(pivot, marker)
+			if newname =~ '[\*\?\[\]]'
+				if glob(newname) != ''
+					return pivot
+				endif
+			elseif filereadable(newname)
+				return pivot
+			elseif isdirectory(newname)
+				return pivot
+			endif
+		endfor
+		let pivot = fnamemodify(pivot, ':h')
+		if pivot == prev
+			break
+		endif
+	endwhile
+	return ''
+endfunc
+
+
+"----------------------------------------------------------------------
 " find project root
 "----------------------------------------------------------------------
 function! s:find_root(path, markers, strict)
-	function! s:guess_root(filename, markers)
-		let fullname = asclib#path#abspath(a:filename)
-		if fullname =~ '^fugitive:/'
-			if exists('b:git_dir')
-				return fnamemodify(b:git_dir, ':h')
-			endif
-			return '' " skip any fugitive buffers early
-		endif
-		let pivot = fullname
-		if !isdirectory(pivot)
-			let pivot = fnamemodify(pivot, ':h')
-		endif
-		while 1
-			let prev = pivot
-			for marker in a:markers
-				let newname = asclib#path#join(pivot, marker)
-				if newname =~ '[\*\?\[\]]'
-					if glob(newname) != ''
-						return pivot
-					endif
-				elseif filereadable(newname)
-					return pivot
-				elseif isdirectory(newname)
-					return pivot
-				endif
-			endfor
-			let pivot = fnamemodify(pivot, ':h')
-			if pivot == prev
-				break
-			endif
-		endwhile
-		return ''
-	endfunc
 	if a:path == '%'
 		if exists('b:asyncrun_root') && b:asyncrun_root != ''
 			return b:asyncrun_root
