@@ -154,6 +154,9 @@ endfunc
 " detect taskini
 "----------------------------------------------------------------------
 function! s:detect_taskini()
+	if &bt != ''
+		return 0
+	endif
 	if expand('%') == ''
 		return 0
 	endif
