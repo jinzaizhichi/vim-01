@@ -36,7 +36,7 @@ nnoremap <space>tt :exec "NERDTreeToggle " . fnameescape(asclib#path#get_root('%
 
 
 "----------------------------------------------------------------------
-" 
+" enable cursorlineopt
 "----------------------------------------------------------------------
 function! s:init_nerdtree_ft()
 	if exists('+cursorlineopt')
@@ -46,7 +46,7 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" 
+" register event handler
 "----------------------------------------------------------------------
 augroup MyNERDTreeEvent
 	au!
