@@ -2487,6 +2487,10 @@ function! s:task_environ(bang, ...)
 		echohl Number
 		echon environ[name]
 		echohl None
+	elseif nargs > 2
+		let name = args[0]
+		let argv = slice(args, 1)
+		let prompt = printf("Set variable '%s' to: ", name)
 	else
 		echom args
 		call s:errmsg('too many arguments, use AsyncTaskEnviron -h for help')
@@ -2498,10 +2502,11 @@ function! s:environ_help()
 	echo 'usage:  :AsyncTaskEnviron <operation>'
 	let t = '    :AsyncTaskEnviron'
 	echo 'operations:'
-	echo t . '                    - list all variables'
-	echo t . ' <varname>          - print value of a variable'
-	echo t . ' <varname> <value>  - assign value to a variable'
-	echo t . '! <varname>         - remove a variable'
+	echo t . '                         - list all variables'
+	echo t . ' <varname>               - print value of a variable'
+	echo t . ' <varname> <value>       - assign value to a variable'
+	echo t . ' <varname> <v1> <v2> ... - select from a value list'
+	echo t . '! <varname>              - remove a variable'
 endfunc
 
 function! s:complete_environ(ArgLead, CmdLine, CursorPos)
