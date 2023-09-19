@@ -46,8 +46,9 @@ set showcmd
 
 
 "----------------------------------------------------------------------
-" map CTRL_HJKL to move cursor in all mode
-" config terminal bind <backspace> to ASCII code 127
+" map CTRL_HJKL to move cursor in all modes
+" some old terminal softwares will send ^H for <backspace> by default,
+" change your terminal settings to bind <backspace> to ASCII code 127.
 "----------------------------------------------------------------------
 noremap <C-h> <left>
 noremap <C-j> <down>
