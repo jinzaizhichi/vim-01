@@ -23,10 +23,10 @@ tnoremap <buffer><tab>l <c-\><c-n><c-w>l
 
 if !has('nvim')
 	tnoremap <buffer><c-w> <c-_>
-	tnoremap <buffer>: <c-_>:
+	" tnoremap <buffer>: <c-_>:
 else
 	tnoremap <buffer><c-w> <c-\><c-n><c-w>
-	tnoremap <buffer>: <c-\><c-n>:
+	" tnoremap <buffer>: <c-\><c-n>:
 endif
 
 
