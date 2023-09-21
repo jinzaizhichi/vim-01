@@ -1203,6 +1203,9 @@ function! s:handle_environ(text)
 	if type(t) != type('')
 		return printf('%s', t)
 	endif
+	if t == ''
+		return s:strip(default)
+	endif
 	return t
 endfunc
 
