@@ -301,6 +301,13 @@ if has_key(s:enabled, 'gdb')
 	IncScript site/bundle/gdb.vim
 endif
 
+" emmet
+if has_key(s:enabled, 'emmet')
+	Plug 'mattn/emmet-vim'
+	IncScript site/bundle/emmet.vim
+endif
+
+
 " endwise
 if has_key(s:enabled, 'endwise')
 	Plug 'tpope/vim-endwise'
