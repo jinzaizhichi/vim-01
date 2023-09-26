@@ -256,6 +256,11 @@ if has_key(s:enabled, 'opt')
 	" Plug 'tpope/vim-apathy'
 	" Plug 'mh21/errormarker.vim'
 
+	if 1
+		Plug 'mattn/emmet-vim' 
+		IncScript site/bundle/emmet.vim
+	endif
+
 	if executable('tmux')
 		Plug 'benmills/vimux'
 	endif
@@ -300,13 +305,6 @@ endif
 if has_key(s:enabled, 'gdb')
 	IncScript site/bundle/gdb.vim
 endif
-
-" emmet
-if has_key(s:enabled, 'emmet')
-	Plug 'mattn/emmet-vim'
-	IncScript site/bundle/emmet.vim
-endif
-
 
 " endwise
 if has_key(s:enabled, 'endwise')
