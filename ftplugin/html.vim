@@ -11,7 +11,7 @@ let b:navigator = { 'prefix': '<tab><tab>' }
 let b:navigator_insert = { 'prefix': '<c-\><c-\>' }
 
 let b:navigator.z = {
-	\ 'name': '+zen-code',
+	\ 'name': '+zen-coding',
 	\ ';': ['<key><c-z>;', 'expand-word'],
 	\ ',': ['<key><c-z>,', 'expand-abbreviation'],
 	\ 'u': ['<key><c-z>u', 'update-tag'],
