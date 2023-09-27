@@ -10,26 +10,26 @@
 let b:navigator = { 'prefix': '<tab><tab>' }
 let b:navigator_insert = { 'prefix': '<c-\><c-\>' }
 
-let b:navigator.c = {
-	\ 'name': '+coding',
-	\ ';': ['<key><c-z>;', 'emmet-expand-word'],
-	\ ',': ['<key><c-z>,', 'emmet-expand-abbreviation'],
-	\ 'u': ['<key><c-z>u', 'emmet-update-tag'],
-	\ 'd': ['<key><c-z>d', 'emmet-balance-tag-inward'],
-	\ 'D': ['<key><c-z>D', 'emmet-balance-tag-outward'],
-	\ 'n': ['<key><c-z>n', 'emmet-next-edit-point'],
-	\ 'N': ['<key><c-z>N', 'emmet-prev-edit-point'],
-	\ 'i': ['<key><c-z>i', 'emmet-update-image-size'],
-	\ 'm': ['<key><c-z>m', 'emmet-merge-lines'],
-	\ 'k': ['<key><c-z>k', 'emmet-remove-tag'],
-	\ 'j': ['<key><c-z>j', 'emmet-split-join-tag'],
-	\ '/': ['<key><c-z>/', 'emmet-toggle-comment'],
-	\ 'a': ['<key><c-z>a', 'emmet-make-anchor-url'],
-	\ 'A': ['<key><c-z>A', 'emmet-quoted-text-url'],
-	\ 'c': ['<key><c-z>c', 'emmet-code-pretty'],
+let b:navigator.z = {
+	\ 'name': '+zen-coding',
+	\ ';': ['<key><c-z>;', 'expand-word'],
+	\ ',': ['<key><c-z>,', 'expand-abbreviation'],
+	\ 'u': ['<key><c-z>u', 'update-tag'],
+	\ 'd': ['<key><c-z>d', 'balance-tag-inward'],
+	\ 'D': ['<key><c-z>D', 'balance-tag-outward'],
+	\ 'n': ['<key><c-z>n', 'next-edit-point'],
+	\ 'N': ['<key><c-z>N', 'prev-edit-point'],
+	\ 'i': ['<key><c-z>i', 'update-image-size'],
+	\ 'm': ['<key><c-z>m', 'merge-lines'],
+	\ 'k': ['<key><c-z>k', 'remove-tag'],
+	\ 'j': ['<key><c-z>j', 'split-join-tag'],
+	\ '/': ['<key><c-z>/', 'toggle-comment'],
+	\ 'a': ['<key><c-z>a', 'make-anchor-url'],
+	\ 'A': ['<key><c-z>A', 'quoted-text-url'],
+	\ 'c': ['<key><c-z>c', 'code-pretty'],
 	\ }
 
-let b:navigator_insert.c = deepcopy(b:navigator.c)
+let b:navigator_insert.z = deepcopy(b:navigator.z)
 
 
 
