@@ -257,8 +257,8 @@ if has_key(s:enabled, 'opt')
 	" Plug 'mh21/errormarker.vim'
 
 	if 1
-		Plug 'mattn/emmet-vim' 
-		IncScript site/bundle/emmet.vim
+		Plug 'mattn/emmet-vim',  { 'on': 'EmmetInstall' }
+		IncScript site/bundle/emmet.vim 
 	endif
 
 	if executable('tmux')

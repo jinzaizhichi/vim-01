@@ -18,11 +18,21 @@ let g:user_emmet_leader_key='<C-Z>'
 
 
 "----------------------------------------------------------------------
+" install
+"----------------------------------------------------------------------
+function! s:install()
+	if exists(':EmmetInstall') == 2
+		EmmetInstall
+	endif
+endfunc
+
+
+"----------------------------------------------------------------------
 " augroup
 "----------------------------------------------------------------------
 augroup MyEmmetEvents
 	au!
-	autocmd FileType html,css EmmetInstall
+	autocmd FileType html,css call s:install()
 augroup END
 
 
