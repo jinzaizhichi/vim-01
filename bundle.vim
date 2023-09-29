@@ -258,7 +258,7 @@ if has_key(s:enabled, 'opt')
 
 	if 1
 		Plug 'mattn/emmet-vim',  { 'on': 'EmmetInstall' }
-		IncScript site/bundle/emmet.vim 
+		IncScript site/bundle/emmet.vim
 	endif
 
 	if executable('tmux')
