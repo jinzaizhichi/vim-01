@@ -34,7 +34,17 @@ let b:navigator_insert.z = deepcopy(b:navigator.z)
 
 
 "----------------------------------------------------------------------
-" install zen-coding
+" switch.vim
 "----------------------------------------------------------------------
+let b:switch_custom_definitions = [
+			\   {
+			\      '\<position\>\s*:\s*\w\+': {
+			\        ':\s*\<static\>': ': absolute',
+			\        ':\s*\<absolute\>': ': relative',
+			\        ':\s*\<relative\>': ': fixed',
+			\        ':\s*\<fixed\>': ': static',
+			\      }
+			\   },
+			\ ]
 
 

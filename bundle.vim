@@ -257,6 +257,11 @@ if has_key(s:enabled, 'opt')
 	" Plug 'mh21/errormarker.vim'
 
 	if 1
+		Plug 'AndrewRadev/switch.vim'
+		IncScript site/bundle/switch.vim
+	endif
+
+	if 1
 		Plug 'mattn/emmet-vim',  { 'on': 'EmmetInstall' }
 		IncScript site/bundle/emmet.vim
 	endif
@@ -294,6 +299,7 @@ if has_key(s:enabled, 'opt')
 		vmap <silent> <Leader>tr <Plug>TranslateRV
 		let g:translator_window_enable_icon = v:true
 	endif
+
 endif
 
 
