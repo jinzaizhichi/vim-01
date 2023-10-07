@@ -58,6 +58,7 @@ endfunc
 let b:switch_custom_definitions = [
 			\ s:switch_css('position', ['static', 'fixed', 'absolute', 'relative']),
 			\ s:switch_css('display', ['block', 'inline-block', 'none', 'flex', 'grid']),
+			\ s:switch_css('flex-direction', ['row', 'row-reverse', 'column', 'column-reverse']),
 			\   {
 			\      '\<align\>\s*:\s*left': 'align: right',
 			\      '\<align\>\s*:\s*right': 'align: center',
