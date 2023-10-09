@@ -25,8 +25,8 @@ noremap <m-g> :Leaderf --nowrap tasks<cr>
 inoremap <m-g> <esc>:Leaderf --nowrap tasks<cr>
 
 if has('gui_running')
-	noremap <c-f12> :Leaderf --nowrap tasks<cr>
-	inoremap <c-f12> <esc>:Leaderf --nowrap tasks<cr>
+	" noremap <c-f12> :Leaderf --nowrap tasks<cr>
+	" inoremap <c-f12> <esc>:Leaderf --nowrap tasks<cr>
 endif
 
 

@@ -128,6 +128,7 @@ let g:navigator.p = {
 			\ 't' : [':AsyncTaskEdit', 'edit-task-list'],
 			\ 'd' : ['module#project#open("README.md")', 'edit-readme-md'],
 			\ 'i' : ['module#project#open(".gitignore")', 'edit-git-ignore'],
+			\ 'g' : ['module#project#open(".clangd")', 'edit-clangd-config'],
 			\ 'l' : ['module#project#try_open(".git/config")', 'edit-git-config'],
 			\ 'r' : ['module#project#open(".lvimrc")', 'edit-local-vimrc'],
 			\ }

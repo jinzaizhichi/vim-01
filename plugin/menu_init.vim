@@ -134,6 +134,7 @@ call quickui#menu#install("&C/C++", [
 			\ ["&Edit Snippet\t", "CodeSnipEdit"],
 			\ ["&Debug Menu\tCtrl+F1", "GdbHelp"],
 			\ ["Cpp&man Help\t", 'call MenuHelp_Cppman()'],
+			\ ["&Target Profile\tCtrl+F12", 'AsyncTaskEnviron profile debug release static'],
 			\ ['--'],
 			\ ["&Switch Header/Source\t<spc>fw", "SwitchHeader edit"],
 			\ ["S&plit Header/Source\t<spc>fh", "SwitchHeader vsplit"],

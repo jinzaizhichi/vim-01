@@ -240,6 +240,8 @@ noremap <silent><s-f12> :AsyncTaskEdit<cr>
 inoremap <silent><s-f12> <ESC>:AsyncTaskEdit<cr>
 noremap <silent><f12> :TaskFinder<cr>
 inoremap <silent><f12> <ESC>:TaskFinder<cr>
+noremap <silent><c-f12> :AsyncTaskEnviron profile debug release static<cr>
+inoremap <silent><c-f12> <ESC>:AsyncTaskEnviron profile debug release static<cr>
 
 noremap <silent><F5> :AsyncTask file-run<cr>
 noremap <silent><F6> :AsyncTask make<cr>
