@@ -15,10 +15,13 @@ SetTitleMatchMode(2)
 
 ^!P::Run "D:\dev\vim\nvim092\bin\nvim-qt.exe -- -u c:\users\linwei\.config\nvim\neovim.vim"
 
+/* WinLaunch */
+/* #Space::Run "D:\Program Files\WinLaunch\WinLaunch.exe" */
 
 #HotIf WinActive("ahk_class MozillaWindowClass") and WinActive("ahk_exe firefox.exe")
 	^+w::^w
 #HotIf
 
 $CapsLock::Ctrl
+
 
