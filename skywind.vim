@@ -134,6 +134,7 @@ if has('win32') || has('win16') || has('win64') || has('win95')
 		let $VIM_ONEDRIVE = test
 	endif
 	nnoremap <silent><space>hw :FileSwitch e:\lab\workshop\README.md<cr>
+	nnoremap <silent><space>hW :FileSwitch e:\Kingsoft\git\bbnet\README.md<cr>
 	nnoremap <silent><space>hq :FileSwitch $VIM_ONEDRIVE/quicknote.md<cr>
 	nnoremap <silent><space>hm :FileSwitch -ft=markdown $VIM_ONEDRIVE/quicknote.md<cr>
 	nnoremap <silent><space>hp :FileSwitch $VIM_ONEDRIVE/personal.gpg<cr>
