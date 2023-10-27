@@ -70,6 +70,12 @@ if executable('gcc') == 0 && executable('clang')
 	let g:ale_linters.cpp += ['clang']
 endif
 
+if executable('clang-tidy')
+	let g:ale_linters.c += ['clangtidy']
+	let g:ale_linters.cpp += ['clangtidy']
+endif
+
+
 " let g:ale_linters.text = ['textlint', 'write-good', 'languagetool']
 " let g:ale_linters.lua += ['luacheck']
 
