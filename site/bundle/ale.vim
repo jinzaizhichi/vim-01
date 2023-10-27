@@ -82,7 +82,7 @@ endif
 "----------------------------------------------------------------------
 " cppcheck
 "----------------------------------------------------------------------
-let s:cppcheck = '--enable=warning,style,portability,performance'
+let s:cppcheck = '--enable=warning,style,portability,performance,information'
 let s:cppcheck .= ' --suppressions-list=' . s:lintcfg('cppcheck.conf')
 
 
