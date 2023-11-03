@@ -64,7 +64,7 @@ highlight Comment guifg=#99968b gui=italic ctermfg=246 cterm=NONE
 " highlight Comment guifg=#99968b ctermfg=246 cterm=NONE
 highlight Todo guifg=#ff4444 guibg=#333333 gui=bold ctermfg=203 ctermbg=236 cterm=bold
 " highlight String guifg=#98ff85 gui=italic ctermfg=120 cterm=NONE
-highlight String guifg=#83c092 ctermfg=108 cterm=NONE
+highlight String guifg=#83c092 ctermfg=108 gui=italic cterm=NONE
 highlight Underlined guifg=#80a0ff gui=underline ctermfg=111 cterm=underline
 
 highlight Identifier guifg=#ffff99 gui=NONE ctermfg=228 cterm=NONE
