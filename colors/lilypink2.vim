@@ -15,7 +15,7 @@ if exists("syntax_on")
   syntax reset
 endif
 
-let colors_name = "lilypink"
+let colors_name = "lilypink2"
 
 " Vim >= 7.0 specific colors
 if version >= 700
@@ -61,8 +61,10 @@ highlight TabLineFill guifg=#e0e0e0 guibg=#444444 gui=NONE ctermfg=254 ctermbg=2
 
 " Syntax highlighting
 highlight Comment guifg=#99968b gui=italic ctermfg=246 cterm=NONE
+" highlight Comment guifg=#99968b ctermfg=246 cterm=NONE
 highlight Todo guifg=#ff4444 guibg=#333333 gui=bold ctermfg=203 ctermbg=236 cterm=bold
-highlight String guifg=#98ff85 gui=italic ctermfg=120 cterm=NONE
+" highlight String guifg=#98ff85 gui=italic ctermfg=120 cterm=NONE
+highlight String guifg=#83c092 ctermfg=108 gui=italic cterm=NONE
 highlight Underlined guifg=#80a0ff gui=underline ctermfg=111 cterm=underline
 
 highlight Identifier guifg=#ffff99 gui=NONE ctermfg=228 cterm=NONE
@@ -80,3 +82,6 @@ highlight DiffAdd guibg=#003300 ctermbg=22
 highlight DiffDelete guifg=#731b00 guibg=#400f00 ctermfg=88 ctermbg=52
 highlight DiffChange guibg=#1b0042 ctermbg=17
 highlight DiffText guibg=#003c4c ctermbg=24
+
+hi! link SignColumn Normal
+
