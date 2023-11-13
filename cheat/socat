@@ -46,5 +46,3 @@
   socat TCP-LISTEN:<local-port>,reuseaddr,fork SOCKS:<socks-ip>:<remote-ip>:<remote-port>,socksport=<socks-port>
   socat TCP-LISTEN:<local-port>,reuseaddr,fork PROXY:<proxy-ip>:<remote-ip>:<remote-port>,proxyport=<proxy-port>
 
-
-
