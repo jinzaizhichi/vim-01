@@ -82,9 +82,7 @@ fi
 #----------------------------------------------------------------------
 # detect vim folder
 #----------------------------------------------------------------------
-if [ -n "$VIM_CONFIG" ]; then
-	[ ! -d "$VIM_CONFIG/etc" ] && VIM_CONFIG=""
-fi
+VIM_CONFIG=""
 
 if [ -z "$VIM_CONFIG" ]; then
 	if [ -d "$HOME/.vim/vim/etc" ]; then
