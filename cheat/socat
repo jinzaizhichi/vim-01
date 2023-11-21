@@ -1,5 +1,6 @@
 - Command Specification
 
+  # socat will redirect input from both side to the opposite side
   socat [options] <addr1> <addr2>
 
 - Connect Standard Input and Output
@@ -8,11 +9,15 @@
 
 - Connection Detection
 
-  socat - TCP-LISTEN:8080               # server: listen on 8080
-  socat - TCP:localhost:8080            # client: connect to server
+  # server: listen on 8080
+  socat - TCP-LISTEN:8080
+
+  # client: connect to server
+  socat - TCP:localhost:8080
 
 - Keep Serving
 
+  # server: use fork to keep serving when after a client quits
   socat - TCP-LISTEN:8080,fork,reuseaddr
   socat - TCP:localhost:8080 
 
@@ -22,9 +27,11 @@
 
 - Remote Login
 
+  # basic remote login
   socat TCP-LISTEN:8080,fork,reuseaddr  EXEC:/usr/bin/bash
   socat - TCP:localhost:8080
 
+  # remote login with a tty like terminal
   socat TCP-LISTEN:8080,fork,reuseaddr  EXEC:/usr/bin/bash,pty,stderr
   socat file:`tty`,raw,echo=0 TCP:localhost:8080
 
@@ -45,4 +52,5 @@
 
   socat TCP-LISTEN:<local-port>,reuseaddr,fork SOCKS:<socks-ip>:<remote-ip>:<remote-port>,socksport=<socks-port>
   socat TCP-LISTEN:<local-port>,reuseaddr,fork PROXY:<proxy-ip>:<remote-ip>:<remote-port>,proxyport=<proxy-port>
+
 
