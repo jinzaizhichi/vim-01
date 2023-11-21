@@ -481,4 +481,24 @@ function! s:RtUpdateHelpTags() abort
 endfunc
 
 
+"----------------------------------------------------------------------
+" display side by side diff in a new tabpage
+" usage: DiffSplit <left_file> <right_file>
+"----------------------------------------------------------------------
+command! -nargs=+ -complete=file DiffSplit call s:DiffSplit(<f-args>)
+function! s:DiffSplit(...) abort
+	if a:0 != 2
+		echohl ErrorMsg
+		echom 'ERROR: Require two file names.'
+		echohl None
+	else
+		exec 'tabe ' . fnameescape(a:1)
+		exec 'rightbelow vert diffsplit ' . fnameescape(a:2)
+		setlocal foldlevel=20
+		exec 'wincmd p'
+		setlocal foldlevel=20
+		exec 'normal! gg]c'
+	endif
+endfunc
+
 
