@@ -339,14 +339,14 @@ if has('autocmd')
 		setlocal nonumber
 	endfunc
 	function! s:insert_enter()
-		if get(g:, 'echodoc#enable_at_startup') != 0
+		if get(g:, 'echodoc#enable_at_startup', 0) != 0
 			set noshowmode
 		elseif exists(':CocInstall')
 			set noshowmode
 		endif
 	endfunc
 	function! s:insert_leave()
-		if get(g:, 'echodoc#enable_at_startup') != 0
+		if get(g:, 'echodoc#enable_at_startup', 0) != 0
 			set showmode
 		elseif exists(':CocInstall')
 			set showmode
