@@ -71,8 +71,8 @@ if executable('gcc') == 0 && executable('clang')
 endif
 
 if executable('clang-tidy')
-	let g:ale_linters.c += ['clangtidy']
-	let g:ale_linters.cpp += ['clangtidy']
+	" let g:ale_linters.c += ['clangtidy']
+	" let g:ale_linters.cpp += ['clangtidy']
 endif
 
 
