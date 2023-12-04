@@ -91,3 +91,12 @@ let g:ale_c_cppcheck_options = s:cppcheck
 let g:ale_cpp_cppcheck_options = s:cppcheck
 
 
+"----------------------------------------------------------------------
+" 
+"----------------------------------------------------------------------
+noremap [z :ALEPrevious<cr>
+noremap ]z :ALENext<cr>
+noremap [Z :ALEFirst<cr>
+noremap ]Z :ALELast<cr>
+
+
