@@ -207,6 +207,8 @@ let g:navigator.x = {
 			\ 'M': [':messages clear', 'messages-clear'],
 			\ 'd': [':LocalRcDisplay', 'display-localrc-messages'],
 			\ 'z': [':AsyncTask git-lazygit', 'lazygit'],
+			\ 'E': ['AsyncTaskEnviron emake_config mingw32 mingw64 mingw', 'emake-config-change'],
+			\ 'e': ['AsyncTaskEnviron profile debug release', 'emake-profile-change'],
 			\ }
 
 
