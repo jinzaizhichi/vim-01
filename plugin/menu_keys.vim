@@ -209,6 +209,7 @@ let g:navigator.x = {
 			\ 'z': [':AsyncTask git-lazygit', 'lazygit'],
 			\ 'E': ['AsyncTaskEnviron emake_config mingw32 mingw64 mingw', 'emake-config-change'],
 			\ 'e': ['AsyncTaskEnviron profile debug release', 'emake-profile-change'],
+			\ 'c': ['AsyncTask emake-clean', 'emake-clean'],
 			\ }
 
 
