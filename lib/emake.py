@@ -3,7 +3,7 @@
 #  vim: set ts=4 sw=4 tw=0 et :
 #======================================================================
 #
-# emake.py - emake version 3.6.15
+# emake.py - emake version 3.6.17
 #
 # history of this file:
 # 2009.08.20   skywind   create this file
@@ -30,6 +30,7 @@
 # 2022.04.03   changning new: update to Python3 
 # 2023.09.20   skywind   new: --profile=debug/release options
 # 2023.10.08   skywind   new: try "flag@debug: -g"
+# 2023.12.07   skywind   new: "PATH" item in 'default' section
 #
 #======================================================================
 from __future__ import unicode_literals, print_function
@@ -50,8 +51,8 @@ else:
 #----------------------------------------------------------------------
 # version info
 #----------------------------------------------------------------------
-EMAKE_VERSION = '3.6.15'
-EMAKE_DATE = 'Oct.10 2023'
+EMAKE_VERSION = '3.6.17'
+EMAKE_DATE = 'Dec.7 2023'
 
 
 #----------------------------------------------------------------------
@@ -893,6 +894,7 @@ class configure(object):
         self.replace['inipath'] = self.inipath
         self.replace['target'] = self.target
         self.replace['profile'] = self.profile
+        self._reset_path()
         self.inited = True
         return 0
 
@@ -900,6 +902,31 @@ class configure(object):
     def _getitem (self, sect, key, default = ''):
         return self.config.get(sect, {}).get(key, default)
     
+    # reset $PATH
+    def _reset_path (self):
+        PATH = self._getitem('default', 'path', '').strip()
+        if not PATH:
+            return -1
+        sep = self.unix and ':' or ';'
+        pathout = []
+        for path in PATH.split(sep):
+            if os.path.isabs(path):
+                pathout.append(path)
+            elif os.path.exists(self.inipath):
+                inihome = os.path.dirname(os.path.abspath(self.inipath))
+                t = os.path.join(inihome, path)
+                pathout.append(t)
+        if 'PATH' not in CFG:
+            CFG['PATH'] = os.environ.get('PATH', '')
+        self._origin_os_path = CFG['PATH']
+        finalize = []
+        for path in pathout:
+            finalize.append(path)
+        t = sep.join(finalize)
+        self._new_os_path = t + sep + os.environ.get('PATH', '')
+        os.environ['PATH'] = self._new_os_path
+        return 0
+
     # 取得替换了$(HOME)变量的路径
     def path (self, path):
         path = path.replace('$(HOME)', self.dirhome).replace('\\', '/')
