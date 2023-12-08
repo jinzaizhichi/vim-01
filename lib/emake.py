@@ -3244,7 +3244,7 @@ def install():
         print('error: install must under unix')
         return -2
     try:
-        f1 = open(filepath, 'r')
+        f1 = open(filepath, 'rb')
     except:
         print('error: cannot read "%s"'%filepath)
         return -3
@@ -3259,12 +3259,12 @@ def install():
         print('/usr/local/bin/emake already exists, you should delete it')
         return -7
     try:
-        f2 = open(name2, 'w')
+        f2 = open(name2, 'wb')
     except:
         print('error: cannot write "%s"'%name2)
         return -4
     try:
-        f3 = open(name3, 'w')
+        f3 = open(name3, 'wb')
     except:
         print('error: cannot write "%s"'%name3)
         f2.close()
