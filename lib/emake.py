@@ -2113,7 +2113,7 @@ class coremake(object):
         for k, v in envsave.items():
             if os.environ.get(k) != v: 
                 os.environ[k] = v
-        for k in os.environ.keys():
+        for k in list(os.environ.keys()):
             if k not in envsave: 
                 del os.environ[k]
         return True
