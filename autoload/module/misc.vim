@@ -39,3 +39,15 @@ function! s:compiler_restore(saved)
 endfunc
 
 
+"----------------------------------------------------------------------
+" open config
+"----------------------------------------------------------------------
+function! module#misc#open(name) abort
+	let p = a:name
+	if stridx(p, '~') >= 0
+		let p = expand(p)
+	endif
+	call asclib#utils#file_switch(['-switch=useopen,auto', p])
+endfunc
+
+

@@ -164,6 +164,7 @@ let g:navigator.e = {
 			\ 'c': [':AsyncTask emake-clean', 'emake-clean'],
 			\ 'p': [':AsyncTaskEnviron profile debug release', 'emake-profile-change'],
 			\ 'e': [':split ~/.config/emake/', 'edit-config'],
+			\ 'g': ['module#misc#open("~/.config/emake.ini")', 'global-config'],
 			\ }
 
 
