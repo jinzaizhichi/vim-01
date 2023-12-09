@@ -160,9 +160,10 @@ let g:navigator.y = {
 "----------------------------------------------------------------------
 let g:navigator.e = {
 			\ 'name': '+emake',
-			\ 'C': ['AsyncTaskEnviron emake_config mingw32 mingw64 mingw', 'emake-config-change'],
-			\ 'c': ['AsyncTask emake-clean', 'emake-clean'],
-			\ 'p': ['AsyncTaskEnviron profile debug release', 'emake-profile-change'],
+			\ 'C': [':AsyncTaskEnviron econfig mingw32 mingw64 mingw msys32 msys64', 'emake-config-change'],
+			\ 'c': [':AsyncTask emake-clean', 'emake-clean'],
+			\ 'p': [':AsyncTaskEnviron profile debug release', 'emake-profile-change'],
+			\ 'e': [':split ~/.config/emake/', 'edit-config'],
 			\ }
 
 

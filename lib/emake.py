@@ -3,7 +3,7 @@
 #  vim: set ts=4 sw=4 tw=0 et :
 #======================================================================
 #
-# emake.py - emake version 3.6.18
+# emake.py - emake version 3.6.19
 #
 # history of this file:
 # 2009.08.20   skywind   create this file
@@ -51,8 +51,8 @@ else:
 #----------------------------------------------------------------------
 # version info
 #----------------------------------------------------------------------
-EMAKE_VERSION = '3.6.18'
-EMAKE_DATE = 'Dec.9 2023'
+EMAKE_VERSION = '3.6.19'
+EMAKE_DATE = 'Dec.10 2023'
 
 
 #----------------------------------------------------------------------
@@ -725,7 +725,7 @@ class configure(object):
     
     # 读取ini文件
     def _readini (self, inipath):
-        if self.unix and '~' in inipath:
+        if '~' in inipath:
             inipath = os.path.expanduser(inipath)
         if os.path.exists(inipath):
             self.iniload = os.path.abspath(inipath)
@@ -802,7 +802,7 @@ class configure(object):
             if self.unix:
                 self._readini('/etc/%s'%self.ininame)
                 self._readini('/usr/local/etc/%s'%self.ininame)
-                self._readini('~/.config/%s'%self.ininame)
+            self._readini('~/.config/%s'%self.ininame)
             self._readini(self.inipath)
         self.dirhome = self._getitem('default', 'home', '')
         cfghome = self.dirhome
