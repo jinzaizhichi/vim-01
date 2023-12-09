@@ -156,9 +156,20 @@ let g:navigator.y = {
 
 
 "----------------------------------------------------------------------
-" escript 
+" emake
 "----------------------------------------------------------------------
 let g:navigator.e = {
+			\ 'name': '+emake',
+			\ 'C': ['AsyncTaskEnviron emake_config mingw32 mingw64 mingw', 'emake-config-change'],
+			\ 'c': ['AsyncTask emake-clean', 'emake-clean'],
+			\ 'p': ['AsyncTaskEnviron profile debug release', 'emake-profile-change'],
+			\ }
+
+
+"----------------------------------------------------------------------
+" escript runner
+"----------------------------------------------------------------------
+let g:navigator.r = {
 			\ 'name': '+escript-runner',
 			\ 'l' : ['EScript list_rtp', 'list-runtime-path'],
 			\ 'p' : ['EScript lua_package', 'list-lua-package'],
@@ -207,9 +218,6 @@ let g:navigator.x = {
 			\ 'M': [':messages clear', 'messages-clear'],
 			\ 'd': [':LocalRcDisplay', 'display-localrc-messages'],
 			\ 'z': [':AsyncTask git-lazygit', 'lazygit'],
-			\ 'E': ['AsyncTaskEnviron emake_config mingw32 mingw64 mingw', 'emake-config-change'],
-			\ 'e': ['AsyncTaskEnviron profile debug release', 'emake-profile-change'],
-			\ 'c': ['AsyncTask emake-clean', 'emake-clean'],
 			\ }
 
 
