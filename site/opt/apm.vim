@@ -155,6 +155,9 @@ endfunc
 
 " enable apc
 function! s:apm_enable()
+	if !has('patch-8.2.1')
+		return
+	endif
 	call s:apm_disable()
 	augroup ApmEventGroup
 		au!

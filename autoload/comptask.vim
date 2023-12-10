@@ -405,6 +405,9 @@ endfunc
 
 " enable apc
 function! comptask#complete_enable()
+	if !has('patch-8.2.1')
+		return
+	endif
 	call comptask#complete_disable()
 	augroup ApmEventGroup2
 		au!
