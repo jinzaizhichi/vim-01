@@ -2,13 +2,18 @@
 # Initialize environment and alias
 #----------------------------------------------------------------------
 case "$OSTYPE" in
-	*gnu*|*linux*|*msys*|*cygwin*) alias ls='ls --color' ;;
+	*gnu*|*linux*|*msys*|*cygwin*|*solaris*) alias ls='ls --color' ;;
 	*freebsd*|*darwin*) alias ls='ls -G' ;;
 esac
 	
 alias ll='ls -lh'
 alias la='ls -lAh'
-alias grep='grep --color=tty'
+
+case "$OSTYPE" in
+	*solaris*) ;;
+	*) alias grep='grep --color=tty' ;;
+esac
+
 alias cvim='/usr/local/opt/bin/vim --cmd "let g:vim_startup=1"'
 alias mvim='/usr/local/opt/bin/vim --cmd "let g:vim_startup=2"'
 alias tmux='tmux -2'
