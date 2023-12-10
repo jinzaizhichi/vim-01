@@ -22,6 +22,10 @@ SetTitleMatchMode(2)
 	^+w::^w
 #HotIf
 
+#HotIf WinActive("ahk_class Chrome_WidgetWin_1") and WinActive("ahk_exe chrome.exe")
+	^+w::^w
+#HotIf
+
 $CapsLock::Ctrl
 
 
