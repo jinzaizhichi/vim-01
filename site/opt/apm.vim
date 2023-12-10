@@ -132,9 +132,11 @@ function! s:feed_popup()
 	endif
 	let context = s:get_context()
 	if s:meets_keyword(context)
-		let info = complete_info(['mode'])
-		if info.mode != ''
-			silent! call feedkeys("\<c-e>", 'n')
+		if exists('*complete_info') == 1
+			let info = complete_info(['mode'])
+			if info.mode != ''
+				silent! call feedkeys("\<c-e>", 'n')
+			endif
 		endif
 		silent! call feedkeys(get(b:, 'apm_trigger', g:apm_trigger), 'n')
 		let b:apm_lastx = x
