@@ -79,7 +79,7 @@ function! module#misc#emake_config() abort
 		let choice += [t]
 		let index += 1
 	endfor
-	let n = 0
+	let n = 1
 	if !exists('g:asynctasks_environ')
 		let g:asynctasks_environ = {}
 	endif
@@ -87,13 +87,14 @@ function! module#misc#emake_config() abort
 	let index = 1
 	for t in candidate
 		if current == t
-			let n = index
+			let n = index + 1
 			break
 		endif
 		let index += 1
 	endfor
 	let hr = asclib#ui#confirm(msg, join(choice, "\n"), n) - 1
 	if hr == 0
+		let g:asynctasks_environ[key] = ''
 		exec ':AsyncTaskEnviron! ' . key
 	elseif hr > 0
 		exec ':AsyncTaskEnviron ' . key . ' ' . candidate[hr - 1]
