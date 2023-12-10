@@ -43,7 +43,7 @@ function! asclib#ui#confirm(msg, choices, default)
 	endif
 	call inputsave()
 	try
-		let hr = confirm(a:msg, choices, default)
+		let hr = confirm(a:msg, a:choices, a:default)
 	catch /^Vim:Interrupt$/
 		let hr = 0
 	endtry

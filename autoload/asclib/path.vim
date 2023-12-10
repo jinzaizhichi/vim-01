@@ -646,19 +646,49 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" list path
+" filename pattern to regex pattern
+"----------------------------------------------------------------------
+function! asclib#path#pattern(pattern) abort
+	let p = escape(a:pattern, "\\/'\".(){}^$%")
+	let p = substitute(p, '?', '\.', 'g')
+	return '^' . substitute(p, '\*', '\.\*', 'g') . '$'
+endfunc
+
+
+"----------------------------------------------------------------------
+" fnmatch
+"----------------------------------------------------------------------
+function! asclib#path#fnmatch(filename, pattern) abort
+	let p = asclib#path#pattern(a:pattern)
+	let s = match(a:filename, p)
+	return (s >= 0)? 1 : 0
+endfunc
+
+
+"----------------------------------------------------------------------
+" usage: asclib#path#list(path [, pattern [, nosuf]])
 "----------------------------------------------------------------------
 function! asclib#path#list(path, ...)
-	let nosuf = (a:0 > 0)? (a:1) : 0
-	if !isdirectory(a:path)
+	let fnpat = (a:0 > 0)? (a:1) : ''
+	let nosuf = (a:0 > 1)? (a:2) : 0
+	let path = expand(a:path)
+	if !isdirectory(path)
 		return []
 	endif
-	let path = asclib#path#join(a:path, '*')
+	if fnpat != ''
+		let fnpat = asclib#path#pattern(fnpat)
+	endif
+	let path = asclib#path#join(path, '*')
 	let part = asclib#path#glob(path, nosuf)
 	let candidate = []
 	for n in split(part, "\n")
 		let f = fnamemodify(n, ':t')
 		if !empty(f)
+			if fnpat != ''
+				if match(f, fnpat) < 0
+					continue
+				endif
+			endif
 			let candidate += [f]
 		endif
 	endfor
