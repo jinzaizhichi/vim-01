@@ -65,6 +65,8 @@ elseif has('dos16') || has('dos32')
 	let s:uname = 'dos'
 elseif has('bsd')
 	let s:uname = 'bsd'
+elseif has('sun')
+	let s:uname = 'sunos'
 elseif has('unix')
 	let s:uname = asclib#platform#system_uname()
 	if v:shell_error == 0 && match(s:uname, 'Linux') >= 0
