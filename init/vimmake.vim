@@ -68,7 +68,11 @@ function! vimmake#grep(text, cwd)
 			let l:full = asyncrun#fullname(a:cwd)
 			let l:inc .= ' '.shellescape(l:full)
 		endif
-		let cmd = 'grep -n -s -R ' . (fixed? '-F ' : '')
+		let cmd = 'grep'
+		if executable('/usr/gnu/bin/grep')
+			let cmd = '/usr/gnu/bin/grep'
+		endif
+		let cmd .= ' -n -s -R ' . (fixed? '-F ' : '')
 		let cmd .= shellescape(a:text). l:inc .' /dev/null'
 		call asyncrun#run('', opts, cmd)
 	elseif mode == 'findstr'
