@@ -155,7 +155,7 @@ endfunc
 
 " enable apc
 function! s:apm_enable()
-	if !has('patch-8.2.1')
+	if !exists('*complete_info')
 		return
 	endif
 	call s:apm_disable()

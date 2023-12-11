@@ -405,7 +405,7 @@ endfunc
 
 " enable apc
 function! comptask#complete_enable()
-	if !has('patch-8.2.1')
+	if !exists('*complete_info')
 		return
 	endif
 	call comptask#complete_disable()
