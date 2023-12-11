@@ -71,6 +71,8 @@ function! vimmake#grep(text, cwd)
 		let cmd = 'grep'
 		if executable('/usr/gnu/bin/grep')
 			let cmd = '/usr/gnu/bin/grep'
+		elseif executable('ggrep') && g:vimmake_windows == 0
+			let cmd = 'ggrep'
 		endif
 		let cmd .= ' -n -s -R ' . (fixed? '-F ' : '')
 		let cmd .= shellescape(a:text). l:inc .' /dev/null'
